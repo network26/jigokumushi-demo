@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="meta.title">Jigokumushi Kobo Kannawa</title>
+<meta name="description" content="Jigokumushi Kobo Kannawa — hell-steam cooking with 98°C geothermal hot-spring steam in Kannawa Onsen, Beppu, Oita. (Design concept demo)">
+<meta name="theme-color" content="#0b0a09">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="loader" aria-hidden="true"><div class="loader-kanji">蒸</div><div class="loader-bar"><span></span></div></div>
+<canvas id="steam-canvas" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div id="progress" aria-hidden="true"></div>
+
+<!-- ====== Header ====== -->
+<header id="site-header">
+  <a class="brand" href="#top" aria-label="Jigokumushi Kobo Kannawa">
+    <span class="brand-mark">蒸</span>
+    <span class="brand-text"><b>地獄蒸し工房 鉄輪</b><small data-i18n="brand.sub">Jigokumushi Kobo Kannawa</small></span>
+  </a>
+  <nav id="main-nav" aria-label="Main">
+    <a href="#about" data-i18n="nav.about">About</a>
+    <a href="#steam" data-i18n="nav.steam">Hell-Steaming</a>
+    <a href="#flow" data-i18n="nav.flow">How It Works</a>
+    <a href="#menu" data-i18n="nav.menu">Menu &amp; Prices</a>
+    <a href="#facilities" data-i18n="nav.facilities">Facilities</a>
+    <a href="#crowd" data-i18n="nav.crowd">Crowd Forecast</a>
+    <a href="#access" data-i18n="nav.access">Access</a>
+    <a href="#faq" data-i18n="nav.faq">FAQ</a>
+    <a href="#news" data-i18n="nav.news">News</a>
+  </nav>
+  <a class="tel-pill" href="tel:0977663775"><span data-i18n="common.tel">Tel</span> 0977-66-3775</a>
+  <button id="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</header>
+
+<!-- ====== Language globe ====== -->
+<div id="lang-dock">
+  <button id="globe-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">
+    <svg viewBox="0 0 48 48" class="globe-svg" aria-hidden="true">
+      <circle cx="24" cy="24" r="19" />
+      <ellipse cx="24" cy="24" rx="8" ry="19" class="spin-ell"/>
+      <path d="M5 24h38M8 14h32M8 34h32"/>
+    </svg>
+    <span id="lang-code">EN</span>
+  </button>
+  <div id="lang-panel" role="listbox" aria-label="Language" tabindex="-1">
+    <div class="lang-head" data-i18n="lang.choose">Choose your language</div>
+    <ul id="lang-list"></ul>
+  </div>
+</div>
+
+<main id="top">
+<!-- ====== HERO: layered depth ====== -->
+<section id="hero" class="hero">
+  <div class="hero-sticky">
+    <div class="layer layer-sky" data-depth="0.05"></div>
+    <div class="layer layer-moon" data-depth="0.12"><div class="moon"></div></div>
+    <div class="layer layer-mtn-far" data-depth="0.2">
+      <svg viewBox="0 0 1600 600" preserveAspectRatio="xMidYMax slice"><path d="M0 420 L180 300 L300 360 L470 210 L640 330 L780 250 L960 380 L1120 230 L1290 340 L1440 260 L1600 330 V600 H0Z"/></svg>
+    </div>
+    <div class="layer layer-mtn-mid" data-depth="0.35">
+      <svg viewBox="0 0 1600 600" preserveAspectRatio="xMidYMax slice"><path d="M0 480 L140 420 L260 450 L420 360 L560 430 L700 380 L860 460 L1000 400 L1180 470 L1330 390 L1480 450 L1600 410 V600 H0Z"/></svg>
+    </div>
+    <div class="layer layer-town" data-depth="0.55">
+      <svg viewBox="0 0 1600 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <g class="roofs">
+          <path d="M60 520 l70-40 70 40z M80 520h100v80H80z"/>
+          <path d="M260 530 l90-52 90 52z M285 530h130v70H285z"/>
+          <path d="M560 515 l60-36 60 36z M575 515h90v85h-90z"/>
+          <path d="M760 520 l110-60 110 60z M790 520h160v80H790z"/>
+          <path d="M1080 530 l70-40 70 40z M1095 530h110v70h-110z"/>
+          <path d="M1300 515 l95-55 95 55z M1325 515h140v85h-140z"/>
+        </g>
+        <g class="chimneys"><rect x="470" y="420" width="18" height="180"/><rect x="1010" y="440" width="16" height="160"/><rect x="1240" y="410" width="20" height="190"/></g>
+      </svg>
+      <div class="vent v1"></div><div class="vent v2"></div><div class="vent v3"></div>
+    </div>
+    <div class="layer layer-torii" data-depth="0.8">
+      <svg viewBox="0 0 400 300" class="torii" aria-hidden="true"><path d="M20 40 Q200 10 380 40 L372 62 Q200 36 28 62Z"/><rect x="40" y="78" width="320" height="16"/><rect x="88" y="54" width="22" height="246"/><rect x="290" y="54" width="22" height="246"/><rect x="190" y="78" width="20" height="40"/></svg>
+    </div>
+    <div class="hero-content">
+      <p class="kicker" data-i18n="hero.kicker">Beppu · Kannawa Onsen · Oita</p>
+      <h1 class="hero-title">
+        <span class="jp-vert">地獄蒸し</span>
+        <span class="hero-main" data-i18n="hero.title">Jigokumushi Kobo Kannawa</span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero.sub">Experience Beppu's traditional hell-steam cooking.</p>
+      <div class="hero-cta">
+        <a class="btn btn-fire" href="#menu" data-i18n="hero.cta1">See the menu</a>
+        <a class="btn btn-ghost" href="#flow" data-i18n="hero.cta2">How it works</a>
+      </div>
+    </div>
+    <div class="scroll-cue"><span data-i18n="hero.scroll">Scroll to descend into the steam</span><i></i></div>
+  </div>
+</section>
+
+<!-- Closed days ticker -->
+<section class="notice-band" aria-label="Notice">
+  <div class="notice-track" id="notice-track"></div>
+</section>
+
+<!-- ====== Stats ====== -->
+<section class="stats">
+  <div class="stat" data-reveal="up"><b data-count="98">0</b><sup>°C</sup><span data-i18n="stats.temp">Hot-spring steam</span></div>
+  <div class="stat" data-reveal="up" data-delay="1"><b data-count="100">0</b><sup>%</sup><span data-i18n="stats.geo">Geothermal energy</span></div>
+  <div class="stat" data-reveal="up" data-delay="2"><b data-count="15">0</b><sup data-i18n="stats.minUnit">min</sup><span data-i18n="stats.basic">Basic steamer time</span></div>
+  <div class="stat" data-reveal="up" data-delay="3"><b class="txt" data-i18n="stats.edoVal">Edo</b><span data-i18n="stats.edo">A tradition since the Edo period</span></div>
+</section>
+
+<!-- ====== About ====== -->
+<section id="about" class="section about">
+  <div class="kanji-bg" data-speed="-0.25">湯</div>
+  <div class="wrap">
+    <header class="sec-head" data-reveal="left">
+      <span class="sec-no">壱</span>
+      <h2 data-i18n="about.title">About</h2>
+    </header>
+    <p class="lead" data-reveal="right" data-i18n="about.body">...</p>
+    <div class="feature-grid">
+      <article class="feature tilt" data-reveal="up"><div class="f-icon">蒸</div><h3 data-i18n="feat.cook">Hell-steam cooking experience</h3></article>
+      <article class="feature tilt" data-reveal="down" data-delay="1"><div class="f-icon">展</div><h3 data-i18n="feat.exhibit">Exhibition corner</h3></article>
+      <article class="feature tilt" data-reveal="up" data-delay="2"><div class="f-icon">飲</div><h3 data-i18n="feat.drink">Hot-spring drinking fountain</h3></article>
+      <article class="feature tilt" data-reveal="down" data-delay="3"><div class="f-icon">滝</div><h3 data-i18n="feat.yureidaki">Yureidaki cooling monument</h3></article>
+      <article class="feature tilt" data-reveal="up" data-delay="4"><div class="f-icon">足</div><h3 data-i18n="feat.footsteam">Foot steam bath</h3></article>
+      <article class="feature tilt" data-reveal="down" data-delay="5"><div class="f-icon">♿</div><h3 data-i18n="feat.footbath">Foot bath (wheelchair accessible)</h3></article>
+    </div>
+  </div>
+</section>
+
+<!-- ====== What is jigokumushi: zoom section ====== -->
+<section id="steam" class="zoom-section">
+  <div class="zoom-sticky">
+    <div class="zoom-ring r1"></div><div class="zoom-ring r2"></div><div class="zoom-ring r3"></div>
+    <div class="zoom-core">
+      <div class="kama">
+        <svg viewBox="0 0 300 220" aria-hidden="true">
+          <defs><linearGradient id="stone" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#5a4a3e"/><stop offset="1" stop-color="#2a221c"/></linearGradient></defs>
+          <rect x="30" y="90" width="240" height="120" rx="8" fill="url(#stone)"/>
+          <g stroke="#1a1410" stroke-width="3" opacity=".6"><path d="M30 130h240M30 170h240M90 90v40M170 90v40M240 90v40M60 130v40M130 130v40M210 130v40M90 170v40M170 170v40M240 170v40"/></g>
+          <ellipse cx="150" cy="90" rx="100" ry="18" fill="#3b2f27"/>
+          <path class="lid" d="M60 82 Q150 40 240 82 Z" fill="#8a6a45"/><rect class="lid" x="140" y="46" width="20" height="10" rx="3" fill="#c79a5b"/>
+        </svg>
+      </div>
+    </div>
+    <div class="zoom-text">
+      <h2 data-i18n="steam.title">What is jigokumushi?</h2>
+      <p data-i18n="steam.body">...</p>
+    </div>
+    <ol class="zoom-steps">
+      <li><b>1</b><span data-i18n="steam.s1">Place ingredients in a basket</span></li>
+      <li><b>2</b><span data-i18n="steam.s2">Set into the steamer</span></li>
+      <li><b>3</b><span data-i18n="steam.s3">Close the lid</span></li>
+      <li><b>4</b><span data-i18n="steam.s4">Flavor locked in</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ====== Flow: depth tunnel ====== -->
+<section id="flow" class="tunnel">
+  <div class="tunnel-sticky">
+    <div class="tunnel-head">
+      <h2 data-i18n="flow.title">The Hell-Steaming Experience</h2>
+      <p data-i18n="flow.intro">...</p>
+    </div>
+    <div class="tunnel-stage">
+      <div class="t-layer" data-i="0"><div class="t-card"><span class="t-num">01</span><span class="t-kanji">受付</span><h3 data-i18n="flow.s1t">First, go to reception</h3><p data-i18n="flow.s1d">Get a numbered ticket.</p></div></div>
+      <div class="t-layer" data-i="1"><div class="t-card"><span class="t-num">02</span><span class="t-kanji">券売機</span><h3 data-i18n="flow.s2t">Choose and buy</h3><p data-i18n="flow.s2d">...</p></div></div>
+      <div class="t-layer" data-i="2"><div class="t-card"><span class="t-num">03</span><span class="t-kanji">待機</span><h3 data-i18n="flow.s3t">Wait inside</h3><p data-i18n="flow.s3d">...</p></div></div>
+      <div class="t-layer" data-i="3"><div class="t-card"><span class="t-num">04</span><span class="t-kanji">開始</span><h3 data-i18n="flow.s4t">Start!</h3><p data-i18n="flow.s4d">...</p></div></div>
+    </div>
+    <div class="tunnel-dots"><i></i><i></i><i></i><i></i></div>
+  </div>
+</section>
+
+<!-- ====== Menu ====== -->
+<section id="menu" class="section menu">
+  <div class="kanji-bg right" data-speed="0.2">食</div>
+  <div class="wrap">
+    <header class="sec-head" data-reveal="right">
+      <span class="sec-no">弐</span>
+      <h2 data-i18n="menu.title">Menu &amp; Prices</h2>
+    </header>
+
+    <div class="fees" data-reveal="scale">
+      <h3 data-i18n="fees.title">Steamer fees</h3>
+      <div class="fee-cards">
+        <div class="fee-card tilt"><span class="fee-name" data-i18n="fees.small">Steamer (small)</span><span class="fee-price">¥400</span><span class="fee-sub"><span data-i18n="fees.basic">Basic (up to 15 min)</span></span><span class="fee-ext"><span data-i18n="fees.ext">Extension</span> ¥200</span></div>
+        <div class="fee-card tilt big"><span class="fee-name" data-i18n="fees.large">Steamer (large)</span><span class="fee-price">¥600</span><span class="fee-sub"><span data-i18n="fees.basic">Basic (up to 15 min)</span></span><span class="fee-ext"><span data-i18n="fees.ext">Extension</span> ¥300</span></div>
+        <div class="fee-card tilt"><span class="fee-name" data-i18n="fees.coupon">Coupon book</span><span class="fee-price">¥2,500</span><span class="fee-sub" data-i18n="fees.couponSub">10 uses</span></div>
+      </div>
+      <ul class="notes">
+        <li data-i18n="fees.n1"></li><li data-i18n="fees.n2"></li><li data-i18n="fees.n3"></li><li data-i18n="fees.n4"></li>
+      </ul>
+    </div>
+
+    <div class="pay-box" id="payment" data-reveal="zoom">
+      <div class="pay-glow" aria-hidden="true"></div>
+      <div class="pay-head">
+        <div class="pay-badge" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><rect x="6" y="14" width="52" height="36" rx="6"/><path d="M6 24h52"/><rect x="12" y="34" width="14" height="6" rx="1.5"/><path class="pay-wave" d="M40 30a8 8 0 0 1 0 12M45 27a13 13 0 0 1 0 18"/></svg>
+        </div>
+        <div>
+          <h3 data-i18n="pay.title">Payment Methods</h3>
+          <p class="pay-sub" data-i18n="pay.sub">Accepted at the ticket machine</p>
+        </div>
+        <span class="pay-tag" data-i18n="pay.tag">Cashless OK</span>
+      </div>
+      <div class="pay-grid" id="pay-grid"></div>
+      <ul class="notes pay-notes">
+        <li data-i18n="pay.n1"></li><li data-i18n="pay.n2"></li>
+      </ul>
+    </div>
+
+    <div class="food">
+      <h3 data-reveal="left" data-i18n="food.title">Steaming ingredients menu</h3>
+      <div class="filters" id="menu-filters" role="tablist"></div>
+      <div class="food-grid" id="food-grid"></div>
+      <ul class="notes" data-reveal="up">
+        <li data-i18n="food.n1"></li><li data-i18n="food.n2"></li><li data-i18n="food.n3"></li>
+      </ul>
+    </div>
+
+    <div class="dressings" data-reveal="scale">
+      <h3><span data-i18n="dress.title">Dressings &amp; sauces</span> <em>2 / ¥100</em></h3>
+      <p class="small" data-i18n="dress.where">Available at the reception counter</p>
+      <div class="dress-row" id="dress-row"></div>
+      <p class="small" data-i18n="dress.extra"></p>
+      <p class="small hl" data-i18n="dress.free"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== Facilities ====== -->
+<section id="facilities" class="section facilities">
+  <div class="kanji-bg" data-speed="-0.2">館</div>
+  <div class="wrap">
+    <header class="sec-head" data-reveal="left">
+      <span class="sec-no">参</span>
+      <h2 data-i18n="fac.title">Facility Guide</h2>
+    </header>
+    <div class="fac-layout">
+      <dl class="info-table" data-reveal="left">
+        <div><dt data-i18n="fac.addrL">Address</dt><dd data-i18n="fac.addr"></dd></div>
+        <div><dt data-i18n="fac.contactL">Contact</dt><dd data-i18n="fac.contact"></dd></div>
+        <div><dt data-i18n="fac.overviewL">Facilities</dt><dd data-i18n="fac.overview"></dd></div>
+        <div><dt data-i18n="fac.hoursL">Hours</dt><dd data-i18n="fac.hours"></dd></div>
+        <div><dt data-i18n="fac.closedL">Closed</dt><dd data-i18n="fac.closed"></dd></div>
+        <div><dt data-i18n="fac.amenL">Amenities</dt><dd data-i18n="fac.amen"></dd></div>
+      </dl>
+      <div class="fac-side">
+        <div class="hours-card" data-reveal="right">
+          <h3 data-i18n="hours.title">Opening Hours</h3>
+          <div class="clock" aria-hidden="true"><div class="hand h"></div><div class="hand m"></div><div class="arc"></div></div>
+          <p class="big-hours">10:00 – 19:00</p>
+          <p data-i18n="hours.lo">Last order 18:00</p>
+          <p class="small" data-i18n="hours.since"></p>
+          <p class="small" data-i18n="hours.age"></p>
+        </div>
+        <div class="park-card" data-reveal="right" data-delay="1">
+          <h3 data-i18n="park.title">Pocket Park</h3>
+          <p data-i18n="park.body"></p>
+          <ul>
+            <li><b data-i18n="feat.footsteam">Foot steam bath</b> — <span data-i18n="park.steam"></span></li>
+            <li><b data-i18n="feat.footbath">Foot bath</b> — 10:00–18:00</li>
+          </ul>
+          <p class="small" data-i18n="hours.change"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== Crowd forecast ====== -->
+<section id="crowd" class="section crowd">
+  <div class="wrap">
+    <header class="sec-head" data-reveal="down">
+      <span class="sec-no">四</span>
+      <h2 data-i18n="crowd.title">Crowd Forecast</h2>
+    </header>
+    <p class="lead small" data-reveal="up" data-i18n="crowd.body"></p>
+    <div class="crowd-layout">
+      <div class="calendar" data-reveal="scale" id="calendar"></div>
+      <div class="legend" data-reveal="right">
+        <div><i class="lv busy"></i><b data-i18n="crowd.busy">Busy</b><span data-i18n="crowd.busyD"></span></div>
+        <div><i class="lv vbusy"></i><b data-i18n="crowd.vbusy">Very busy</b><span data-i18n="crowd.vbusyD"></span></div>
+        <div><i class="lv closed"></i><b data-i18n="crowd.closed">Closed</b></div>
+        <a class="btn btn-ghost sm" href="https://goo.gl/maps/oh2S7St7rEaiHcU3A" target="_blank" rel="noopener" data-i18n="crowd.google">Check Google</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== Access ====== -->
+<section id="access" class="section access">
+  <div class="kanji-bg right" data-speed="0.25">道</div>
+  <div class="wrap">
+    <header class="sec-head" data-reveal="right">
+      <span class="sec-no">伍</span>
+      <h2 data-i18n="access.title">Access</h2>
+    </header>
+    <div class="access-grid">
+      <div class="acc-card" data-reveal="left">
+        <div class="acc-ico">🚗</div>
+        <h3 data-i18n="access.carT">By car</h3>
+        <p data-i18n="access.car"></p>
+      </div>
+      <div class="acc-card wide" data-reveal="up">
+        <div class="acc-ico">🚌</div>
+        <h3 data-i18n="access.busT">By bus</h3>
+        <div class="bus-routes" id="bus-routes"></div>
+      </div>
+      <div class="acc-card" data-reveal="right">
+        <div class="acc-ico">P</div>
+        <h3 data-i18n="access.parkT">Parking</h3>
+        <p data-i18n="access.park"></p>
+        <p class="small" data-i18n="access.park2"></p>
+      </div>
+    </div>
+    <div class="map-wrap" data-reveal="scale">
+      <div class="map-frame" id="map-frame">
+        <button class="btn btn-fire" id="map-load" data-i18n="access.mapLoad">Show map</button>
+      </div>
+      <div class="map-info">
+        <p class="addr" data-i18n="fac.addr"></p>
+        <a class="btn btn-ghost sm" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%E5%9C%B0%E7%8D%84%E8%92%B8%E3%81%97%E5%B7%A5%E6%88%BF+%E9%89%84%E8%BC%AA" data-i18n="access.gmaps">Open in Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FAQ ====== -->
+<section id="faq" class="section faq">
+  <div class="wrap narrow">
+    <header class="sec-head" data-reveal="left">
+      <span class="sec-no">六</span>
+      <h2 data-i18n="faq.title">FAQ</h2>
+    </header>
+    <div class="faq-list" id="faq-list"></div>
+  </div>
+</section>
+
+<!-- ====== News ====== -->
+<section id="news" class="section news">
+  <div class="wrap">
+    <header class="sec-head" data-reveal="right">
+      <span class="sec-no">七</span>
+      <h2 data-i18n="news.title">News</h2>
+    </header>
+    <div class="news-rail" id="news-list"></div>
+    <a class="btn btn-ghost sm" href="https://jigokumushi.com/pages/1/detail=1/b_id=1/view=list/block1_limit=20" target="_blank" rel="noopener" data-i18n="news.more">All news</a>
+  </div>
+</section>
+
+<!-- ====== More info layers ====== -->
+<section id="more" class="section more">
+  <div class="wrap">
+    <header class="sec-head" data-reveal="down">
+      <span class="sec-no">八</span>
+      <h2 data-i18n="more.title">More from Kannawa</h2>
+    </header>
+    <div class="more-grid">
+      <article class="more-card tilt" data-reveal="left">
+        <h3 data-i18n="insta.title">Official Instagram</h3>
+        <p data-i18n="insta.body"></p>
+        <a class="btn btn-ghost sm" href="https://www.instagram.com/jigokumushikoubou/" target="_blank" rel="noopener">@jigokumushikoubou</a>
+      </article>
+      <article class="more-card tilt" data-reveal="up">
+        <h3 data-i18n="video.title">Drone footage</h3>
+        <p data-i18n="video.body"></p>
+        <a class="btn btn-ghost sm" href="https://www.youtube.com/watch?v=wNtE0XabE4Q" target="_blank" rel="noopener" data-i18n="video.btn">Watch on YouTube</a>
+      </article>
+      <article class="more-card tilt" data-reveal="right">
+        <h3 data-i18n="media.title">Media &amp; filming</h3>
+        <p data-i18n="media.body"></p>
+        <a class="btn btn-ghost sm" href="https://jigokumushi.com/pages/19/" target="_blank" rel="noopener" data-i18n="media.btn">Application form</a>
+      </article>
+      <article class="more-card tilt" data-reveal="left">
+        <h3 data-i18n="support.title">Kannawa Supporters</h3>
+        <p data-i18n="support.body"></p>
+        <a class="btn btn-ghost sm" href="https://jigokumushi.com/pages/43/" target="_blank" rel="noopener" data-i18n="common.details">Details</a>
+      </article>
+      <article class="more-card tilt" data-reveal="down">
+        <h3 data-i18n="eco.title">Carbon offset</h3>
+        <p data-i18n="eco.body"></p>
+      </article>
+      <article class="more-card tilt" data-reveal="right">
+        <h3 data-i18n="links.title">Related links</h3>
+        <ul class="link-list">
+          <li><a href="https://www.city.beppu.oita.jp/" target="_blank" rel="noopener" data-i18n="links.city">Beppu City website</a></li>
+          <li><a href="https://beppu-tourism.com/" target="_blank" rel="noopener" data-i18n="links.tabi">Beppu Tabi</a></li>
+          <li><a href="https://www.asahi-em.co.jp/" target="_blank" rel="noopener" data-i18n="foot.asahi">Asahi Kankyo Kanri</a></li>
+          <li><a href="http://heike.jp/" target="_blank" rel="noopener" data-i18n="foot.heike">Kappo Heike</a></li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="footer">
+  <div class="foot-steam" aria-hidden="true"></div>
+  <div class="wrap foot-grid">
+    <div>
+      <div class="brand big"><span class="brand-mark">蒸</span><span class="brand-text"><b>地獄蒸し工房 鉄輪</b><small data-i18n="brand.sub">Jigokumushi Kobo Kannawa</small></span></div>
+      <p data-i18n="fac.addr"></p>
+      <p><a href="tel:0977663775">TEL 0977-66-3775</a></p>
+      <p class="small" data-i18n="notice.noRes"></p>
+    </div>
+    <div>
+      <h4 data-i18n="foot.hoursT">Hours</h4>
+      <p data-i18n="hours.since"></p>
+      <p data-i18n="fac.closed"></p>
+      <p data-i18n="foot.parking"></p>
+    </div>
+    <div>
+      <h4 data-i18n="foot.opT">Designated manager</h4>
+      <p data-i18n="foot.jv"></p>
+      <p class="small"><b data-i18n="foot.rep">Representative</b><br><span data-i18n="foot.asahi"></span><br><span data-i18n="foot.asahiAddr"></span><br>TEL 0977-21-2145 / FAX 0977-21-2164</p>
+      <p class="small"><b data-i18n="foot.member">Member</b><br><span data-i18n="foot.heike"></span><br><span data-i18n="foot.heikeAddr"></span><br>TEL 0977-24-7126 / FAX 0977-21-9956</p>
+    </div>
+  </div>
+  <p class="demo-note" data-i18n="foot.demo">Design concept demo — not the official website. Information sourced from jigokumushi.com.</p>
+</footer>
+
+<script src="js/i18n/en.js"></script>
+<script src="js/i18n/ja.js"></script>
+<script src="js/i18n/ko.js"></script>
+<script src="js/i18n/zh-Hans.js"></script>
+<script src="js/i18n/zh-Hant.js"></script>
+<script src="js/i18n/fr.js"></script>
+<script src="js/i18n/vi.js"></script>
+<script src="js/i18n/es.js"></script>
+<script src="js/i18n/de.js"></script>
+<script src="js/i18n/th.js"></script>
+<script src="js/i18n/id.js"></script>
+<script src="js/i18n/pt.js"></script>
+<script src="js/i18n/it.js"></script>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
