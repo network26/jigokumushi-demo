@@ -111,3 +111,4 @@ body.embed .stats b{font-size:22px}
   .dc-grid[data-show=both] .dc-pane iframe{height:44vh;min-height:300px}
   .dc-info{display:none}
 }
+.tag.lang{border-color:var(--gold);color:var(--gold);margin-left:4px}

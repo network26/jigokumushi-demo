@@ -17,10 +17,14 @@
     var guess = /^zh-(TW|HK|MO)|Hant/i.test(nav) ? 'zh-Hant' : /^zh/i.test(nav) ? 'zh-Hans' : nav.slice(0, 2);
     [q, saved, guess].some(function (c) { if (c && QI18N[c]) { lang = c; return true; } });
   })();
-  function t(k, o) {
-    var s = (QI18N[lang] && QI18N[lang][k] != null) ? QI18N[lang][k] : (QI18N.en[k] != null ? QI18N.en[k] : k);
+  function tt(l, k, o) {
+    var s = (QI18N[l] && QI18N[l][k] != null) ? QI18N[l][k] : (QI18N.en[k] != null ? QI18N.en[k] : k);
     return o ? s.replace(/\{n\}/g, o.n) : s;
   }
+  function t(k, o) { return tt(lang, k, o); }                 // page UI: follows the language selector
+  // ALERTS: always use the language the ticket was joined in (ticket.lang) = source of truth, even if the page UI language is switched later.
+  var alertLang = lang;
+  function ta(k, o) { return tt(alertLang, k, o); }
   var sel = $('#q-lang');
   LANGS.forEach(function (l) { var o = document.createElement('option'); o.value = l[0]; o.textContent = l[1]; sel.appendChild(o); });
   sel.addEventListener('change', function () { lang = sel.value; try { localStorage.setItem('jk-lang', lang); } catch (e) {} applyLang(); render(); });
@@ -29,14 +33,23 @@
     document.documentElement.lang = lang;
     sel.value = lang;
     $$('[data-q]').forEach(function (el) { el.textContent = t(el.getAttribute('data-q')); });
-    $('#called-ok').textContent = t('ok');
+    $('#called-ok').textContent = ta('ok');
     var fs = $('#f-size'), cur = fs.value || '2';
     fs.innerHTML = '';
     for (var i = 1; i <= 12; i++) { var o = document.createElement('option'); o.value = i; o.textContent = t('party', { n: i }); fs.appendChild(o); }
     fs.value = cur;
-    baseTitle = t('title') + ' | 地獄蒸し工房 鉄輪';
+    syncAlertLang();
   }
   var baseTitle = '';
+  function syncAlertLang() {
+    var st = api.getState(), id = ticketId(), me = id ? Q.findById(st, id) : null;
+    alertLang = (me && me.lang && QI18N[me.lang]) ? me.lang : lang;
+    curNo = me ? me.no : null;
+    baseTitle = ta('title') + ' | 地獄蒸し工房 鉄輪';
+    $('#called-ok').textContent = ta('ok');
+    $('#called-banner').setAttribute('lang', alertLang);
+    if (!$('#called-banner').hidden && alarmTimer) $('#called-msg').textContent = ta('calledMsg');
+  }
 
   /* ---------- alerts: sound + vibration + banner + title flash + system notification ----------
    * Browsers only allow sound after a user tap, and throttle/freeze background tabs. So:
@@ -48,7 +61,7 @@
    *  - If the tab is hidden/unfocused, a system notification is shown (Notification API via a tiny service worker).
    */
   var ALERT_KEY = 'jk-q-alerts', DISMISS_KEY = 'jk-q-dismissed';
-  var ac = null, audioEl = null, audioUnlocked = false, soundBlocked = false, swReg = null;
+  var curNo = null, ac = null, audioEl = null, audioUnlocked = false, soundBlocked = false, swReg = null;
   var alertsEnabled = ss(ALERT_KEY) === '1';
   var alarmTimer = null, flashTimer = null, alarmStop = null, testTimer = null, alertedSig = null, dismissedSig = ss(DISMISS_KEY);
   var dbg = window.JKAlertDebug = { chimes: 0, audioPlays: 0, notified: 0, rings: 0, acState: function () { return ac ? ac.state : 'none'; } };
@@ -134,23 +147,40 @@
     soundBlocked = true; updateStatus(); return false;
   }
   function vibrate(p) { try { if (navigator.vibrate && !(navigator.userActivation && !navigator.userActivation.hasBeenActive)) navigator.vibrate(p); } catch (e) {} } // browsers ignore it until the page has been tapped once
-  function notify(body, test) {
+  // System notification. Text is built from the TICKET language: by the service worker (sw.js, same dictionary) when it is
+  // active, else locally. kind = 'called' | 'test' | 'noshow'
+  function getReg() {
+    if (swReg && swReg.active) return Promise.resolve(swReg);
+    if (!('serviceWorker' in navigator)) return Promise.resolve(null);
+    return navigator.serviceWorker.getRegistration().then(function (r) { if (r) { swReg = r; if (!r.active) return navigator.serviceWorker.ready; } return r || null; }).catch(function () { return null; });
+  }
+  function notifText(l, kind, no) {
+    return { title: '地獄蒸し工房 · ' + tt(l, 'yourNo') + ' ' + no,
+             body: kind === 'called' ? tt(l, 'calledMsg') : kind === 'test' ? tt(l, 'testMsg') : tt(l, 's.noshow') };
+  }
+  function notify(kind, test) {
     try {
       if (!('Notification' in window) || Notification.permission !== 'granted') return;
       if (!test && !document.hidden && document.hasFocus()) return;   // only needed when the user is not looking at this tab
-      var title = t('title') + ' – 地獄蒸し工房', opts = { body: body, tag: 'jk-queue-called', renotify: true, requireInteraction: !test, vibrate: [400, 150, 400, 150, 800] };
-      var fallback = function () { var n = new Notification(title, opts); n.onclick = function () { try { window.focus(); } catch (e) {} n.close(); }; dbg.notified++; };
-      if (swReg && swReg.showNotification) swReg.showNotification(title, opts).then(function () { dbg.notified++; }, function () { try { fallback(); } catch (e) {} });
-      else fallback();
+      var l = alertLang, no = curNo || '';
+      var x = notifText(l, kind, no);
+      var opts = { body: x.body, lang: l, tag: 'jk-queue-' + no, renotify: true, requireInteraction: kind === 'called', vibrate: [400, 150, 400, 150, 800] };
+      var fallback = function () { var n = new Notification(x.title, opts); n.onclick = function () { try { window.focus(); } catch (e) {} n.close(); }; dbg.notified++; dbg.lastNotif = { title: x.title, body: x.body, lang: l, by: 'page' }; };
+      getReg().then(function (r) {
+        if (r && r.active) r.active.postMessage({ type: 'show', kind: kind, lang: l, no: no });   // sw.js builds + shows it
+        else if (r && r.showNotification) r.showNotification(x.title, opts).then(function () { dbg.notified++; dbg.lastNotif = { title: x.title, body: x.body, lang: l, by: 'page-sw' }; }, function () { try { fallback(); } catch (e) {} });
+        else fallback();
+      });
     } catch (e) {}
   }
+  try { if ('serviceWorker' in navigator) navigator.serviceWorker.addEventListener('message', function (e) { if (e.data && e.data.type === 'shown') { dbg.notified++; dbg.lastNotif = { title: e.data.title, body: e.data.body, lang: e.data.lang, by: 'sw' }; } }); } catch (e) {}
   function updateStatus() {
     var el = $('#alert-status'); if (!el) return;
-    var snd = soundReady() ? t('stSoundOk') : t('stSoundTap');
-    var nt = !('Notification' in window) ? t('stNotifNA') : Notification.permission === 'granted' ? t('stNotifOn') : t('stNotifOff');
+    var snd = soundReady() ? ta('stSoundOk') : ta('stSoundTap');
+    var nt = !('Notification' in window) ? ta('stNotifNA') : Notification.permission === 'granted' ? ta('stNotifOn') : ta('stNotifOff');
     el.textContent = snd + ' · ' + nt;
     el.className = 'meta alert-status' + (soundReady() ? ' ok' : ' warn');
-    var h = $('#called-hint'); if (h) { h.hidden = !(soundBlocked && !soundReady()); h.textContent = t('stSoundTap'); }
+    var h = $('#called-hint'); if (h) { h.hidden = !(soundBlocked && !soundReady()); h.textContent = ta('stSoundTap'); }
   }
   // Any tap/key re-unlocks sound (e.g. after a page reload, when the browser forgot the earlier tap).
   ['pointerdown', 'touchend', 'keydown', 'click'].forEach(function (ev) {
@@ -164,16 +194,16 @@
   function hideBanner() { $('#called-banner').hidden = true; document.body.classList.remove('is-called'); }
   function startFlash() {
     clearInterval(flashTimer); var on = false;
-    flashTimer = setInterval(function () { on = !on; document.title = on ? t('tab') : baseTitle; }, 900);
+    flashTimer = setInterval(function () { on = !on; document.title = on ? ta('tab') : baseTitle; }, 900);
   }
   function startAlarm() {
     stopAlarm();
     dbg.rings++;
-    showBanner(t('calledMsg'));
+    showBanner(ta('calledMsg'));
     var ring = function () { chime(); vibrate([400, 150, 400, 150, 800]); };
     ring(); alarmTimer = setInterval(ring, 3500);
     startFlash();
-    notify(t('calledMsg'), false);
+    notify('called', false);
     alarmStop = setTimeout(stopAlarm, 90000); // never ring forever
   }
   function stopAlarm() {
@@ -182,14 +212,14 @@
     vibrate(0);
     hideBanner();
     document.title = baseTitle;
-    try { if (swReg && swReg.getNotifications) swReg.getNotifications({ tag: 'jk-queue-called' }).then(function (l) { l.forEach(function (n) { n.close(); }); }); } catch (e) {}
+    try { if (swReg && swReg.getNotifications) swReg.getNotifications({ tag: 'jk-queue-' + curNo }).then(function (l) { l.forEach(function (n) { n.close(); }); }); } catch (e) {}
   }
   function testAlert() {      // sound + vibration + banner + notification, same path as a real call but short
     unlockAudio(false); askNotifications();
     chime(); vibrate([200, 100, 200]);
-    showBanner(t('testMsg'));
+    showBanner(ta('testMsg'));
     clearTimeout(testTimer); testTimer = setTimeout(function () { if (!alarmTimer) hideBanner(); }, 6000);
-    notify(t('testMsg'), true);
+    notify('test', true);
   }
   $('#called-ok').addEventListener('click', function () { dismissedSig = alertedSig; ss(DISMISS_KEY, dismissedSig); stopAlarm(); });
   $('#alerts-btn').addEventListener('click', enableAlerts);
@@ -202,7 +232,7 @@
   $('#join-form').addEventListener('submit', function (e) {
     e.preventDefault();
     enableAlerts();   // the Join tap is a user gesture: unlock sound + ask for notifications right here
-    api.join({ size: $('#f-size').value, nick: $('#f-nick').value }).then(function (en) {
+    api.join({ size: $('#f-size').value, nick: $('#f-nick').value, lang: lang }).then(function (en) {
       setTicket(en.id); $('#f-nick').value = ''; render(); $('#t-no').focus();
     }).catch(function (err) { if (err && err.code === 'closed') render(); });
   });
@@ -215,6 +245,7 @@
     var st = api.getState(), id = ticketId(), me = id ? Q.findById(st, id) : null;
     lastRev = st.rev;
     if (id && !me) { setTicket(null); id = null; }   // queue was reset by staff
+    syncAlertLang();
     var waitingN = Q.waiting(st).length;
 
     $('#join-view').hidden = !!me;
@@ -250,12 +281,15 @@
     if (me.status === 'called') {
       var sig = me.id + ':' + (me.calls || 1) + ':' + me.calledAt;
       if (alertedSig !== sig) { alertedSig = sig; if (dismissedSig !== sig) startAlarm(); }
-      else if (!$('#called-banner').hidden) $('#called-msg').textContent = t('calledMsg');
+      else if (!$('#called-banner').hidden) $('#called-msg').textContent = ta('calledMsg');
     } else { alertedSig = null; stopAlarm(); }
-    if (me.status === 'waiting') document.title = '#' + me.no + ' · ' + (ahead ? t('ahead', { n: ahead }) : t('next')) + ' | ' + baseTitle;
-    else if (me.status !== 'called') document.title = baseTitle;
+    if (me.status === 'waiting') document.title = '#' + me.no + ' · ' + (ahead ? ta('ahead', { n: ahead }) : ta('next')) + ' | ' + baseTitle;
+    if (me.status === 'noshow' && (lastStatus === 'waiting' || lastStatus === 'called')) {   // staff marked no-show: alert in the ticket language
+      showBanner(ta('s.noshow')); clearTimeout(testTimer); testTimer = setTimeout(hideBanner, 8000); notify('noshow', false); document.title = ta('s.noshow') + ' | ' + baseTitle;
+    }
+    else if (me.status !== 'called' && me.status !== 'noshow') document.title = baseTitle;
 
-    var msg = me.status === 'called' ? t('calledMsg') : me.status === 'waiting' ? t('yourNo') + ' ' + me.no + '. ' + (ahead ? t('ahead', { n: ahead }) : t('next')) : t('s.' + me.status);
+    var msg = me.status === 'called' ? ta('calledMsg') : me.status === 'waiting' ? ta('yourNo') + ' ' + me.no + '. ' + (ahead ? ta('ahead', { n: ahead }) : ta('next')) : ta('s.' + me.status);
     if (msg !== lastLive) { $('#q-live').textContent = msg; lastLive = msg; }
     lastStatus = me.status;
   }

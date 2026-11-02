@@ -37,3 +37,10 @@ Replace `JKQueue.create()` to return a `RemoteAdapter` that talks to:
 - Wait estimate is a placeholder (`AVG_MIN_PER_GROUP = 8` minutes per group).
 - No phone number or email is collected – only party size and an optional nickname.
 - Customer text is translated in 13 languages (`queue/i18n.js`); staff page is English + Japanese.
+
+## Alerts follow the ticket language
+`join()` stores the language the customer joined in as `ticket.lang` (one of the 13 codes). Every alert for that ticket —
+called banner + OK button, sound hint/status line, tab-title flash, Test alert, no-show message and the system
+notification (built inside `sw.js` from the same `i18n.js` dictionary, so a future Web Push payload `{kind, lang, no}` works too) —
+uses that language, even if the page UI language is switched later. Staff rows show the ticket language as a small tag.
+Check translations with `node tools/check-queue-i18n.js` (fails on a missing key or an untranslated English copy).

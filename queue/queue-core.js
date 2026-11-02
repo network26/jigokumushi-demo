@@ -7,7 +7,7 @@
  *
  *   adapter.getState()          -> { open:Boolean, nextNo:Number, entries:[Entry] }
  *   adapter.subscribe(fn)       -> unsubscribe()   fn(state) is called on every change (any tab/device)
- *   adapter.join({size,nick})   -> Promise<Entry>  (server assigns number + random ticket id)
+ *   adapter.join({size,nick,lang}) -> Promise<Entry>  (server assigns number + random ticket id)
  *   adapter.leave(id)           -> Promise         (customer leaves)
  *   adapter.callNext()          -> Promise<Entry|null>   first waiting -> called
  *   adapter.call(id)            -> Promise         waiting -> called
@@ -77,7 +77,7 @@
         return mutate(function (st) {
           if (!st.open) { var err = new Error('closed'); err.code = 'closed'; throw err; }
           var e = { id: randomId(), no: st.nextNo++, size: Math.min(20, Math.max(1, parseInt(o.size, 10) || 1)),
-                    nick: String(o.nick || '').trim().slice(0, 20), status: 'waiting', joinedAt: Date.now(), calledAt: null, doneAt: null };
+                    nick: String(o.nick || '').trim().slice(0, 20), lang: /^[A-Za-z]{2,3}(-[A-Za-z]{2,4})?$/.test(o.lang || '') ? o.lang : 'en', status: 'waiting', joinedAt: Date.now(), calledAt: null, doneAt: null };
           st.entries.push(e); return e;
         });
       },
