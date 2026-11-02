@@ -29,13 +29,13 @@
     <a href="#steam" data-i18n="nav.steam">Hell-Steaming</a>
     <a href="#flow" data-i18n="nav.flow">How It Works</a>
     <a href="#menu" data-i18n="nav.menu">Menu &amp; Prices</a>
+    <a href="#queue" class="nav-queue" data-i18n="nav.queue">Join the queue</a>
     <a href="#facilities" data-i18n="nav.facilities">Facilities</a>
     <a href="#crowd" data-i18n="nav.crowd">Crowd Forecast</a>
     <a href="#access" data-i18n="nav.access">Access</a>
     <a href="#faq" data-i18n="nav.faq">FAQ</a>
     <a href="#news" data-i18n="nav.news">News</a>
     <a href="#review" data-i18n="nav.review">Reviews</a>
-    <a href="#queue" class="nav-queue" data-i18n="nav.queue">Join the queue</a>
   </nav>
   <a class="tel-pill" href="tel:0977663775"><span data-i18n="common.tel">Tel</span> 0977-66-3775</a>
   <button id="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -243,6 +243,28 @@
   </div>
 </section>
 
+<!-- ====== Queue (demo) ====== -->
+<section id="queue" class="section queue-sec">
+  <div class="wrap">
+    <header class="sec-head" data-reveal="left">
+      <h2 data-i18n="qs.title">Join the queue</h2>
+    </header>
+    <div class="qs-grid">
+      <div class="qs-text" data-reveal="left">
+        <p data-i18n="qs.intro">Scan the QR code with your phone to get a queue number, see how many groups are ahead of you, and be alerted when it is your turn.</p>
+        <p class="qs-demo" role="note"><b>DEMO</b> <span data-i18n="qs.demo">Demo: works only within this browser; the real version would sync across phones.</span></p>
+        <div class="rv-actions">
+          <a class="btn btn-fire" href="queue/" data-i18n="qs.title">Join the queue</a>
+          <a class="btn btn-ghost sm" href="queue/staff.html" data-i18n="qs.staff">Staff page (demo)</a>
+        </div>
+      </div>
+      <figure class="qs-qr" data-reveal="right">
+        <a href="queue/" aria-label="Join the queue"><img src="assets/queue-qr.png" width="220" height="220" alt="QR code for joining the queue" data-alt="qs.qrAlt" loading="lazy"></a>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <!-- ====== Facilities ====== -->
 <section id="facilities" class="section facilities">
   <div class="kanji-bg" data-speed="-0.2">館</div>
@@ -361,28 +383,6 @@
     </header>
     <div class="news-rail" id="news-list"></div>
     <a class="btn btn-ghost sm" href="https://jigokumushi.com/pages/1/detail=1/b_id=1/view=list/block1_limit=20" target="_blank" rel="noopener" data-i18n="news.more">All news</a>
-  </div>
-</section>
-
-<!-- ====== Queue (demo) ====== -->
-<section id="queue" class="section queue-sec">
-  <div class="wrap">
-    <header class="sec-head" data-reveal="left">
-      <h2 data-i18n="qs.title">Join the queue</h2>
-    </header>
-    <div class="qs-grid">
-      <div class="qs-text" data-reveal="left">
-        <p data-i18n="qs.intro">Scan the QR code with your phone to get a queue number, see how many groups are ahead of you, and be alerted when it is your turn.</p>
-        <p class="qs-demo" role="note"><b>DEMO</b> <span data-i18n="qs.demo">Demo: works only within this browser; the real version would sync across phones.</span></p>
-        <div class="rv-actions">
-          <a class="btn btn-fire" href="queue/" data-i18n="qs.title">Join the queue</a>
-          <a class="btn btn-ghost sm" href="queue/staff.html" data-i18n="qs.staff">Staff page (demo)</a>
-        </div>
-      </div>
-      <figure class="qs-qr" data-reveal="right">
-        <a href="queue/" aria-label="Join the queue"><img src="assets/queue-qr.png" width="220" height="220" alt="QR code for joining the queue" data-alt="qs.qrAlt" loading="lazy"></a>
-      </figure>
-    </div>
   </div>
 </section>
 
