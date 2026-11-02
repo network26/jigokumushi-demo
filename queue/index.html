@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join the queue | Jigokumushi Kobo Kannawa</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b0a09">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="queue.css">
+</head>
+<body>
+<div id="called-banner" role="alert" hidden>
+  <p id="called-msg"></p>
+  <button type="button" class="btn sm" id="called-ok"></button>
+</div>
+
+<header class="q-head">
+  <span class="q-mark" aria-hidden="true">蒸</span>
+  <div class="grow"><a class="back" href="../" data-q="back">Back to the website</a></div>
+  <div class="q-lang"><label for="q-lang" data-q="lang">Language</label>
+    <select id="q-lang"></select></div>
+</header>
+
+<main id="main">
+  <h1 id="q-title" data-q="title">Join the queue</h1>
+  <p class="demo-note" role="note"><b>DEMO</b><span data-q="demo">Demo: works only within this browser; the real version would sync across phones.</span></p>
+  <p class="vh" id="q-live" role="status" aria-live="polite"></p>
+
+  <!-- join -->
+  <section id="join-view" class="card" aria-labelledby="q-title">
+    <p><span class="badge" id="q-open-badge"></span> <span id="q-waiting-now"></span></p>
+    <form id="join-form" novalidate>
+      <div class="field">
+        <label for="f-size" data-q="sizeL">Party size</label>
+        <select id="f-size"></select>
+      </div>
+      <div class="field">
+        <label for="f-nick" data-q="nickL">Nickname (optional)</label>
+        <input id="f-nick" type="text" maxlength="20" autocomplete="off" aria-describedby="f-nick-h">
+        <small id="f-nick-h" data-q="nickH"></small>
+      </div>
+      <button class="btn btn-fire block" type="submit" id="f-join" data-q="join">Get my queue number</button>
+      <p id="closed-msg" class="empty" hidden data-q="closed"></p>
+    </form>
+  </section>
+
+  <!-- ticket -->
+  <section id="ticket-view" class="card" hidden aria-live="off">
+    <p class="num-lab" data-q="yourNo">Your queue number</p>
+    <p class="big-no" id="t-no" tabindex="-1" aria-label=""></p>
+    <p><span class="status" id="t-status"></span></p>
+    <p class="stat" id="t-ahead"></p>
+    <p class="stat" id="t-wait"></p>
+    <p class="meta"><span id="t-party"></span> · <span data-q="ticket">Ticket ID</span>: <code id="t-id"></code></p>
+
+    <div class="row" id="alert-row">
+      <button type="button" class="btn btn-gold sm" id="alerts-btn" data-q="alertsOff"></button>
+      <button type="button" class="btn btn-ghost sm" id="test-btn" data-q="test" hidden></button>
+    </div>
+    <p class="alerts-on" id="alerts-on" hidden data-q="alertsOn"></p>
+    <p class="meta" data-q="tip"></p>
+
+    <div class="row">
+      <button type="button" class="btn btn-ghost sm" id="leave-btn" data-q="leave">Leave the queue</button>
+      <button type="button" class="btn btn-fire sm" id="again-btn" data-q="again" hidden>Join again</button>
+    </div>
+  </section>
+</main>
+
+<script src="i18n.js"></script>
+<script src="queue-core.js"></script>
+<script src="customer.js"></script>
+</body>
+</html>

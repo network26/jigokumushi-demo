@@ -22,3 +22,6 @@ Copy `js/i18n/en.js` to `xx.js`, change `I18N.en` to `I18N['xx']`, translate the
 
 ## Assets
 No photos from the official site are used. All artwork is CSS/SVG/canvas. Fonts are loaded from Google Fonts (SIL Open Font License). The map is a Google Maps embed that only loads when you press "Show map".
+
+## QR queue demo (`queue/`)
+Client-side demo of a QR-code waiting queue (customer page, staff console, printable QR poster). Data lives in `localStorage` and syncs between tabs of the same browser. See `queue/README.md` (demo staff PIN, test steps, and how to swap in a Cloudflare Workers + D1 backend through the adapter interface).

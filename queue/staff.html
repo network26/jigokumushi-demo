@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Staff – Queue (demo) スタッフ用 | Jigokumushi Kobo Kannawa</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0b0a09">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="queue.css">
+</head>
+<body class="wide">
+<header class="q-head">
+  <span class="q-mark" aria-hidden="true">蒸</span>
+  <div class="grow"><strong>Queue – Staff / 順番待ち スタッフ用</strong></div>
+  <a class="back" href="./">Customer page / お客様ページ</a>
+</header>
+
+<main id="main">
+  <h1>Queue control <span lang="ja">順番待ち管理</span></h1>
+  <p class="demo-note" role="note"><b>DEMO</b><span>Demo only: this page and its PIN are <u>not secure</u>. Data lives only in this browser (localStorage) and syncs between tabs/windows of the same browser. The real version would use Cloudflare Access for staff login and sync across phones.<br>
+  <span lang="ja">デモ専用：このページとPINは安全ではありません。データはこのブラウザ内のみで、同じブラウザのタブ間で同期されます。本番版ではCloudflare Accessでスタッフ認証を行い、複数端末で同期します。</span></span></p>
+
+  <!-- PIN gate (DEMO) -->
+  <section id="pin-view" class="card pin-box" aria-labelledby="pin-h">
+    <h2 id="pin-h" style="font-family:var(--serif);margin:0 0 6px">Staff PIN <span lang="ja">スタッフPIN</span></h2>
+    <p class="pin-hint">DEMO PIN / デモ用PIN: <code>2468</code></p>
+    <form id="pin-form" novalidate>
+      <div class="field">
+        <label for="pin">PIN</label>
+        <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="8" aria-describedby="pin-err">
+      </div>
+      <button class="btn btn-fire block" type="submit">Enter / 入る</button>
+      <p class="pin-err" id="pin-err" role="alert"></p>
+    </form>
+  </section>
+
+  <!-- console -->
+  <div id="console" hidden>
+    <p class="vh" id="s-live" role="status" aria-live="polite"></p>
+    <div class="stats" aria-label="Summary">
+      <div><b id="n-wait">0</b><span>Waiting / 待ち</span></div>
+      <div><b id="n-called">0</b><span>Called / 呼出中</span></div>
+      <div><b id="n-seated">0</b><span>Seated / 案内済</span></div>
+      <div><b id="n-no">0</b><span>No-show / 不在</span></div>
+      <div><span class="badge" id="s-open">Queue open</span><br><span id="s-open-ja" lang="ja"></span></div>
+    </div>
+
+    <div class="toolbar">
+      <button type="button" class="btn btn-fire" id="b-next">Call next <span lang="ja">次を呼ぶ</span></button>
+      <button type="button" class="btn btn-ghost" id="b-open">Close queue <span lang="ja">受付終了</span></button>
+      <button type="button" class="btn btn-ghost" id="b-add">Add walk-in party <span lang="ja">店頭のお客様を追加</span></button>
+      <button type="button" class="btn btn-ghost" id="b-reset">Reset <span lang="ja">リセット</span></button>
+      <button type="button" class="btn btn-ghost" id="b-lock">Lock <span lang="ja">ロック</span></button>
+    </div>
+
+    <div class="card tbl-wrap">
+      <table>
+        <caption>Queue <span lang="ja">待ちリスト</span></caption>
+        <thead><tr><th scope="col">No.</th><th scope="col">Party / 人数</th><th scope="col">Name / 名前</th><th scope="col">Status / 状態</th><th scope="col">Waiting / 経過</th><th scope="col">Actions / 操作</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p class="empty" id="empty">No parties yet. Open the customer page in another tab and join. <span lang="ja">まだ待ちはありません。別タブでお客様ページから並んでみてください。</span></p>
+    </div>
+
+    <div class="card qr-card">
+      <img src="../assets/queue-qr.png" width="140" height="140" alt="QR code for the customer queue page">
+      <div>
+        <p style="margin:0"><b>Poster QR / ポスター用QR</b></p>
+        <p class="meta" style="margin:4px 0 10px">Opens <code>https://network26.github.io/jigokumushi-demo/queue/</code></p>
+        <a class="btn btn-ghost sm" href="poster.html">Printable poster / 印刷用ポスター</a>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="queue-core.js"></script>
+<script src="staff.js"></script>
+</body>
+</html>

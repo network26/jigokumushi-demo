@@ -471,3 +471,13 @@ html:lang(th) .hero-main{line-height:1.3;max-width:none}
 .rv-clear:hover{color:var(--fire2)}
 .rv-clear[hidden]{display:none}
 @media (max-width:860px){.rv-grid{grid-template-columns:1fr}.rv-card{padding:22px}}
+
+/* ---------- queue (demo) section ---------- */
+.qs-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:34px;align-items:center}
+.qs-text p{color:#cfc3ae;max-width:560px}
+.qs-demo{font-size:13.5px;padding:10px 14px;border:1px dashed var(--gold);border-radius:14px;background:rgba(201,161,91,.08);margin:14px 0 18px}
+.qs-demo b{background:var(--gold);color:var(--ink);border-radius:6px;padding:0 7px;font-size:12px;letter-spacing:.06em}
+.qs-qr{margin:0;padding:16px;border-radius:24px;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.qs-qr img{display:block;width:220px;height:220px;image-rendering:pixelated}
+#main-nav a.nav-queue{color:var(--fire2);font-weight:700}
+@media (max-width:760px){.qs-grid{grid-template-columns:1fr;justify-items:start}.qs-qr img{width:200px;height:200px}}

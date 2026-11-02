@@ -25,6 +25,7 @@
   function render(){
     document.documentElement.lang = lang;
     $$('[data-i18n]').forEach(function(el){ el.textContent = t(el.getAttribute('data-i18n')); });
+    $$('[data-alt]').forEach(function(el){ var v=t(el.getAttribute('data-alt')); el.alt=v; if(el.parentNode && el.parentNode.tagName==='A') el.parentNode.setAttribute('aria-label', t('qs.title')+' – '+v); });
     document.title = t('meta.title');
     $('#lang-code').textContent = CODES[lang];
     $$('#lang-list button').forEach(function(b){ b.setAttribute('aria-selected', b.dataset.lang===lang); });
