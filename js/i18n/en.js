@@ -32,6 +32,7 @@ I18N.en = {
   'fees.n4': 'Admission, the foot steam bath and the foot bath are free.',
   'food.title': 'Steaming ingredients menu (revised Oct 1, 2026)',
   'cat.all': 'All', 'cat.set': 'Sets', 'cat.sea': 'Seafood', 'cat.meat': 'Meat', 'cat.veg': 'Vegetables & tofu', 'cat.dim': 'Buns, dumplings & sides', 'cat.rice': 'Rice, noodles & hot pots', 'cat.sweet': 'Breads & sweets',
+  'cat.top': 'Top 8', 'top.title': 'Our Top 8 picks', 'top.sub': 'These are the 8 dishes we recommend first. Choose All or a category above to see the full menu.', 'top.badge': 'Top 8', 'top.status': 'Showing the Top 8 of {m} dishes', 'menu.status': 'Showing {n} of {m} dishes', 'food.filterLabel': 'Menu categories',
   'serv.1': 'Serves 1', 'serv.12': 'Serves 1–2', 'serv.2': 'Serves 2', 'pcs': '{n} pc(s)', 'rec': 'Recommended',
   'food.setNote': 'Includes 1 pork chimaki — can be swapped for bamboo-wrapped white rice',
   'food.n1': 'Be sure to try our dressings — a perfect match for steamed food.',

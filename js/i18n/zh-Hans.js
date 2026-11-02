@@ -32,6 +32,7 @@ I18N['zh-Hans'] = {
   'fees.n4': '设施入场、蒸足及足汤均免费。',
   'food.title': '蒸制食材菜单（2026年10月1日修订）',
   'cat.all': '全部', 'cat.set': '套餐', 'cat.sea': '海鲜', 'cat.meat': '肉类', 'cat.veg': '蔬菜·豆腐', 'cat.dim': '点心·小食', 'cat.rice': '饭·面·锅物', 'cat.sweet': '面包·甜点',
+  'cat.top': '精选8道', 'top.title': '我们的精选8道', 'top.sub': '这是我们首先推荐的8道菜。点击上方“全部”或某个分类即可查看完整菜单。', 'top.badge': '精选8道', 'top.status': '显示全部 {m} 道菜中的精选8道', 'menu.status': '显示 {m} 道菜中的 {n} 道', 'food.filterLabel': '菜单分类',
   'serv.1': '1人份', 'serv.12': '1~2人份', 'serv.2': '2人份', 'pcs': '{n}个', 'rec': '推荐',
   'food.setNote': '附猪肉粽1个 · 可换成竹皮包白饭',
   'food.n1': '欢迎搭配与蒸料理绝配的各式酱汁一同享用。',

@@ -219,7 +219,12 @@
 
     <div class="food">
       <h3 data-reveal="left" data-i18n="food.title">Steaming ingredients menu</h3>
-      <div class="filters" id="menu-filters" role="tablist"></div>
+      <div class="filters" id="menu-filters" role="group" aria-label="Menu categories"></div>
+      <div class="top8-banner" id="top8-banner">
+        <span class="top8-star" aria-hidden="true">★</span>
+        <div><b data-i18n="top.title">Our Top 8 picks</b><span data-i18n="top.sub">These are the 8 dishes we recommend first. Choose All or a category above to see the full menu.</span></div>
+      </div>
+      <p class="menu-status" id="menu-status" role="status" aria-live="polite"></p>
       <div class="food-grid" id="food-grid"></div>
       <ul class="notes" data-reveal="up">
         <li data-i18n="food.n1"></li><li data-i18n="food.n2"></li><li data-i18n="food.n3"></li>

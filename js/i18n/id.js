@@ -32,6 +32,7 @@ I18N.id = {
   'fees.n4': 'Masuk, mandi uap kaki, dan rendam kaki gratis.',
   'food.title': 'Menu bahan untuk dikukus (direvisi 1 Oktober 2026)',
   'cat.all': 'Semua', 'cat.set': 'Paket', 'cat.sea': 'Hidangan laut', 'cat.meat': 'Daging', 'cat.veg': 'Sayur & tahu', 'cat.dim': 'Bakpao, pangsit & camilan', 'cat.rice': 'Nasi, mi & hotpot', 'cat.sweet': 'Roti & kudapan manis',
+  'cat.top': 'Top 8', 'top.title': 'Top 8 pilihan kami', 'top.sub': 'Inilah 8 hidangan yang paling kami rekomendasikan. Pilih Semua atau kategori di atas untuk melihat menu lengkap.', 'top.badge': 'Top 8', 'top.status': 'Menampilkan Top 8 dari {m} hidangan', 'menu.status': 'Menampilkan {n} dari {m} hidangan', 'food.filterLabel': 'Kategori menu',
   'serv.1': 'Untuk 1 orang', 'serv.12': 'Untuk 1–2 orang', 'serv.2': 'Untuk 2 orang', 'pcs': '{n} buah', 'rec': 'Rekomendasi',
   'food.setNote': 'Termasuk 1 chimaki babi — bisa diganti nasi putih bungkus pelepah bambu',
   'food.n1': 'Cobalah juga aneka dressing kami — sangat cocok untuk hidangan kukus.',

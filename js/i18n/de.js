@@ -32,6 +32,7 @@ I18N.de = {
   'fees.n4': 'Eintritt, Fußdampfbad und Fußbad sind kostenlos.',
   'food.title': 'Zutaten zum Dampfgaren (Stand: 1. Oktober 2026)',
   'cat.all': 'Alle', 'cat.set': 'Sets', 'cat.sea': 'Meeresfrüchte', 'cat.meat': 'Fleisch', 'cat.veg': 'Gemüse & Tofu', 'cat.dim': 'Teigtaschen & Beilagen', 'cat.rice': 'Reis, Nudeln & Eintöpfe', 'cat.sweet': 'Brot & Süßes',
+  'cat.top': 'Top 8', 'top.title': 'Unsere Top 8', 'top.sub': 'Diese 8 Gerichte empfehlen wir zuerst. Wählen Sie oben „Alle“ oder eine Kategorie, um die ganze Speisekarte zu sehen.', 'top.badge': 'Top 8', 'top.status': 'Top 8 von {m} Gerichten werden angezeigt', 'menu.status': '{n} von {m} Gerichten werden angezeigt', 'food.filterLabel': 'Menükategorien',
   'serv.1': 'Für 1 Person', 'serv.12': 'Für 1–2 Personen', 'serv.2': 'Für 2 Personen', 'pcs': '{n} Stk.', 'rec': 'Empfehlung',
   'food.setNote': 'Inkl. 1 Schweinefleisch-Chimaki – gegen Reis im Bambusblatt tauschbar',
   'food.n1': 'Probieren Sie auch unsere Dressings – ideal zu Gedämpftem.',

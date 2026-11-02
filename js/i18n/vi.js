@@ -32,6 +32,7 @@ I18N.vi = {
   'fees.n4': 'Vào cửa, xông hơi chân và ngâm chân đều miễn phí.',
   'food.title': 'Thực đơn nguyên liệu hấp (điều chỉnh ngày 1/10/2026)',
   'cat.all': 'Tất cả', 'cat.set': 'Suất set', 'cat.sea': 'Hải sản', 'cat.meat': 'Thịt', 'cat.veg': 'Rau & đậu phụ', 'cat.dim': 'Bánh bao, há cảo & món phụ', 'cat.rice': 'Cơm, mì & lẩu', 'cat.sweet': 'Bánh mì & tráng miệng',
+  'cat.top': 'Top 8', 'top.title': 'Top 8 món chúng tôi gợi ý', 'top.sub': 'Đây là 8 món chúng tôi muốn giới thiệu trước tiên. Chọn Tất cả hoặc một danh mục phía trên để xem toàn bộ thực đơn.', 'top.badge': 'Top 8', 'top.status': 'Đang hiển thị Top 8 trong {m} món', 'menu.status': 'Đang hiển thị {n} trong {m} món', 'food.filterLabel': 'Danh mục thực đơn',
   'serv.1': '1 người', 'serv.12': '1–2 người', 'serv.2': '2 người', 'pcs': '{n} cái', 'rec': 'Gợi ý',
   'food.setNote': 'Kèm 1 bánh chimaki thịt heo — có thể đổi sang cơm trắng gói bẹ tre',
   'food.n1': 'Hãy thử các loại nước sốt — cực hợp với món hấp.',

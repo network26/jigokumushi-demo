@@ -32,6 +32,7 @@ I18N.it = {
   'fees.n4': 'Ingresso, bagno di vapore per i piedi e pediluvio sono gratuiti.',
   'food.title': 'Menu degli ingredienti da cuocere al vapore (aggiornato al 1° ottobre 2026)',
   'cat.all': 'Tutto', 'cat.set': 'Menu completi', 'cat.sea': 'Pesce e frutti di mare', 'cat.meat': 'Carne', 'cat.veg': 'Verdure e tofu', 'cat.dim': 'Panini al vapore, ravioli e contorni', 'cat.rice': 'Riso, noodles e pentole', 'cat.sweet': 'Pane e dolci',
+  'cat.top': 'Top 8', 'top.title': 'Il nostro Top 8', 'top.sub': 'Questi sono gli 8 piatti che consigliamo per primi. Scegli Tutto o una categoria qui sopra per vedere il menu completo.', 'top.badge': 'Top 8', 'top.status': 'Visualizzazione del Top 8 su {m} piatti', 'menu.status': 'Visualizzazione di {n} piatti su {m}', 'food.filterLabel': 'Categorie del menu',
   'serv.1': 'Per 1', 'serv.12': 'Per 1–2', 'serv.2': 'Per 2', 'pcs': '{n} pz', 'rec': 'Consigliato',
   'food.setNote': 'Include 1 chimaki di maiale — sostituibile con riso bianco in foglia di bambù',
   'food.n1': 'Prova anche i nostri condimenti, perfetti con i piatti al vapore.',

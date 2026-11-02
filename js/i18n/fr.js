@@ -32,6 +32,7 @@ I18N.fr = {
   'fees.n4': 'L’entrée, le bain de vapeur pour les pieds et le bain de pieds sont gratuits.',
   'food.title': 'Ingrédients à cuire à la vapeur (révisé le 1er octobre 2026)',
   'cat.all': 'Tout', 'cat.set': 'Formules', 'cat.sea': 'Fruits de mer', 'cat.meat': 'Viandes', 'cat.veg': 'Légumes & tofu', 'cat.dim': 'Brioches, raviolis & accompagnements', 'cat.rice': 'Riz, nouilles & marmites', 'cat.sweet': 'Pains & desserts',
+  'cat.top': 'Top 8', 'top.title': 'Notre Top 8', 'top.sub': 'Voici les 8 plats que nous recommandons en premier. Choisissez Tout ou une catégorie ci-dessus pour voir le menu complet.', 'top.badge': 'Top 8', 'top.status': 'Affichage du Top 8 sur {m} plats', 'menu.status': 'Affichage de {n} plats sur {m}', 'food.filterLabel': 'Catégories du menu',
   'serv.1': 'Pour 1', 'serv.12': 'Pour 1 à 2', 'serv.2': 'Pour 2', 'pcs': '{n} pièce(s)', 'rec': 'Recommandé',
   'food.setNote': 'Avec 1 chimaki au porc — remplaçable par du riz blanc en feuille de bambou',
   'food.n1': 'Goûtez aussi nos sauces, parfaites avec les plats vapeur.',

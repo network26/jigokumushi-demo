@@ -53,20 +53,22 @@
       return '<div class="pay-cat tilt" data-reveal="'+['left','up','down','right'][gi]+'" data-delay="'+(gi+1)+'"><div class="pay-ico">'+PAY_ICON[g[0]]+'</div><h4>'+esc(t('pay.'+g[0]))+'</h4><div class="chips">'+chips+'</div>'+extra+'</div>';
     }).join('');
   }
-  var curCat = 'all';
+  var curCat = 'top';
   function renderMenu(){
     var f = $('#menu-filters');
-    f.innerHTML = D.cats.map(function(c){ return '<button role="tab" data-cat="'+c+'" class="'+(c===curCat?'on':'')+'">'+esc(t('cat.'+c))+'</button>'; }).join('');
-    $$('button',f).forEach(function(b){ b.onclick = function(){ curCat=b.dataset.cat; $$('button',f).forEach(function(x){x.classList.toggle('on',x===b);}); filterMenu(true); }; });
+    f.setAttribute('aria-label', t('food.filterLabel'));
+    f.innerHTML = D.cats.map(function(c){ return '<button type="button" data-cat="'+c+'" aria-pressed="'+(c===curCat)+'" class="'+(c==='top'?'top ':'')+(c===curCat?'on':'')+'">'+(c==='top'?'<span aria-hidden="true">★</span> ':'')+esc(t('cat.'+c))+'</button>'; }).join('');
+    $$('button',f).forEach(function(b){ b.onclick = function(){ curCat=b.dataset.cat; $$('button',f).forEach(function(x){var on=x===b; x.classList.toggle('on',on); x.setAttribute('aria-pressed',on);}); filterMenu(true); }; });
     var names = t('menu'), dirs=['left','up','right','down','scale'];
     $('#food-grid').innerHTML = D.menu.map(function(m,i){
       var meta = [];
       if(m[2]) meta.push('<span>'+esc(t('serv.'+m[2]))+'</span>');
       if(m[4]) meta.push('<span>'+esc(fmt(t('pcs'),{n:m[4]}))+'</span>');
+      if(D.top.indexOf(m[0])>-1) meta.unshift('<span class="top8-badge">★ '+esc(t('top.badge'))+'</span>');
       if(m[5]) meta.push('<span class="rec">★ '+esc(t('rec'))+'</span>');
       var note = (m[0]===1||m[0]===2) ? '<div class="setnote">+ '+esc(t('food.setNote'))+'</div>' : '';
       var ja = lang==='ja' ? '' : '<div class="ja">'+esc(D.menuJa[i])+'</div>';
-      return '<article class="dish tilt" data-cat="'+m[1]+'" data-reveal="'+dirs[i%5]+'" data-delay="'+(i%4)+'">'+
+      return '<article class="dish tilt'+(D.top.indexOf(m[0])>-1?' is-top':'')+'" data-cat="'+m[1]+'" data-top="'+(D.top.indexOf(m[0])>-1?1:0)+'" data-reveal="'+dirs[i%5]+'" data-delay="'+(i%4)+'">'+
         '<span class="no">'+m[0]+'</span><div class="glyph">'+D.catKanji[m[1]]+'</div>'+
         '<h4>'+esc(names[i]||D.menuJa[i])+'</h4>'+ja+note+
         '<div class="meta">'+meta.join('')+'</div><div class="price">'+yen(m[3])+'</div><i class="steam-puff"></i></article>';
@@ -74,11 +76,17 @@
     filterMenu(false); bindTilt();
   }
   function filterMenu(anim){
+    var n = 0;
     $$('#food-grid .dish').forEach(function(d){
-      var show = curCat==='all' || d.dataset.cat===curCat;
+      var show = curCat==='all' || (curCat==='top' ? d.dataset.top==='1' : d.dataset.cat===curCat);
+      if(show) n++;
       d.classList.toggle('hide',!show);
       if(show && anim){ d.classList.remove('in'); void d.offsetWidth; requestAnimationFrame(function(){ d.classList.add('in'); }); }
     });
+    var isTop = curCat==='top';
+    $('#top8-banner').hidden = !isTop;
+    $('#food-grid').classList.toggle('is-top-view', isTop);
+    $('#menu-status').textContent = isTop ? fmt(t('top.status'),{m:D.menu.length}) : fmt(t('menu.status'),{n:n,m:D.menu.length});
   }
   function renderDress(){
     var n = t('dress');

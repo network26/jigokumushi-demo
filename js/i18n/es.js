@@ -32,6 +32,7 @@ I18N.es = {
   'fees.n4': 'La entrada, el baño de vapor para los pies y el baño de pies son gratuitos.',
   'food.title': 'Menú de ingredientes para cocinar al vapor (revisado el 1 de octubre de 2026)',
   'cat.all': 'Todo', 'cat.set': 'Menús', 'cat.sea': 'Marisco y pescado', 'cat.meat': 'Carne', 'cat.veg': 'Verduras y tofu', 'cat.dim': 'Bollos, empanadillas y guarniciones', 'cat.rice': 'Arroz, fideos y cazuelas', 'cat.sweet': 'Panes y dulces',
+  'cat.top': 'Top 8', 'top.title': 'Nuestro Top 8', 'top.sub': 'Estos son los 8 platos que recomendamos primero. Elige Todo o una categoría arriba para ver el menú completo.', 'top.badge': 'Top 8', 'top.status': 'Mostrando el Top 8 de {m} platos', 'menu.status': 'Mostrando {n} de {m} platos', 'food.filterLabel': 'Categorías del menú',
   'serv.1': 'Para 1', 'serv.12': 'Para 1–2', 'serv.2': 'Para 2', 'pcs': '{n} ud.', 'rec': 'Recomendado',
   'food.setNote': 'Incluye 1 chimaki de cerdo; se puede cambiar por arroz blanco envuelto en bambú',
   'food.n1': 'Prueba también nuestros aliños, perfectos para la comida al vapor.',

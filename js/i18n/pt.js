@@ -32,6 +32,7 @@ I18N.pt = {
   'fees.n4': 'A entrada, o banho de vapor para os pés e o escalda-pés são gratuitos.',
   'food.title': 'Cardápio de ingredientes para o vapor (revisado em 1º de outubro de 2026)',
   'cat.all': 'Tudo', 'cat.set': 'Combos', 'cat.sea': 'Frutos do mar', 'cat.meat': 'Carnes', 'cat.veg': 'Legumes e tofu', 'cat.dim': 'Pães recheados, guioza e acompanhamentos', 'cat.rice': 'Arroz, macarrão e panelas', 'cat.sweet': 'Pães e doces',
+  'cat.top': 'Top 8', 'top.title': 'Nosso Top 8', 'top.sub': 'Estes são os 8 pratos que recomendamos primeiro. Escolha Tudo ou uma categoria acima para ver o menu completo.', 'top.badge': 'Top 8', 'top.status': 'Mostrando o Top 8 de {m} pratos', 'menu.status': 'Mostrando {n} de {m} pratos', 'food.filterLabel': 'Categorias do menu',
   'serv.1': 'Serve 1', 'serv.12': 'Serve 1–2', 'serv.2': 'Serve 2', 'pcs': '{n} un.', 'rec': 'Recomendado',
   'food.setNote': 'Inclui 1 chimaki de porco — pode ser trocado por arroz branco na folha de bambu',
   'food.n1': 'Experimente também nossos molhos, perfeitos para pratos no vapor.',

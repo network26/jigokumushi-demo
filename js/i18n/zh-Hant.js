@@ -32,6 +32,7 @@ I18N['zh-Hant'] = {
   'fees.n4': '設施入場、蒸足及足湯均免費。',
   'food.title': '蒸制食材菜單（2026年10月1日修訂）',
   'cat.all': '全部', 'cat.set': '套餐', 'cat.sea': '海鮮', 'cat.meat': '肉類', 'cat.veg': '蔬菜·豆腐', 'cat.dim': '點心·小點', 'cat.rice': '飯·面·鍋物', 'cat.sweet': '麵包·甜點',
+  'cat.top': '精選8道', 'top.title': '我們的精選8道', 'top.sub': '這是我們首先推薦的8道菜。點選上方「全部」或某個分類即可查看完整菜單。', 'top.badge': '精選8道', 'top.status': '顯示全部 {m} 道菜中的精選8道', 'menu.status': '顯示 {m} 道菜中的 {n} 道', 'food.filterLabel': '菜單分類',
   'serv.1': '1人份', 'serv.12': '1~2人份', 'serv.2': '2人份', 'pcs': '{n}個', 'rec': '推薦',
   'food.setNote': '附豬肉粽1個 · 可換成竹皮包白飯',
   'food.n1': '歡迎搭配與蒸料理絕配的各式醬汁一同享用。',
