@@ -11,14 +11,16 @@ A fully client-side demo of a "scan a QR, get a number, get alerted" queue for J
 
 QR image: `assets/queue-qr.png` → `https://network26.github.io/jigokumushi-demo/queue/` (made offline with Python `qrcode`).
 
-## Test it (two tabs of the SAME browser)
-1. Open `/queue/staff.html`, enter PIN `2468`.
-2. In another tab/window open `/queue/`, pick a party size, press **Get my queue number**. Press **Turn on sound & vibration alerts** (browsers need a tap before sound).
-3. (Optional) open more customer tabs – each tab is a separate "customer"; or press **Add walk-in party** on the staff page. Customers show "Groups ahead of you: N" live.
-4. On the staff page press **Call next** (or **Call** on a row). The customer tab shows a flashing banner, plays a chime, vibrates (Android/Chrome only; iOS ignores vibration) and flashes the page title.
-5. Press **Seat** or **No-show**; the customer sees the new state. **Close queue** blocks new joins; **Reset** clears everything.
+## Test it
+**Easiest (computer or phone): `/queue/demo.html`** – the customer view and the staff controls on one screen (stacked with tabs on a phone), PIN filled in automatically.
+1. Customer pane: press **Get my queue number** (this tap also unlocks sound and asks for notification permission – tap *Allow*).
+2. Staff pane: press **Add walk-in party** a couple of times, then **Call next** (or a row's **Call**; **Call again** re-alerts).
+3. Customer pane: flashing banner, chime, vibration (Android Chrome only), title flash. Use **Test alert** any time to check sound/banner/notification.
 
-Tabs sync through `BroadcastChannel` (+ `storage` events as fallback). Different browsers/phones do **not** share data – that is what the real backend is for.
+**Two windows (computer, desktop Chrome):** open `/queue/staff.html` (PIN `2468`) and `/queue/` in two *windows side by side* (not a background tab). Join on the customer window, then press Call next on the staff window.
+
+Notes on alerts: sound needs a tap on the page first (join/Enable/Test alert, or any tap after a reload – the page says "Sound: tap this page once to unlock" until then). If the customer tab is in the background when staff call, a system notification is shown (if allowed) and the banner + sound fire the moment you return. Mobile browsers freeze background tabs, and iOS Safari only shows notifications for sites added to the Home Screen – so on a phone use the demo console, and the real version needs Web Push from the backend.
+Other tests: each customer tab is one "customer"; **Close queue** blocks new joins; **Reset** clears everything.
 
 ## Swapping in a real backend
 `queue-core.js` defines one adapter interface (see the comment at the top). `customer.js` and `staff.js` only call that interface.

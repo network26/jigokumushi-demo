@@ -6,6 +6,7 @@
   var AUTH = 'jk-q-staff-demo';
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
+  try { if (/[?&]demo=1/.test(location.search)) sessionStorage.setItem(AUTH, '1'); } catch (e) {} // demo console auto-unlock
   function authed() { try { return sessionStorage.getItem(AUTH) === '1'; } catch (e) { return false; } }
   function show() { var a = authed(); $('#pin-view').hidden = a; $('#console').hidden = !a; if (a) render(); }
   $('#pin-form').addEventListener('submit', function (e) {
@@ -47,6 +48,7 @@
     $('#rows').innerHTML = all.map(function (e) {
       var live = e.status === 'waiting' || e.status === 'called', btns = '';
       if (e.status === 'waiting') btns += '<button type="button" class="btn btn-fire sm" data-act="call" data-id="' + esc(e.id) + '">Call <span lang="ja">呼出</span></button>';
+      if (e.status === 'called') btns += '<button type="button" class="btn btn-ghost sm" data-act="call" data-id="' + esc(e.id) + '">Call again <span lang="ja">再呼出</span></button>';
       if (e.status === 'called') btns += '<button type="button" class="btn btn-gold sm" data-act="seat" data-id="' + esc(e.id) + '">Seat <span lang="ja">案内</span></button>';
       if (live) btns += '<button type="button" class="btn btn-ghost sm" data-act="noshow" data-id="' + esc(e.id) + '">No-show <span lang="ja">不在</span></button>';
       return '<tr class="' + esc(e.status) + '"><td class="no">' + e.no + '</td><td>' + e.size + '</td><td>' + (e.nick ? esc(e.nick) : '<span class="tag">—</span>') + '<br><small class="meta">' + esc(e.id) + '</small></td><td><span class="tag ' + esc(e.status) + '">' + (ST[e.status] || esc(e.status)) + '</span></td><td>' + mins((e.doneAt || now) - e.joinedAt) + '</td><td class="act"><div>' + btns + '</div></td></tr>';
@@ -54,5 +56,6 @@
   }
   api.subscribe(function () { render(); });
   setInterval(render, 30000); // refresh elapsed minutes
+  if (/[?&]embed=1/.test(location.search)) document.body.classList.add("embed");
   show();
 })();

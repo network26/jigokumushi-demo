@@ -15,6 +15,7 @@
 <body>
 <div id="called-banner" role="alert" hidden>
   <p id="called-msg"></p>
+  <p id="called-hint" hidden></p>
   <button type="button" class="btn sm" id="called-ok"></button>
 </div>
 
@@ -62,12 +63,20 @@
       <button type="button" class="btn btn-ghost sm" id="test-btn" data-q="test" hidden></button>
     </div>
     <p class="alerts-on" id="alerts-on" hidden data-q="alertsOn"></p>
+    <p class="meta alert-status" id="alert-status" hidden></p>
     <p class="meta" data-q="tip"></p>
 
     <div class="row">
       <button type="button" class="btn btn-ghost sm" id="leave-btn" data-q="leave">Leave the queue</button>
       <button type="button" class="btn btn-fire sm" id="again-btn" data-q="again" hidden>Join again</button>
     </div>
+  </section>
+
+  <section class="card tip-card" aria-labelledby="tip-h">
+    <h2 id="tip-h" data-q="tipH">Testing this demo</h2>
+    <p data-q="sameTip">Sync only works inside one browser. On a computer, open the staff page in a second window (side by side, not a background tab). On a phone, use the one-screen demo console.</p>
+    <p><a class="btn btn-ghost sm" href="demo.html" data-q="demoLink">Open the demo console</a>
+       <a class="btn btn-ghost sm" href="staff.html" target="_blank" rel="noopener">Staff 職員用</a></p>
   </section>
 </main>
 

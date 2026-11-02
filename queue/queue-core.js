@@ -17,7 +17,7 @@
  *   adapter.reset()             -> Promise         clear everything, numbers restart at 1
  *
  *   Entry = { id:'K7F2-9QXD' (random ticket id), no:12, size:2, nick:'', status:
- *             'waiting'|'called'|'seated'|'noshow'|'left', joinedAt:ms, calledAt:ms|null, doneAt:ms|null }
+ *             'waiting'|'called'|'seated'|'noshow'|'left', joinedAt:ms, calledAt:ms|null, calls:int, doneAt:ms|null }
  *
  * Planned production backend (recommended): Cloudflare Workers + D1 (queue tables),
  * a Durable Object or SSE/WebSocket for live pushes, Turnstile on join (bot protection) and
@@ -85,11 +85,11 @@
       callNext: function () {
         return mutate(function (st) {
           var w = st.entries.filter(function (e) { return e.status === 'waiting'; }).sort(function (a, b) { return a.no - b.no; })[0];
-          if (w) { w.status = 'called'; w.calledAt = Date.now(); }
+          if (w) { w.status = 'called'; w.calledAt = Date.now(); w.calls = (w.calls || 0) + 1; }
           return w || null;
         });
       },
-      call: function (id) { return mutate(function (st) { var e = find(st, id); if (e && e.status === 'waiting') { e.status = 'called'; e.calledAt = Date.now(); } }); },
+      call: function (id) { return mutate(function (st) { var e = find(st, id); if (e && (e.status === 'waiting' || e.status === 'called')) { e.status = 'called'; e.calledAt = Date.now(); e.calls = (e.calls || 0) + 1; } }); }, // also "Call again"
       seat: function (id) { return mutate(function (st) { var e = find(st, id); if (e && e.status === 'called') { e.status = 'seated'; e.doneAt = Date.now(); } }); },
       noShow: function (id) { return mutate(function (st) { var e = find(st, id); if (e && (e.status === 'waiting' || e.status === 'called')) { e.status = 'noshow'; e.doneAt = Date.now(); } }); },
       setOpen: function (v) { return mutate(function (st) { st.open = !!v; }); },

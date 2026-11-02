@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo console – Queue | Jigokumushi Kobo Kannawa</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0b0a09">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="queue.css">
+</head>
+<body class="wide">
+<header class="q-head">
+  <span class="q-mark" aria-hidden="true">蒸</span>
+  <div class="grow"><strong>Demo console / デモ操作画面</strong></div>
+  <a class="back" href="./">Customer page</a>
+</header>
+<p class="demo-note" role="note" style="max-width:1168px;margin:12px auto 0"><b>DEMO</b><span>One-screen test: the customer view and the staff controls are side by side (stacked, with tabs, on a phone), both in this one browser tab, so they sync live and both stay visible. Works on a phone. PIN is filled in automatically. / 1画面でお客様側とスタッフ側を同時に試せるデモ操作画面です。</span></p>
+<div class="dc-info">
+  <ol>
+    <li>Customer: tap <b>Get my queue number</b> (this also turns on sound and asks for notification permission).</li>
+    <li>Staff: tap <b>Add walk-in party</b> a few times, then <b>Call next</b> or a row's <b>Call</b>.</li>
+    <li>Customer: banner, sound, vibration (Android) and title flash. <b>Call again</b> re-alerts. Use <b>New customer</b> to start over as someone else.</li>
+  </ol>
+</div>
+<div class="dc-bar">
+  <div class="dc-tabs" role="group" aria-label="View / 表示">
+    <button type="button" class="btn btn-ghost sm" data-show="both" aria-pressed="true">Both</button>
+    <button type="button" class="btn btn-ghost sm" data-show="customer" aria-pressed="false">Customer</button>
+    <button type="button" class="btn btn-ghost sm" data-show="staff" aria-pressed="false">Staff</button>
+  </div>
+  <span class="grow"></span>
+  <button type="button" class="btn btn-ghost sm" id="dc-new">New customer</button>
+</div>
+<div class="dc-grid" id="dc-grid" data-show="both">
+  <section class="dc-pane" id="pane-customer"><h2>Customer view / お客様</h2>
+    <iframe id="fr-customer" title="Customer view" src="index.html?embed=1" allow="autoplay; vibrate"></iframe></section>
+  <section class="dc-pane" id="pane-staff"><h2>Staff controls / スタッフ（demo PIN auto）</h2>
+    <iframe id="fr-staff" title="Staff controls" src="staff.html?demo=1&amp;embed=1"></iframe></section>
+</div>
+<script>
+(function () {
+  var g = document.getElementById('dc-grid');
+  document.querySelectorAll('.dc-tabs button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      g.setAttribute('data-show', b.getAttribute('data-show'));
+      document.querySelectorAll('.dc-tabs button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    });
+  });
+  document.getElementById('dc-new').addEventListener('click', function () {
+    var f = document.getElementById('fr-customer');
+    try { ['jk-q-ticket', 'jk-q-alerts', 'jk-q-dismissed'].forEach(function (k) { f.contentWindow.sessionStorage.removeItem(k); }); } catch (e) {}
+    f.contentWindow.location.reload();
+  });
+})();
+</script>
+</body>
+</html>
