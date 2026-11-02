@@ -21,7 +21,7 @@
  *
  * Planned production backend (recommended): Cloudflare Workers + D1 (queue tables),
  * a Durable Object or SSE/WebSocket for live pushes, Turnstile on join (bot protection) and
- * Cloudflare Access in front of /queue/staff* (real staff login instead of the demo PIN).
+ * Cloudflare Access in front of /queue/staff* (real staff login instead of the private-link key).
  * See queue/README.md for the endpoint sketch. RemoteAdapter below is the stub to fill in.
  */
 (function (global) {
@@ -39,17 +39,18 @@
     return s;
   }
 
-  function fresh() { return { open: true, nextNo: 1, entries: [], rev: 0 }; }
+  function fresh() { return { open: true, nextNo: 1, entries: [], rev: 0, epoch: randomId(), resetAt: 0 }; }
 
   /* ---------------- Local (demo) adapter ---------------- */
-  function LocalAdapter() {
+  function LocalAdapter(opts) {
+    var KEY_ = (opts && opts.key) || KEY, CH_ = (opts && opts.channel) || CH;   // class-demo staff state lives under its own key
     var subs = [];
     var chan = null;
-    try { chan = ('BroadcastChannel' in global) ? new BroadcastChannel(CH) : null; } catch (e) { chan = null; }
+    try { chan = ('BroadcastChannel' in global) ? new BroadcastChannel(CH_) : null; } catch (e) { chan = null; }
 
     function read() {
       try {
-        var s = JSON.parse(global.localStorage.getItem(KEY));
+        var s = JSON.parse(global.localStorage.getItem(KEY_));
         if (s && Array.isArray(s.entries)) return s;
       } catch (e) {}
       return fresh();
@@ -57,14 +58,14 @@
     function emit() { var st = read(); subs.slice().forEach(function (f) { try { f(st); } catch (e) { if (global.console) console.error(e); } }); }
     function write(st) {
       st.rev = (st.rev || 0) + 1;
-      global.localStorage.setItem(KEY, JSON.stringify(st));
+      global.localStorage.setItem(KEY_, JSON.stringify(st));
       if (chan) { try { chan.postMessage({ t: 'changed', rev: st.rev }); } catch (e) {} }
       emit(); // this tab (storage events don't fire in the writing tab)
       return st;
     }
     // other tabs/windows of the same browser
     if (chan) chan.onmessage = function () { emit(); };
-    global.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) emit(); });
+    global.addEventListener('storage', function (e) { if (e.key === KEY_ || e.key === null) emit(); });
 
     function find(st, id) { for (var i = 0; i < st.entries.length; i++) if (st.entries[i].id === id) return st.entries[i]; return null; }
     function mutate(fn) { try { var st = read(); var r = fn(st); write(st); return Promise.resolve(r); } catch (e) { return Promise.reject(e); } }
@@ -76,8 +77,10 @@
       join: function (o) {
         return mutate(function (st) {
           if (!st.open) { var err = new Error('closed'); err.code = 'closed'; throw err; }
-          var e = { id: randomId(), no: st.nextNo++, size: Math.min(20, Math.max(1, parseInt(o.size, 10) || 1)),
-                    nick: String(o.nick || '').trim().slice(0, 20), lang: /^[A-Za-z]{2,3}(-[A-Za-z]{2,4})?$/.test(o.lang || '') ? o.lang : 'en', status: 'waiting', joinedAt: Date.now(), calledAt: null, doneAt: null };
+          var rid = /^[A-Za-z0-9-]{6,16}$/.test(o.id || '') ? o.id : null;   // class demo: the phone chooses its own (secret-derived) id; joining twice = no-op
+          if (rid) { var ex = find(st, rid); if (ex) return ex; }
+          var e = { id: rid || randomId(), no: st.nextNo++, size: Math.min(20, Math.max(1, parseInt(o.size, 10) || 1)),
+                    nick: String(o.nick || '').trim().slice(0, 20), lang: /^[A-Za-z]{2,3}(-[A-Za-z]{2,4})?$/.test(o.lang || '') ? o.lang : 'en', status: 'waiting', joinedAt: Math.min(Date.now(), +o.ts || Date.now()), calledAt: null, doneAt: null };
           st.entries.push(e); return e;
         });
       },
@@ -93,7 +96,7 @@
       seat: function (id) { return mutate(function (st) { var e = find(st, id); if (e && e.status === 'called') { e.status = 'seated'; e.doneAt = Date.now(); } }); },
       noShow: function (id) { return mutate(function (st) { var e = find(st, id); if (e && (e.status === 'waiting' || e.status === 'called')) { e.status = 'noshow'; e.doneAt = Date.now(); } }); },
       setOpen: function (v) { return mutate(function (st) { st.open = !!v; }); },
-      reset: function () { return mutate(function (st) { var f = fresh(); st.open = true; st.nextNo = 1; st.entries = f.entries; }); }
+      reset: function () { return mutate(function (st) { var f = fresh(); st.open = true; st.nextNo = 1; st.entries = f.entries; st.epoch = f.epoch; st.resetAt = Date.now(); }); }
     };
   }
 
@@ -113,9 +116,9 @@
   function findById(st, id) { for (var i = 0; i < st.entries.length; i++) if (st.entries[i].id === id) return st.entries[i]; return null; }
 
   global.JKQueue = {
-    create: function () { return LocalAdapter(); }, // <- switch to RemoteAdapter(baseUrl) when the backend exists
+    create: function (opts) { return LocalAdapter(opts); }, // <- switch to RemoteAdapter(baseUrl) when the backend exists
     LocalAdapter: LocalAdapter, RemoteAdapter: RemoteAdapter,
     waiting: waiting, groupsAhead: groupsAhead, findById: findById,
-    AVG_MIN_PER_GROUP: AVG_MIN_PER_GROUP, DEMO_PIN: '2468'
+    AVG_MIN_PER_GROUP: AVG_MIN_PER_GROUP
   };
 })(window);

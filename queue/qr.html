@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scan to join the queue | 地獄蒸し工房 鉄輪</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0b0a09">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<style>
+  html,body{height:100%;margin:0}
+  body{background:#0b0a09;color:#f3ece3;font-family:"Zen Kaku Gothic New",system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.2vmin;text-align:center;padding:2vmin;box-sizing:border-box}
+  h1{margin:0;font-size:clamp(20px,4.6vmin,46px);font-weight:700;letter-spacing:.02em}
+  #qr{width:min(78vmin,90vw);height:min(78vmin,90vw);background:#fff;border-radius:2vmin;overflow:hidden;line-height:0;box-shadow:0 0 0 1.2vmin #fff}
+  #qr svg{width:100%;height:100%;display:block}
+  p{margin:0;font-size:clamp(12px,2.2vmin,22px);opacity:.75}
+  #err{font-size:clamp(16px,3vmin,28px);opacity:1}
+  #fs{position:fixed;right:10px;bottom:10px;background:transparent;border:1px solid #fff3;color:#fff6;border-radius:6px;padding:4px 10px;font-size:13px;cursor:pointer}
+  #fs:hover,#fs:focus{color:#fff;border-color:#fff8}
+  body.full #fs{display:none}
+</style>
+</head>
+<body>
+  <h1 id="h">Scan to join the queue<br><span lang="ja">QRコードで順番待ち</span></h1>
+  <div id="qr" role="img" aria-label="QR code for joining the queue"></div>
+  <p id="note">Class demo: messages pass through a public relay (ntfy.sh). Don't enter personal info.</p>
+  <button type="button" id="fs">Fullscreen</button>
+<script src="vendor/qrcode.js"></script>
+<script src="relay.js"></script>
+<script>
+(function () {
+  var c = JKRelay.parseClass(location.hash), box = document.getElementById('qr');
+  if (!c) { box.remove(); document.getElementById('h').innerHTML = '<span id="err">No class session in this link.</span>'; document.getElementById('note').remove(); }
+  else box.innerHTML = JKRelay.qrSvg(JKRelay.joinUrl(c.sid, c.pk));
+  var fs = document.getElementById('fs');
+  fs.addEventListener('click', function () { var d = document.documentElement; (d.requestFullscreen || d.webkitRequestFullscreen || function () {}).call(d); });
+  document.addEventListener('fullscreenchange', function () { document.body.classList.toggle('full', !!document.fullscreenElement); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'f' || e.key === 'F') fs.click(); });
+})();
+</script>
+</body>
+</html>

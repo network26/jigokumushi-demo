@@ -16,26 +16,18 @@
 <header class="q-head">
   <span class="q-mark" aria-hidden="true">蒸</span>
   <div class="grow"><strong>Queue – Staff / 順番待ち スタッフ用</strong></div>
-  <a class="back" href="./">Customer page / お客様ページ</a> · <a class="back" href="demo.html">Demo console</a>
+  <a class="back" href="./">Customer page / お客様ページ</a>
 </header>
 
 <main id="main">
   <h1>Queue control <span lang="ja">順番待ち管理</span></h1>
-  <p class="demo-note" role="note"><b>DEMO</b><span>Demo only: this page and its PIN are <u>not secure</u>. Data lives only in this browser (localStorage) and syncs between tabs/windows of the same browser. The real version would use Cloudflare Access for staff login and sync across phones.<br>
-  <span lang="ja">デモ専用：このページとPINは安全ではありません。データはこのブラウザ内のみで、同じブラウザのタブ間で同期されます。本番版ではCloudflare Accessでスタッフ認証を行い、複数端末で同期します。</span></span></p>
+  <p class="demo-note" role="note" id="demo-note"><b>DEMO</b><span>Private staff page (not linked from anywhere on the site). Queue data lives only in this browser (localStorage). The real version would use Cloudflare Access for staff login.<br>
+  <span lang="ja">関係者専用ページ（サイト内のどこからもリンクされていません）。データはこのブラウザ内のみに保存されます。本番版ではCloudflare Accessでスタッフ認証を行います。</span></span></p>
 
-  <!-- PIN gate (DEMO) -->
-  <section id="pin-view" class="card pin-box" aria-labelledby="pin-h">
-    <h2 id="pin-h" style="font-family:var(--serif);margin:0 0 6px">Staff PIN <span lang="ja">スタッフPIN</span></h2>
-    <p class="pin-hint">DEMO PIN / デモ用PIN: <code>2468</code></p>
-    <form id="pin-form" novalidate>
-      <div class="field">
-        <label for="pin">PIN</label>
-        <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="8" aria-describedby="pin-err">
-      </div>
-      <button class="btn btn-fire block" type="submit">Enter / 入る</button>
-      <p class="pin-err" id="pin-err" role="alert"></p>
-    </form>
+  <!-- locked view: shown unless this browser opened the private staff link -->
+  <section id="pin-view" class="card pin-box" aria-labelledby="pin-h" hidden>
+    <h2 id="pin-h" style="font-family:var(--serif);margin:0 0 6px">Private page <span lang="ja">関係者専用</span></h2>
+    <p class="pin-hint">Open this page with your private staff link. <span lang="ja">専用のスタッフ用リンクから開いてください。</span></p>
   </section>
 
   <!-- console -->
@@ -49,12 +41,36 @@
       <div><span class="badge" id="s-open">Queue open</span><br><span id="s-open-ja" lang="ja"></span></div>
     </div>
 
+    <section class="card" id="class-panel" aria-labelledby="cd-h" style="padding:14px 16px;margin:0 0 14px">
+      <h2 id="cd-h" style="font-family:var(--serif);margin:0 0 6px;font-size:1.1rem">Class demo (live, many phones) <span lang="ja">クラス用ライブデモ</span> <span class="badge" id="cd-badge" hidden>LIVE</span></h2>
+      <p class="meta" style="margin:0 0 10px">Classmates scan a QR code and join from their own phones; you call them from here. Messages pass through a public relay (ntfy.sh); they should not enter personal info. <span lang="ja">クラスの皆さんが各自のスマホで参加し、ここから呼び出します。メッセージは公開リレー(ntfy.sh)を経由します。個人情報は入力しないでください。</span></p>
+      <div id="cd-off">
+        <button type="button" class="btn btn-fire" id="cd-start">Start / resume class demo <span lang="ja">開始・再開</span></button>
+      </div>
+      <div id="cd-on" hidden>
+        <p style="margin:0 0 8px"><span id="cd-status" role="status" class="meta"></span></p>
+        <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+          <div id="cd-qr" style="width:170px;height:170px;background:#fff;border-radius:6px;overflow:hidden" aria-label="QR code that classmates scan"></div>
+          <div style="flex:1;min-width:230px">
+            <p class="meta" style="margin:0 0 8px;word-break:break-all">Join link (public, goes inside the QR): <code id="cd-link"></code></p>
+            <div class="toolbar" style="margin:0">
+              <button type="button" class="btn btn-fire sm" id="cd-proj">Open projector QR <span lang="ja">投影用QR</span></button>
+              <button type="button" class="btn btn-ghost sm" id="cd-copy">Copy join link <span lang="ja">参加リンク</span></button>
+              <button type="button" class="btn btn-ghost sm" id="cd-backup">Copy private staff link + backup <span lang="ja">非公開リンク</span></button>
+              <button type="button" class="btn btn-ghost sm" id="cd-local">Back to local demo <span lang="ja">ローカルへ</span></button>
+              <button type="button" class="btn btn-ghost sm" id="cd-end">End &amp; forget session <span lang="ja">終了</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <div class="toolbar">
       <button type="button" class="btn btn-fire" id="b-next">Call next <span lang="ja">次を呼ぶ</span></button>
       <button type="button" class="btn btn-ghost" id="b-open">Close queue <span lang="ja">受付終了</span></button>
       <button type="button" class="btn btn-ghost" id="b-add">Add walk-in party <span lang="ja">店頭のお客様を追加</span></button>
       <button type="button" class="btn btn-ghost" id="b-reset">Reset <span lang="ja">リセット</span></button>
-      <button type="button" class="btn btn-ghost" id="b-lock">Lock <span lang="ja">ロック</span></button>
+      <button type="button" class="btn btn-ghost" id="b-lock">Lock this browser <span lang="ja">ロック</span></button>
     </div>
 
     <div class="card tbl-wrap">
@@ -76,7 +92,10 @@
     </div>
   </div>
 </main>
+<script src="gate.js"></script>
+<script src="vendor/qrcode.js"></script>
 <script src="queue-core.js"></script>
+<script src="relay.js"></script>
 <script src="staff.js"></script>
 </body>
 </html>

@@ -33,7 +33,7 @@ I18N['zh-Hans'] = {
   'food.title': '蒸制食材菜单（2026年10月1日修订）',
   'cat.all': '全部', 'cat.set': '套餐', 'cat.sea': '海鲜', 'cat.meat': '肉类', 'cat.veg': '蔬菜·豆腐', 'cat.dim': '点心·小食', 'cat.rice': '饭·面·锅物', 'cat.sweet': '面包·甜点',
   'cat.top': '精选8道', 'top.title': '我们的精选8道', 'top.sub': '这是我们首先推荐的8道菜。点击上方“全部”或某个分类即可查看完整菜单。', 'top.badge': '精选8道', 'top.status': '显示全部 {m} 道菜中的精选8道', 'menu.status': '显示 {m} 道菜中的 {n} 道', 'food.filterLabel': '菜单分类',
-  'nav.queue': '排队取号', 'qs.title': '排队取号', 'qs.intro': '用手机扫描二维码即可取号，查看前面还有几组，轮到您时会收到提醒。', 'qs.demo': '演示：仅在当前浏览器内运行。正式版将可在多部手机之间实时同步。', 'qs.qrAlt': '排队取号二维码', 'qs.staff': '员工页面（演示）',
+  'nav.queue': '排队取号', 'qs.title': '排队取号', 'qs.intro': '用手机扫描二维码即可取号，查看前面还有几组，轮到您时会收到提醒。', 'qs.demo': '演示：仅在当前浏览器内运行。正式版将可在多部手机之间实时同步。', 'qs.qrAlt': '排队取号二维码',
   'nav.review': '评价', 'rv.title': '留下您的评价', 'rv.intro': '地狱蒸体验如何？欢迎在谷歌、Instagram 或本页面告诉我们和其他旅客。', 'rv.g.t': '谷歌评价', 'rv.g.b': '在谷歌地图上分享您的到访体验，让更多旅客找到我们。', 'rv.g.btn': '撰写谷歌评价', 'rv.g.see': '在谷歌地图查看评价', 'rv.i.t': 'Instagram', 'rv.i.b': '上传您的蒸煮美食照片，标记 @jigokumushikoubou 并使用下方话题标签。', 'rv.i.btn': '打开 Instagram', 'rv.w.t': '在本页面评价', 'rv.name': '姓名（选填）', 'rv.ph.name': '您的姓名', 'rv.rating': '您的评分', 'rv.star': '5 星中的 {n} 星', 'rv.comment': '您的评论', 'rv.ph.comment': '您的地狱蒸体验如何？', 'rv.submit': '提交评价', 'rv.demo': '这是演示版本：目前在此发布的评价仅保存在本设备（浏览器）中，不会发送给店铺。', 'rv.recent': '最近评价', 'rv.empty': '本设备上还没有评价，来写第一条吧！', 'rv.anon': '访客', 'rv.thanks': '谢谢！您的评价已保存在本设备上。', 'rv.need': '请选择星级评分并填写评论。', 'rv.clear': '删除本设备上保存的评价', 'rv.fail': '抱歉，浏览器无法保存您的评价。', 'rv.confirm': '要删除本设备上保存的所有评价吗？',
   'serv.1': '1人份', 'serv.12': '1~2人份', 'serv.2': '2人份', 'pcs': '{n}个', 'rec': '推荐',
   'food.setNote': '附猪肉粽1个 · 可换成竹皮包白饭',

@@ -1,7 +1,21 @@
 /* Customer page for the queue DEMO. All data goes through window.JKQueue (see queue-core.js). */
 (function () {
   'use strict';
-  var Q = JKQueue, api = Q.create();
+  var Q = JKQueue;
+  /* Class demo (live): the QR code carries #c=<session>.<public key>; the phone then talks to the staff device through the relay (relay.js).
+     Without it (or embedded in the demo console) this is the same-browser demo. */
+  var EMBED = /[?&]embed=1/.test(location.search);
+  var CLASS = (function () {
+    if (EMBED || !window.JKRelay) return null;
+    var c = JKRelay.parseClass(location.hash);
+    try {
+      if (c) localStorage.setItem('jk-class-join', JSON.stringify(c));
+      else { var s = JSON.parse(localStorage.getItem('jk-class-join')); if (s && s.sid && localStorage.getItem('jk-class-me-' + s.sid)) c = s; }   // reopened without the link: keep my ticket
+    } catch (e) {}
+    return c;
+  })();
+  var api = CLASS ? JKRelay.customer(CLASS) : Q.create();
+  function findMe(st) { var id = ticketId(); if (!id) return null; return Q.findById(st, id) || (st.pending && st.pending.id === id ? st.pending : null); }
   var $ = function (s) { return document.querySelector(s); }, $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
   var LANGS = [['en','English'],['ja','日本語'],['ko','한국어'],['zh-Hans','简体中文'],['zh-Hant','繁體中文'],['fr','Français'],['vi','Tiếng Việt'],['es','Español'],['de','Deutsch'],['th','ไทย'],['id','Bahasa Indonesia'],['pt','Português'],['it','Italiano']];
   var TICKET_KEY = 'jk-q-ticket'; // sessionStorage = one "customer" per tab, so Nathan can test several customers in several tabs.
@@ -42,7 +56,7 @@
   }
   var baseTitle = '';
   function syncAlertLang() {
-    var st = api.getState(), id = ticketId(), me = id ? Q.findById(st, id) : null;
+    var st = api.getState(), id = ticketId(), me = findMe(st);
     alertLang = (me && me.lang && QI18N[me.lang]) ? me.lang : lang;
     curNo = me ? me.no : null;
     baseTitle = ta('title') + ' | 地獄蒸し工房 鉄輪';
@@ -226,8 +240,8 @@
   $('#test-btn').addEventListener('click', testAlert);
 
   /* ---------- ticket ---------- */
-  function ticketId() { try { return sessionStorage.getItem(TICKET_KEY); } catch (e) { return null; } }
-  function setTicket(id) { try { id ? sessionStorage.setItem(TICKET_KEY, id) : sessionStorage.removeItem(TICKET_KEY); } catch (e) {} }
+  function ticketId() { if (CLASS) return api.myId(); try { return sessionStorage.getItem(TICKET_KEY); } catch (e) { return null; } }
+  function setTicket(id) { if (CLASS) { if (!id) api.clearMe(); return; } try { id ? sessionStorage.setItem(TICKET_KEY, id) : sessionStorage.removeItem(TICKET_KEY); } catch (e) {} }
 
   $('#join-form').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -242,7 +256,7 @@
   /* ---------- render ---------- */
   var lastStatus = null, lastLive = '', lastRev = -1;
   function render() {
-    var st = api.getState(), id = ticketId(), me = id ? Q.findById(st, id) : null;
+    var st = api.getState(), id = ticketId(), me = findMe(st);
     lastRev = st.rev;
     if (id && !me) { setTicket(null); id = null; }   // queue was reset by staff
     syncAlertLang();
@@ -256,6 +270,16 @@
 
     if (!me) { lastStatus = null; stopAlarm(); document.title = baseTitle; return; }
 
+    if (me.pending) {   // class demo: joined, waiting for the staff device to number the ticket (it may be closed for a while)
+      $('#t-no').textContent = '…'; $('#t-no').setAttribute('aria-label', t('pend')); $('#t-id').textContent = me.id;
+      $('#t-party').textContent = t('party', { n: me.size }) + (me.nick ? ' · ' + me.nick : '');
+      var ps = $('#t-status'); ps.textContent = t('s.waiting'); ps.className = 'status waiting';
+      $('#t-ahead').hidden = false; $('#t-ahead').textContent = t('pend'); $('#t-wait').hidden = true;
+      $('#leave-btn').hidden = false; $('#again-btn').hidden = true;
+      $('#alert-row').hidden = false; $('#alerts-btn').hidden = alertsEnabled; $('#test-btn').hidden = !alertsEnabled; $('#alerts-on').hidden = !alertsEnabled;
+      $('#alert-status').hidden = !alertsEnabled; updateStatus(); lastStatus = null; stopAlarm(); document.title = baseTitle;
+      return;
+    }
     var live = me.status === 'waiting' && me.status !== lastStatus;
     $('#t-no').textContent = me.no; $('#t-no').setAttribute('aria-label', t('yourNo') + ' ' + me.no);
     $('#t-id').textContent = me.id;
@@ -294,6 +318,7 @@
     lastStatus = me.status;
   }
 
+  if (CLASS) { var dn = document.querySelector('[data-q="demo"]'); if (dn) dn.setAttribute('data-q', 'relayNote'); }
   applyLang();
   render();
   api.subscribe(render);
@@ -306,5 +331,5 @@
   setInterval(function () { var r = api.getState().rev; if (r !== lastRev) render(); }, 1000);
   if (alertsEnabled) { setupAudio(); askNotifications(); }
   // embedded in the demo console: hide page chrome
-  if (/[?&]embed=1/.test(location.search)) document.body.classList.add('embed');
+  if (EMBED) document.body.classList.add('embed');
 })();
