@@ -435,3 +435,39 @@ main,footer{position:relative;z-index:3}
 html:lang(ja) .hero-main,html:lang(ko) .hero-main,html:lang(zh-Hans) .hero-main,html:lang(zh-Hant) .hero-main{max-width:none;word-break:keep-all;line-height:1.15}
 html:lang(ja) body,html:lang(zh-Hans) body,html:lang(zh-Hant) body,html:lang(ko) body{word-break:normal;line-break:strict}
 html:lang(th) .hero-main{line-height:1.3;max-width:none}
+
+/* ---------- reviews ---------- */
+.rv-intro{max-width:720px;color:#cfc3ae;margin:-10px 0 34px}
+.rv-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:22px;align-items:start}
+.rv-side{display:grid;gap:22px}
+.rv-card{padding:30px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(170deg,var(--ink3),var(--ink2));display:flex;flex-direction:column;gap:12px}
+.rv-card h3{font-family:var(--serif);font-size:21px}
+.rv-card p{font-size:14px;color:#cfc3ae}
+.rv-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.rv-tag{display:inline-block;align-self:flex-start;padding:4px 14px;border-radius:99px;border:1px solid var(--gold);color:var(--gold)!important;font-weight:700}
+.rv-field{display:flex;flex-direction:column;gap:6px;margin:0 0 16px;border:0;padding:0;min-width:0}
+.rv-field label,.rv-field legend{font-size:13px;color:var(--mute);padding:0}
+.rv-field input[type=text],.rv-field textarea{font:inherit;font-size:15px;color:var(--paper);background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:11px 14px;width:100%;resize:vertical}
+.rv-field input[type=text]:focus,.rv-field textarea:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+.rv-stars{display:inline-flex;flex-direction:row-reverse;justify-content:flex-end;gap:2px;align-self:flex-start}
+.rv-stars input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.rv-stars label{font-size:34px;line-height:1;color:rgba(239,230,214,.25);cursor:pointer;padding:2px 4px;border-radius:8px;transition:color .2s,transform .2s}
+.rv-stars label:hover,.rv-stars label:hover ~ label,.rv-stars input:checked ~ label{color:var(--gold)}
+.rv-stars label:hover{transform:scale(1.12)}
+.rv-stars input:focus-visible + label{outline:2px solid var(--gold);outline-offset:2px}
+.rv-msg{min-height:1.5em;margin-top:10px;font-size:13.5px}
+.rv-msg.ok{color:var(--jade)!important}
+.rv-msg.err{color:var(--fire2)!important}
+.rv-demo{font-size:12.5px!important;color:var(--mute)!important;border-left:2px solid var(--gold);padding-left:12px;margin-top:6px}
+.rv-recent-h{font-family:var(--serif);font-size:18px;margin-top:10px}
+.rv-list{list-style:none;display:grid;gap:12px;margin:0;padding:0}
+.rv-list li{padding:14px 16px;border-radius:14px;background:var(--ink);border:1px solid var(--line)}
+.rv-list .rv-top{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;font-size:13px;color:var(--mute)}
+.rv-list .rv-top b{color:var(--paper)}
+.rv-list .rv-top .st{color:var(--gold);letter-spacing:2px}
+.rv-list p{margin-top:6px;font-size:14px;color:#e6dcc9!important;white-space:pre-wrap;overflow-wrap:anywhere}
+.rv-empty{font-size:14px;color:var(--mute)}
+.rv-clear{align-self:flex-start;background:none;border:0;color:var(--mute);font:inherit;font-size:12.5px;text-decoration:underline;cursor:pointer;padding:4px 0}
+.rv-clear:hover{color:var(--fire2)}
+.rv-clear[hidden]{display:none}
+@media (max-width:860px){.rv-grid{grid-template-columns:1fr}.rv-card{padding:22px}}

@@ -34,6 +34,7 @@
     <a href="#access" data-i18n="nav.access">Access</a>
     <a href="#faq" data-i18n="nav.faq">FAQ</a>
     <a href="#news" data-i18n="nav.news">News</a>
+    <a href="#review" data-i18n="nav.review">Reviews</a>
   </nav>
   <a class="tel-pill" href="tel:0977663775"><span data-i18n="common.tel">Tel</span> 0977-66-3775</a>
   <button id="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -362,11 +363,71 @@
   </div>
 </section>
 
+<!-- ====== Reviews ====== -->
+<section id="review" class="section review">
+  <div class="wrap">
+    <header class="sec-head" data-reveal="left">
+      <span class="sec-no">八</span>
+      <h2 data-i18n="rv.title">Leave us a review</h2>
+    </header>
+    <p class="rv-intro" data-i18n="rv.intro">Enjoyed your hell-steaming experience? Tell us and other travelers — on Google, on Instagram, or right here on this page.</p>
+    <div class="rv-grid">
+      <div class="rv-side">
+        <article class="rv-card tilt" data-reveal="left">
+          <h3 data-i18n="rv.g.t">Google reviews</h3>
+          <p data-i18n="rv.g.b">Share your visit on Google Maps so other travelers can find us.</p>
+          <div class="rv-actions">
+            <a class="btn btn-fire sm" target="_blank" rel="noopener" href="https://search.google.com/local/writereview?placeid=ChIJD-MRi6GnRjURhoBsDb8vCX0" data-i18n="rv.g.btn">Write a Google review</a>
+            <a class="btn btn-ghost sm" target="_blank" rel="noopener" href="https://www.google.com/maps/place/?q=place_id:ChIJD-MRi6GnRjURhoBsDb8vCX0" data-i18n="rv.g.see">See reviews on Google Maps</a>
+          </div>
+        </article>
+        <article class="rv-card tilt" data-reveal="left" data-delay="1">
+          <h3 data-i18n="rv.i.t">Instagram</h3>
+          <p data-i18n="rv.i.b">Post a photo of your steamed meal, tag @jigokumushikoubou and use the hashtag below.</p>
+          <p class="rv-tag" lang="ja">#地獄蒸し工房</p>
+          <div class="rv-actions">
+            <a class="btn btn-ghost sm" target="_blank" rel="noopener" href="https://www.instagram.com/jigokumushikoubou/"><span data-i18n="rv.i.btn">Open Instagram</span>&nbsp;· @jigokumushikoubou</a>
+          </div>
+        </article>
+      </div>
+      <article class="rv-card rv-web" data-reveal="right">
+        <h3 data-i18n="rv.w.t">Review on this page</h3>
+        <form id="rv-form" novalidate>
+          <div class="rv-field">
+            <label for="rv-name" data-i18n="rv.name">Name (optional)</label>
+            <input id="rv-name" name="name" type="text" maxlength="40" autocomplete="nickname">
+          </div>
+          <fieldset class="rv-field rv-rating">
+            <legend data-i18n="rv.rating">Your rating</legend>
+            <div class="rv-stars">
+              <input type="radio" name="rating" id="rv-s5" value="5"><label for="rv-s5" data-n="5"><span aria-hidden="true">★</span></label>
+              <input type="radio" name="rating" id="rv-s4" value="4"><label for="rv-s4" data-n="4"><span aria-hidden="true">★</span></label>
+              <input type="radio" name="rating" id="rv-s3" value="3"><label for="rv-s3" data-n="3"><span aria-hidden="true">★</span></label>
+              <input type="radio" name="rating" id="rv-s2" value="2"><label for="rv-s2" data-n="2"><span aria-hidden="true">★</span></label>
+              <input type="radio" name="rating" id="rv-s1" value="1"><label for="rv-s1" data-n="1"><span aria-hidden="true">★</span></label>
+            </div>
+          </fieldset>
+          <div class="rv-field">
+            <label for="rv-comment" data-i18n="rv.comment">Your comment</label>
+            <textarea id="rv-comment" name="comment" rows="4" maxlength="500" required></textarea>
+          </div>
+          <button class="btn btn-fire" type="submit" data-i18n="rv.submit">Post review</button>
+          <p class="rv-msg" id="rv-msg" role="status" aria-live="polite"></p>
+        </form>
+        <p class="rv-demo" data-i18n="rv.demo">This is the demo version: reviews posted here are saved only on this device (in your browser) for now and are not sent to the shop.</p>
+        <h4 class="rv-recent-h" data-i18n="rv.recent">Recent reviews</h4>
+        <ul class="rv-list" id="rv-list"></ul>
+        <button type="button" class="rv-clear" id="rv-clear" hidden data-i18n="rv.clear">Delete reviews saved on this device</button>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- ====== More info layers ====== -->
 <section id="more" class="section more">
   <div class="wrap">
     <header class="sec-head" data-reveal="down">
-      <span class="sec-no">八</span>
+      <span class="sec-no">九</span>
       <h2 data-i18n="more.title">More from Kannawa</h2>
     </header>
     <div class="more-grid">

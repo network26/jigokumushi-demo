@@ -28,7 +28,7 @@
     document.title = t('meta.title');
     $('#lang-code').textContent = CODES[lang];
     $$('#lang-list button').forEach(function(b){ b.setAttribute('aria-selected', b.dataset.lang===lang); });
-    renderNotice(); renderPay(); renderMenu(); renderDress(); renderCalendar(); renderBus(); renderFaq(); renderNews();
+    renderNotice(); renderPay(); renderMenu(); renderDress(); renderCalendar(); renderBus(); renderFaq(); renderNews(); renderReviews();
     observeReveals();
   }
   function renderNotice(){
@@ -234,6 +234,33 @@
     if(!document.hidden) requestAnimationFrame(frame); else setTimeout(function(){requestAnimationFrame(frame);},300);
   }
   if(!reduce) requestAnimationFrame(frame);
+
+
+  /* ---------- on-site reviews (demo: stored in this browser only) ---------- */
+  var RV_KEY = 'jk-reviews';
+  function rvLoad(){ try{ var a = JSON.parse(localStorage.getItem(RV_KEY)||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+  function rvSave(a){ try{ localStorage.setItem(RV_KEY, JSON.stringify(a)); return true; }catch(e){ return false; } }
+  function rvMsg(k,cls){ var m=$('#rv-msg'); m.textContent = k ? t(k) : ''; m.className = 'rv-msg' + (cls?' '+cls:''); }
+  function renderReviews(){
+    $$('#rv-form .rv-stars label').forEach(function(l){ var s=fmt(t('rv.star'),{n:l.dataset.n}); l.setAttribute('aria-label',s); l.title=s; });
+    $('#rv-name').placeholder = t('rv.ph.name'); $('#rv-comment').placeholder = t('rv.ph.comment');
+    var all = rvLoad(), list = all.slice(0,5);
+    $('#rv-clear').hidden = !all.length;
+    $('#rv-list').innerHTML = list.length ? list.map(function(r){
+      var n = Math.min(5,Math.max(1,+r.rating||1)), when = '';
+      try{ when = new Date(r.ts).toLocaleDateString(t('_locale'),{year:'numeric',month:'short',day:'numeric'}); }catch(e){}
+      return '<li><div class="rv-top"><b>'+esc(r.name||t('rv.anon'))+'</b><span class="st" role="img" aria-label="'+esc(fmt(t('rv.star'),{n:n}))+'">'+'★'.repeat(n)+'<span style="opacity:.25">'+'★'.repeat(5-n)+'</span></span><span>'+esc(when)+'</span></div><p>'+esc(r.comment)+'</p></li>';
+    }).join('') : '<li class="rv-empty">'+esc(t('rv.empty'))+'</li>';
+  }
+  $('#rv-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var f=e.target, rating=f.querySelector('input[name=rating]:checked'), comment=f.elements.comment.value.trim();
+    if(!rating || !comment){ rvMsg('rv.need','err'); (rating?f.elements.comment:$('#rv-s5')).focus(); return; }
+    var a = rvLoad(); a.unshift({name:f.elements.name.value.trim().slice(0,40), rating:+rating.value, comment:comment.slice(0,500), ts:Date.now()});
+    if(!rvSave(a.slice(0,50))){ rvMsg('rv.fail','err'); return; }
+    f.reset(); renderReviews(); rvMsg('rv.thanks','ok');
+  });
+  $('#rv-clear').addEventListener('click',function(){ if(confirm(t('rv.confirm'))){ rvSave([]); renderReviews(); rvMsg(''); } });
 
   /* ---------- boot ---------- */
   render(); bindTilt(); update();

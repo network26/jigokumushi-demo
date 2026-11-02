@@ -33,6 +33,7 @@ I18N['zh-Hant'] = {
   'food.title': '蒸制食材菜單（2026年10月1日修訂）',
   'cat.all': '全部', 'cat.set': '套餐', 'cat.sea': '海鮮', 'cat.meat': '肉類', 'cat.veg': '蔬菜·豆腐', 'cat.dim': '點心·小點', 'cat.rice': '飯·面·鍋物', 'cat.sweet': '麵包·甜點',
   'cat.top': '精選8道', 'top.title': '我們的精選8道', 'top.sub': '這是我們首先推薦的8道菜。點選上方「全部」或某個分類即可查看完整菜單。', 'top.badge': '精選8道', 'top.status': '顯示全部 {m} 道菜中的精選8道', 'menu.status': '顯示 {m} 道菜中的 {n} 道', 'food.filterLabel': '菜單分類',
+  'nav.review': '評價', 'rv.title': '留下您的評價', 'rv.intro': '地獄蒸體驗如何？歡迎在 Google、Instagram 或本頁面告訴我們和其他旅客。', 'rv.g.t': 'Google 評價', 'rv.g.b': '在 Google 地圖上分享您的到訪體驗，讓更多旅客找到我們。', 'rv.g.btn': '撰寫 Google 評價', 'rv.g.see': '在 Google 地圖查看評價', 'rv.i.t': 'Instagram', 'rv.i.b': '上傳您的蒸煮美食照片，標註 @jigokumushikoubou 並使用下方主題標籤。', 'rv.i.btn': '開啟 Instagram', 'rv.w.t': '在本頁面評價', 'rv.name': '姓名（選填）', 'rv.ph.name': '您的姓名', 'rv.rating': '您的評分', 'rv.star': '5 顆星中的 {n} 顆', 'rv.comment': '您的評論', 'rv.ph.comment': '您的地獄蒸體驗如何？', 'rv.submit': '送出評價', 'rv.demo': '這是示範版本：目前在此發佈的評價僅儲存在本裝置（瀏覽器）中，不會傳送給店家。', 'rv.recent': '最近評價', 'rv.empty': '本裝置上還沒有評價，來寫第一則吧！', 'rv.anon': '訪客', 'rv.thanks': '謝謝！您的評價已儲存在本裝置上。', 'rv.need': '請選擇星級評分並填寫評論。', 'rv.clear': '刪除本裝置上儲存的評價', 'rv.fail': '抱歉，瀏覽器無法儲存您的評價。', 'rv.confirm': '要刪除本裝置上儲存的所有評價嗎？',
   'serv.1': '1人份', 'serv.12': '1~2人份', 'serv.2': '2人份', 'pcs': '{n}個', 'rec': '推薦',
   'food.setNote': '附豬肉粽1個 · 可換成竹皮包白飯',
   'food.n1': '歡迎搭配與蒸料理絕配的各式醬汁一同享用。',
