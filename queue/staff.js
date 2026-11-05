@@ -79,14 +79,39 @@
   $('#rows').addEventListener('click', function (e) {
     var b = e.target.closest('button[data-act]'); if (!b) return;
     var id = b.getAttribute('data-id'), act = b.getAttribute('data-act');
-    api[act === 'noshow' ? 'noShow' : act](id);
+    api[act === 'noshow' ? 'noShow' : act](id); delete fresh[id];
+    if (act === 'call') { var r = Q.findById(api.getState(), id); if (r) say('Called No. ' + r.no + ' – their phone is alerting now / ' + r.no + '番を呼び出しました'); }
   });
   }
   function say(m) { $('#s-live').textContent = m; }
 
+  /* ---- "new person joined": row highlight + banner + short beep. Customers are never alerted until Call is pressed here. ---- */
+  var seen = null, fresh = {}, ac = null;
+  function beep() {
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      if (!ac) ac = new AC(); if (ac.state === 'suspended') ac.resume();
+      var t0 = ac.currentTime;
+      [[660, 0], [990, .14]].forEach(function (n) { var o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = n[0]; g.gain.setValueAtTime(.0001, t0 + n[1]); g.gain.exponentialRampToValueAtTime(.25, t0 + n[1] + .02); g.gain.exponentialRampToValueAtTime(.0001, t0 + n[1] + .2); o.connect(g); g.connect(ac.destination); o.start(t0 + n[1]); o.stop(t0 + n[1] + .22); });
+    } catch (e) {}
+  }
+  document.addEventListener('pointerdown', function () { try { var AC = window.AudioContext || window.webkitAudioContext; if (AC && !ac) ac = new AC(); if (ac && ac.state === 'suspended') ac.resume(); } catch (e) {} }, true);
+  function trackNew(st) {
+    var now = Date.now(), added = [];
+    if (seen === null) { seen = {}; st.entries.forEach(function (e) { seen[e.id] = 1; }); return; }
+    st.entries.forEach(function (e) { if (!seen[e.id]) { seen[e.id] = 1; if (e.status === 'waiting') { fresh[e.id] = now; added.push(e); } } });
+    Object.keys(fresh).forEach(function (id) { if (now - fresh[id] > 60000) delete fresh[id]; });
+    if (added.length) {
+      var m = added.map(function (e) { return 'No. ' + e.no + ' (' + e.size + 'p' + (e.nick ? ', ' + e.nick : '') + ')'; }).join(', ');
+      var nb = $('#new-banner'); nb.textContent = 'New in line / 新しいお客様: ' + m + ' – press Call when ready / 準備ができたら「呼出」'; nb.hidden = false;
+      clearTimeout(trackNew.t); trackNew.t = setTimeout(function () { nb.hidden = true; }, 15000);
+      say('New in line: ' + m); beep();
+    }
+  }
+
   function render() {
     if (!authed || !api) return;
-    var st = api.getState(), now = Date.now(), c = { waiting: 0, called: 0, seated: 0, noshow: 0 };
+    var st = api.getState(), now = Date.now(); trackNew(st); var c = { waiting: 0, called: 0, seated: 0, noshow: 0 };
     st.entries.forEach(function (e) { if (c[e.status] != null) c[e.status]++; });
     $('#n-wait').textContent = c.waiting; $('#n-called').textContent = c.called; $('#n-seated').textContent = c.seated; $('#n-no').textContent = c.noshow;
     var o = $('#s-open'); o.textContent = st.open ? 'Queue open' : 'Queue closed'; o.className = 'badge' + (st.open ? '' : ' closed');
@@ -104,10 +129,11 @@
       if (e.status === 'called') btns += '<button type="button" class="btn btn-ghost sm" data-act="call" data-id="' + esc(e.id) + '">Call again <span lang="ja">再呼出</span></button>';
       if (e.status === 'called') btns += '<button type="button" class="btn btn-gold sm" data-act="seat" data-id="' + esc(e.id) + '">Seat <span lang="ja">案内</span></button>';
       if (live) btns += '<button type="button" class="btn btn-ghost sm" data-act="noshow" data-id="' + esc(e.id) + '">No-show <span lang="ja">不在</span></button>';
-      return '<tr class="' + esc(e.status) + '"><td class="no">' + e.no + '</td><td>' + e.size + '</td><td>' + (e.nick ? esc(e.nick) : '<span class="tag">—</span>') + '<br><small class="meta">' + esc(e.id) + '</small> ' + (e.lang ? '<span class="tag lang" lang="' + esc(e.lang) + '" title="Ticket language / 言語">' + esc(LT[e.lang] || e.lang) + '</span>' : '') + '</td><td><span class="tag ' + esc(e.status) + '">' + (ST[e.status] || esc(e.status)) + '</span></td><td>' + mins((e.doneAt || now) - e.joinedAt) + '</td><td class="act"><div>' + btns + '</div></td></tr>';
+      var isNew = e.status === 'waiting' && fresh[e.id];
+      return '<tr class="' + esc(e.status) + (isNew ? ' is-new' : '') + '" data-id="' + esc(e.id) + '"><td class="no">' + e.no + (isNew ? ' <span class="tag new">NEW</span>' : '') + '</td><td>' + e.size + '</td><td>' + (e.nick ? esc(e.nick) : '<span class="tag">—</span>') + '<br><small class="meta">' + esc(e.id) + '</small></td><td>' + (e.lang ? '<span class="tag lang" lang="' + esc(e.lang) + '" title="Ticket language / 言語">' + esc(LT[e.lang] || e.lang) + '</span>' : '—') + '</td><td><span class="tag ' + esc(e.status) + '">' + (ST[e.status] || esc(e.status)) + '</span></td><td>' + mins((e.doneAt || now) - e.joinedAt) + '</td><td class="act"><div>' + btns + '</div></td></tr>';
     }).join('');
   }
-  setInterval(render, 30000); // refresh elapsed minutes
+  setInterval(render, 15000); // refresh elapsed minutes
   if (EMBED) document.body.classList.add('embed');
   JKGate.ready.then(function (ok) { authed = ok; boot(); api && api.subscribe(function () { render(); }); });
 })();

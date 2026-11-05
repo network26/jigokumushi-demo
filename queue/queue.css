@@ -112,3 +112,11 @@ body.embed .stats b{font-size:22px}
   .dc-info{display:none}
 }
 .tag.lang{border-color:var(--gold);color:var(--gold);margin-left:4px}
+
+/* staff: new arrivals */
+.new-banner{background:#c8452b;color:#fff;font-weight:700;padding:10px 14px;border-radius:8px;margin:0 0 12px;animation:jk-pulse 1.2s ease-in-out 3}
+tr.is-new td{background:rgba(200,69,43,.16)}
+tr.is-new{animation:jk-pulse 1.2s ease-in-out 2}
+.tag.new{background:#c8452b;color:#fff;border-color:#c8452b}
+@keyframes jk-pulse{0%,100%{opacity:1}50%{opacity:.55}}
+@media (prefers-reduced-motion:reduce){.new-banner,tr.is-new{animation:none}}

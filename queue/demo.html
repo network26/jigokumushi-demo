@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#0b0a09">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="queue.css">
+<link rel="stylesheet" href="queue.css?v=20261105">
 </head>
 <body class="wide">
 <p id="locked" class="demo-note" style="max-width:640px;margin:40px auto" hidden>Private page. 関係者専用ページです。</p>
@@ -36,18 +36,18 @@
 </div>
 <div class="dc-grid" id="dc-grid" data-show="both">
   <section class="dc-pane" id="pane-customer"><h2>Customer view / お客様</h2>
-    <iframe id="fr-customer" title="Customer view" src="about:blank" data-src="index.html?embed=1" allow="autoplay; vibrate"></iframe></section>
+    <iframe id="fr-customer" title="Customer view" src="about:blank" data-src="index.html?embed=1&v=20261105" allow="autoplay; vibrate"></iframe></section>
   <section class="dc-pane" id="pane-staff"><h2>Staff controls / スタッフ</h2>
     <iframe id="fr-staff" title="Staff controls" src="about:blank"></iframe></section>
 </div>
-<script src="gate.js"></script>
+<script src="gate.js?v=20261105"></script>
 <script>
 (function () {
   JKGate.ready.then(function (ok) {
     if (!ok) { document.getElementById('locked').hidden = false; return; }
     document.getElementById('demo-all').hidden = false;
     var fc = document.getElementById('fr-customer'); fc.src = fc.getAttribute('data-src');
-    document.getElementById('fr-staff').src = 'staff.html?embed=1#k=' + encodeURIComponent(JKGate.key());
+    document.getElementById('fr-staff').src = 'staff.html?embed=1&v=20261105#k=' + encodeURIComponent(JKGate.key());
   });
   var g = document.getElementById('dc-grid');
   document.querySelectorAll('.dc-tabs button').forEach(function (b) {

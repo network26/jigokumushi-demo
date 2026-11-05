@@ -14,7 +14,8 @@
     } catch (e) {}
     return c;
   })();
-  var api = CLASS ? JKRelay.customer(CLASS) : Q.create();
+  // Customer side gets ONLY join/leave/read: no call / callNext / seat / reset reach this page (staff page only).
+  var api = (function (full) { return { getState: full.getState, subscribe: full.subscribe, join: full.join, leave: full.leave, myId: full.myId, clearMe: full.clearMe }; })(CLASS ? JKRelay.customer(CLASS) : Q.create());
   function findMe(st) { var id = ticketId(); if (!id) return null; return Q.findById(st, id) || (st.pending && st.pending.id === id ? st.pending : null); }
   var $ = function (s) { return document.querySelector(s); }, $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
   var LANGS = [['en','English'],['ja','日本語'],['ko','한국어'],['zh-Hans','简体中文'],['zh-Hant','繁體中文'],['fr','Français'],['vi','Tiếng Việt'],['es','Español'],['de','Deutsch'],['th','ไทย'],['id','Bahasa Indonesia'],['pt','Português'],['it','Italiano']];
@@ -228,16 +229,9 @@
     document.title = baseTitle;
     try { if (swReg && swReg.getNotifications) swReg.getNotifications({ tag: 'jk-queue-' + curNo }).then(function (l) { l.forEach(function (n) { n.close(); }); }); } catch (e) {}
   }
-  function testAlert() {      // sound + vibration + banner + notification, same path as a real call but short
-    unlockAudio(false); askNotifications();
-    chime(); vibrate([200, 100, 200]);
-    showBanner(ta('testMsg'));
-    clearTimeout(testTimer); testTimer = setTimeout(function () { if (!alarmTimer) hideBanner(); }, 6000);
-    notify('test', true);
-  }
+  // (No self-test button: only the staff page can make this phone alert.)
   $('#called-ok').addEventListener('click', function () { dismissedSig = alertedSig; ss(DISMISS_KEY, dismissedSig); stopAlarm(); });
   $('#alerts-btn').addEventListener('click', enableAlerts);
-  $('#test-btn').addEventListener('click', testAlert);
 
   /* ---------- ticket ---------- */
   function ticketId() { if (CLASS) return api.myId(); try { return sessionStorage.getItem(TICKET_KEY); } catch (e) { return null; } }
@@ -276,7 +270,7 @@
       var ps = $('#t-status'); ps.textContent = t('s.waiting'); ps.className = 'status waiting';
       $('#t-ahead').hidden = false; $('#t-ahead').textContent = t('pend'); $('#t-wait').hidden = true;
       $('#leave-btn').hidden = false; $('#again-btn').hidden = true;
-      $('#alert-row').hidden = false; $('#alerts-btn').hidden = alertsEnabled; $('#test-btn').hidden = !alertsEnabled; $('#alerts-on').hidden = !alertsEnabled;
+      $('#alert-row').hidden = false; $('#alerts-btn').hidden = alertsEnabled; $('#alerts-on').hidden = !alertsEnabled;
       $('#alert-status').hidden = !alertsEnabled; updateStatus(); lastStatus = null; stopAlarm(); document.title = baseTitle;
       return;
     }
@@ -298,7 +292,7 @@
     }
     var done = !(me.status === 'waiting' || me.status === 'called');
     $('#leave-btn').hidden = done; $('#again-btn').hidden = !done;
-    $('#alert-row').hidden = done; $('#alerts-btn').hidden = alertsEnabled; $('#test-btn').hidden = !alertsEnabled; $('#alerts-on').hidden = !alertsEnabled || done;
+    $('#alert-row').hidden = done; $('#alerts-btn').hidden = alertsEnabled; $('#alerts-on').hidden = !alertsEnabled || done;
     $('#alert-status').hidden = !alertsEnabled || done; updateStatus();
 
     // transitions: a "call" is identified by ticket + call counter + time, so Call again re-alerts
