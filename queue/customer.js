@@ -18,7 +18,7 @@
   var api = (function (full) { return { getState: full.getState, subscribe: full.subscribe, join: full.join, leave: full.leave, myId: full.myId, clearMe: full.clearMe }; })(CLASS ? JKRelay.customer(CLASS) : Q.create());
   function findMe(st) { var id = ticketId(); if (!id) return null; return Q.findById(st, id) || (st.pending && st.pending.id === id ? st.pending : null); }
   var $ = function (s) { return document.querySelector(s); }, $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
-  var LANGS = [['en','English'],['ja','日本語'],['ko','한국어'],['zh-Hans','简体中文'],['zh-Hant','繁體中文'],['fr','Français'],['vi','Tiếng Việt'],['es','Español'],['de','Deutsch'],['th','ไทย'],['id','Bahasa Indonesia'],['pt','Português'],['it','Italiano']];
+  var LANGS = [['en','English'],['ja','日本語'],['ko','한국어'],['zh-Hans','简体中文'],['zh-Hant','繁體中文'],['fr','Français'],['vi','Tiếng Việt'],['es','Español'],['de','Deutsch'],['th','ไทย'],['id','Bahasa Indonesia'],['pt','Português'],['it','Italiano'],['my','မြန်မာ']];
   var TICKET_KEY = 'jk-q-ticket'; // sessionStorage = one "customer" per tab, so Nathan can test several customers in several tabs.
                                   // (A real version would keep the ticket id in a cookie / localStorage on the phone.)
 
@@ -40,6 +40,8 @@
   // ALERTS: always use the language the ticket was joined in (ticket.lang) = source of truth, even if the page UI language is switched later.
   var alertLang = lang;
   function ta(k, o) { return tt(alertLang, k, o); }
+  // Queue CALL alerts are always bilingual English + Japanese (restaurant name included), whatever the page/ticket language.
+  function bi(k, o, sep) { return tt('en', k, o) + (sep || '\n') + tt('ja', k, o); }
   var sel = $('#q-lang');
   LANGS.forEach(function (l) { var o = document.createElement('option'); o.value = l[0]; o.textContent = l[1]; sel.appendChild(o); });
   sel.addEventListener('change', function () { lang = sel.value; try { localStorage.setItem('jk-lang', lang); } catch (e) {} applyLang(); render(); });
@@ -48,7 +50,7 @@
     document.documentElement.lang = lang;
     sel.value = lang;
     $$('[data-q]').forEach(function (el) { el.textContent = t(el.getAttribute('data-q')); });
-    $('#called-ok').textContent = ta('ok');
+    $('#called-ok').textContent = bi('ok', null, ' / ');
     var fs = $('#f-size'), cur = fs.value || '2';
     fs.innerHTML = '';
     for (var i = 1; i <= 12; i++) { var o = document.createElement('option'); o.value = i; o.textContent = t('party', { n: i }); fs.appendChild(o); }
@@ -61,9 +63,9 @@
     alertLang = (me && me.lang && QI18N[me.lang]) ? me.lang : lang;
     curNo = me ? me.no : null;
     baseTitle = ta('title') + ' | 地獄蒸し工房 鉄輪';
-    $('#called-ok').textContent = ta('ok');
+    $('#called-ok').textContent = bi('ok', null, ' / ');
     $('#called-banner').setAttribute('lang', alertLang);
-    if (!$('#called-banner').hidden && alarmTimer) $('#called-msg').textContent = ta('calledMsg');
+    if (!$('#called-banner').hidden && alarmTimer) $('#called-msg').textContent = bi('calledMsg');
   }
 
   /* ---------- alerts: sound + vibration + banner + title flash + system notification ----------
@@ -170,8 +172,8 @@
     return navigator.serviceWorker.getRegistration().then(function (r) { if (r) { swReg = r; if (!r.active) return navigator.serviceWorker.ready; } return r || null; }).catch(function () { return null; });
   }
   function notifText(l, kind, no) {
-    return { title: 'Jigoku Mushikobo Kanawa · ' + tt(l, 'yourNo') + ' ' + no,
-             body: kind === 'called' ? tt(l, 'calledMsg') : kind === 'test' ? tt(l, 'testMsg') : 'Jigoku Mushikobo Kanawa: ' + tt(l, 's.noshow') };
+    return { title: 'Jigoku Mushikobo Kanawa · ' + bi('yourNo', null, ' / ') + ' ' + no,
+             body: kind === 'called' ? bi('calledMsg') : kind === 'test' ? bi('testMsg') : 'Jigoku Mushikobo Kanawa: ' + bi('s.noshow') };
   }
   function notify(kind, test) {
     try {
@@ -209,12 +211,12 @@
   function hideBanner() { $('#called-banner').hidden = true; document.body.classList.remove('is-called'); }
   function startFlash() {
     clearInterval(flashTimer); var on = false;
-    flashTimer = setInterval(function () { on = !on; document.title = on ? ta('tab') : baseTitle; }, 900);
+    flashTimer = setInterval(function () { on = !on; document.title = on ? bi('tab', null, ' / ') : baseTitle; }, 900);
   }
   function startAlarm() {
     stopAlarm();
     dbg.rings++;
-    showBanner(ta('calledMsg'));
+    showBanner(bi('calledMsg'));
     var ring = function () { chime(); vibrate([400, 150, 400, 150, 800]); };
     ring(); alarmTimer = setInterval(ring, 3500);
     startFlash();
@@ -299,15 +301,15 @@
     if (me.status === 'called') {
       var sig = me.id + ':' + (me.calls || 1) + ':' + me.calledAt;
       if (alertedSig !== sig) { alertedSig = sig; if (dismissedSig !== sig) startAlarm(); }
-      else if (!$('#called-banner').hidden) $('#called-msg').textContent = ta('calledMsg');
+      else if (!$('#called-banner').hidden) $('#called-msg').textContent = bi('calledMsg');
     } else { alertedSig = null; stopAlarm(); }
     if (me.status === 'waiting') document.title = '#' + me.no + ' · ' + (ahead ? ta('ahead', { n: ahead }) : ta('next')) + ' | ' + baseTitle;
     if (me.status === 'noshow' && (lastStatus === 'waiting' || lastStatus === 'called')) {   // staff marked no-show: alert in the ticket language
-      showBanner(ta('s.noshow')); clearTimeout(testTimer); testTimer = setTimeout(hideBanner, 8000); notify('noshow', false); document.title = ta('s.noshow') + ' | ' + baseTitle;
+      showBanner('Jigoku Mushikobo Kanawa: ' + bi('s.noshow')); clearTimeout(testTimer); testTimer = setTimeout(hideBanner, 8000); notify('noshow', false); document.title = ta('s.noshow') + ' | ' + baseTitle;
     }
     else if (me.status !== 'called' && me.status !== 'noshow') document.title = baseTitle;
 
-    var msg = me.status === 'called' ? ta('calledMsg') : me.status === 'waiting' ? ta('yourNo') + ' ' + me.no + '. ' + (ahead ? ta('ahead', { n: ahead }) : ta('next')) : ta('s.' + me.status);
+    var msg = me.status === 'called' ? bi('calledMsg') : me.status === 'waiting' ? ta('yourNo') + ' ' + me.no + '. ' + (ahead ? ta('ahead', { n: ahead }) : ta('next')) : ta('s.' + me.status);
     if (msg !== lastLive) { $('#q-live').textContent = msg; lastLive = msg; }
     lastStatus = me.status;
   }

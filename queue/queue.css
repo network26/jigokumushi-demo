@@ -120,3 +120,6 @@ tr.is-new{animation:jk-pulse 1.2s ease-in-out 2}
 .tag.new{background:#c8452b;color:#fff;border-color:#c8452b}
 @keyframes jk-pulse{0%,100%{opacity:1}50%{opacity:.55}}
 @media (prefers-reduced-motion:reduce){.new-banner,tr.is-new{animation:none}}
+
+#called-msg{white-space:pre-line}
+html[lang=my] body{font-family:'Noto Sans Myanmar','Myanmar Text','Padauk',sans-serif;line-height:1.9}

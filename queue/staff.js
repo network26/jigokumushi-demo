@@ -68,7 +68,7 @@
 
   var ST = { waiting: 'Waiting / 待ち', called: 'Called / 呼出中', seated: 'Seated / 案内済', noshow: 'No-show / 不在', left: 'Left / 退出' };
   function mins(ms) { return Math.max(0, Math.round(ms / 60000)) + ' min'; }
-  var LT = { en: 'EN', ja: '日本語', ko: '한국어', 'zh-Hans': '简体中文', 'zh-Hant': '繁體中文', fr: 'FR', vi: 'VI', es: 'ES', de: 'DE', th: 'ไทย', id: 'ID', pt: 'PT', it: 'IT' };
+  var LT = { en: 'EN', ja: '日本語', ko: '한국어', 'zh-Hans': '简体中文', 'zh-Hant': '繁體中文', fr: 'FR', vi: 'VI', es: 'ES', de: 'DE', th: 'ไทย', id: 'ID', pt: 'PT', it: 'IT', my: 'မြန်မာ' };
   var NAMES = ['Walk-in', 'Table-for', 'Guest'];
 
   function initButtons() {

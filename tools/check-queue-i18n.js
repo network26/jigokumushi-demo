@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Checks queue/i18n.js: every key exists in all 13 languages, no empty values, {n} placeholders match,
+/* Checks queue/i18n.js: every key exists in all 14 languages, no empty values, {n} placeholders match,
  * and no value is a verbatim copy of the English text (= English fallback leaking). Usage: node tools/check-queue-i18n.js */
 global.window = {}; require('../queue/i18n.js');
 const D = window.QI18N, en = D.en, langs = Object.keys(D), bad = [];

@@ -5,10 +5,11 @@ self.window = self;
 importScripts('i18n.js');
 var D = self.QI18N;
 function tr(l, k) { return (D[l] && D[l][k] != null) ? D[l][k] : D.en[k]; }
+function bi(k, sep) { return tr('en', k) + (sep || '\n') + tr('ja', k); }   // call alerts: always English + Japanese
 function build(d) {
   d = d || {}; var l = D[d.lang] ? d.lang : 'en', kind = d.kind || 'called';
-  return { title: 'Jigoku Mushikobo Kanawa · ' + tr(l, 'yourNo') + ' ' + (d.no || ''),
-           opts: { body: kind === 'called' ? tr(l, 'calledMsg') : kind === 'test' ? tr(l, 'testMsg') : 'Jigoku Mushikobo Kanawa: ' + tr(l, 's.noshow'), lang: l, tag: 'jk-queue-' + (d.no || ''), renotify: true,
+  return { title: 'Jigoku Mushikobo Kanawa · ' + bi('yourNo', ' / ') + ' ' + (d.no || ''),
+           opts: { body: kind === 'called' ? bi('calledMsg') : kind === 'test' ? bi('testMsg') : 'Jigoku Mushikobo Kanawa: ' + bi('s.noshow'), lang: l, tag: 'jk-queue-' + (d.no || ''), renotify: true,
                    requireInteraction: kind === 'called', vibrate: [400, 150, 400, 150, 800] }, lang: l };
 }
 self.addEventListener('install', function () { self.skipWaiting(); });

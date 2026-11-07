@@ -4,9 +4,9 @@
   var LANGS = [
     ['en','English','English'],['ja','日本語','Japanese'],['ko','한국어','Korean'],['zh-Hans','简体中文','Chinese (Simplified)'],
     ['zh-Hant','繁體中文','Chinese (Traditional)'],['fr','Français','French'],['vi','Tiếng Việt','Vietnamese'],['es','Español','Spanish'],
-    ['de','Deutsch','German'],['th','ไทย','Thai'],['id','Bahasa Indonesia','Indonesian'],['pt','Português','Portuguese'],['it','Italiano','Italian']
+    ['de','Deutsch','German'],['th','ไทย','Thai'],['id','Bahasa Indonesia','Indonesian'],['pt','Português','Portuguese'],['it','Italiano','Italian'],['my','မြန်မာ','Burmese']
   ];
-  var CODES = {en:'EN',ja:'日',ko:'한','zh-Hans':'简','zh-Hant':'繁',fr:'FR',vi:'VI',es:'ES',de:'DE',th:'TH',id:'ID',pt:'PT',it:'IT'};
+  var CODES = {en:'EN',ja:'日',ko:'한','zh-Hans':'简','zh-Hant':'繁',fr:'FR',vi:'VI',es:'ES',de:'DE',th:'TH',id:'ID',pt:'PT',it:'IT',my:'MY'};
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var lang = 'en';
   try { lang = localStorage.getItem('jk-lang') || ''; } catch(e){}
