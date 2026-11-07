@@ -89,3 +89,4 @@ I18N.en = {
 };
 
 Object.assign(I18N['en'], {"sup.title":"Support Jigoku Mushikobo Kanawa","sup.body":"Enjoyed your steam-cooked meal? A support option would help keep Jigoku Mushikobo Kanawa running, and we propose sharing a related benefit with the local Kannawa / Beppu community.","sup.note":"Demo proposal only: no payments are collected on this site and no official city partnership is implied."});
+Object.assign(I18N['en'], {"nav.login": "Members login (demo)"});

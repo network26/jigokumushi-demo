@@ -89,3 +89,4 @@ I18N['zh-Hans'] = {
 };
 
 Object.assign(I18N['zh-Hans'], {"sup.title":"支持 Jigoku Mushikobo Kanawa","sup.body":"喜欢地狱蒸料理吗？支持可帮助 Jigoku Mushikobo Kanawa 持续运营，我们提议将部分相关益处回馈铁轮・别府当地社区。","sup.note":"仅为演示提案：本网站不收取任何款项，也不代表与市政府有正式合作。"});
+Object.assign(I18N['zh-Hans'], {"nav.login": "会员登录（演示）"});

@@ -89,3 +89,4 @@ I18N.pt = {
 };
 
 Object.assign(I18N['pt'], {"sup.title":"Apoie o Jigoku Mushikobo Kanawa","sup.body":"Gostou da refeição no vapor? Um apoio ajudaria o Jigoku Mushikobo Kanawa a funcionar, e propomos compartilhar um benefício com a comunidade local de Kannawa / Beppu.","sup.note":"Apenas uma proposta de demonstração: este site não recebe pagamentos nem indica parceria oficial com a cidade."});
+Object.assign(I18N['pt'], {"nav.login": "Login de membros (demo)"});

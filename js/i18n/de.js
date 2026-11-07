@@ -89,3 +89,4 @@ I18N.de = {
 };
 
 Object.assign(I18N['de'], {"sup.title":"Jigoku Mushikobo Kanawa unterstützen","sup.body":"Hat Ihnen das Dampfgaren gefallen? Eine Unterstützung hilft, Jigoku Mushikobo Kanawa zu betreiben, und wir schlagen vor, einen Teil des Nutzens mit der Gemeinde Kannawa / Beppu zu teilen.","sup.note":"Nur ein Demo-Vorschlag: Auf dieser Seite werden keine Zahlungen angenommen und keine offizielle Partnerschaft mit der Stadt behauptet."});
+Object.assign(I18N['de'], {"nav.login": "Mitglieder-Login (Demo)"});

@@ -89,3 +89,4 @@ I18N.ko = {
 };
 
 Object.assign(I18N['ko'], {"sup.title":"Jigoku Mushikobo Kanawa 응원하기","sup.body":"지옥찜 요리를 즐기셨나요? 응원은 Jigoku Mushikobo Kanawa 운영을 돕고, 그 혜택의 일부를 간나와·벳푸 지역사회와 나누는 방안을 제안합니다.","sup.note":"데모 제안일 뿐입니다: 이 사이트에서는 결제를 받지 않으며 시와의 공식 제휴를 의미하지 않습니다."});
+Object.assign(I18N['ko'], {"nav.login": "회원 로그인 (데모)"});

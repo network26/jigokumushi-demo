@@ -89,3 +89,4 @@ I18N.vi = {
 };
 
 Object.assign(I18N['vi'], {"sup.title":"Ủng hộ Jigoku Mushikobo Kanawa","sup.body":"Bạn thích món hấp địa ngục? Sự ủng hộ giúp Jigoku Mushikobo Kanawa duy trì hoạt động, và chúng tôi đề xuất chia sẻ một phần lợi ích với cộng đồng Kannawa / Beppu.","sup.note":"Chỉ là đề xuất demo: trang này không thu tiền và không ngụ ý hợp tác chính thức với thành phố."});
+Object.assign(I18N['vi'], {"nav.login": "Đăng nhập thành viên (demo)"});

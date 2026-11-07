@@ -89,3 +89,4 @@ I18N.id = {
 };
 
 Object.assign(I18N['id'], {"sup.title":"Dukung Jigoku Mushikobo Kanawa","sup.body":"Suka hidangan kukus Anda? Dukungan membantu Jigoku Mushikobo Kanawa tetap berjalan, dan kami mengusulkan berbagi manfaat dengan komunitas lokal Kannawa / Beppu.","sup.note":"Hanya usulan demo: situs ini tidak menerima pembayaran dan tidak menyiratkan kemitraan resmi dengan kota."});
+Object.assign(I18N['id'], {"nav.login": "Masuk anggota (demo)"});

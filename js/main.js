@@ -25,6 +25,8 @@
   function render(){
     document.documentElement.lang = lang;
     $$('[data-qlink]').forEach(function(a){ a.setAttribute('href','queue/?lang='+encodeURIComponent(lang)); });
+    // members demo supports en/ja/my; other site languages open it in English
+    $$('[data-members]').forEach(function(a){ a.setAttribute('href','members/?lang='+(/^(en|ja|my)$/.test(lang)?lang:'en')); });
     $$('[data-i18n]').forEach(function(el){ el.textContent = t(el.getAttribute('data-i18n')); });
     $$('[data-alt]').forEach(function(el){ var v=t(el.getAttribute('data-alt')); el.alt=v; if(el.parentNode && el.parentNode.tagName==='A') el.parentNode.setAttribute('aria-label', t('qs.title')+' – '+v); });
     document.title = t('meta.title');
@@ -168,7 +170,7 @@
   var zs=$('#steam'), rings=$$('.zoom-ring'), core=$('.zoom-core'), ztext=$('.zoom-text'), zsteps=$$('.zoom-steps li');
   var tun=$('#flow'), tl=$$('.t-layer'), tdots=$$('.tunnel-dots i');
   var kbg=$$('.kanji-bg'), header=$('#site-header'), prog=$('#progress');
-  var navLinks=$$('#main-nav a'), secs=navLinks.map(function(a){return $(a.getAttribute('href'));});
+  var navLinks=$$('#main-nav a[href^="#"]'), secs=navLinks.map(function(a){return $(a.getAttribute('href'));});
   function prog01(el){ var r=el.getBoundingClientRect(), h=el.offsetHeight-innerHeight; return Math.min(1,Math.max(0,-r.top/(h||1))); }
   var ticking=false;
   function onScroll(){ if(!ticking){ ticking=true; requestAnimationFrame(update); } }
