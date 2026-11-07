@@ -87,3 +87,5 @@ I18N['zh-Hant'] = {
   'foot.demo': '本頁面為設計概念演示（非官方網站）。所有資訊均來自 jigokumushi.com。',
   'pay.title': "付款方式", 'pay.sub': "售票機可使用現金及無現金支付", 'pay.tag': "支援無現金支付", 'pay.card': "信用卡", 'pay.emoney': "電子錢包", 'pay.qr': "QR Code 支付", 'pay.cash': "現金", 'pay.ic': "交通IC卡", 'pay.cashChip': "日圓（現金）", 'pay.cashNote': "售票機也支援2024年7月起發行的新版紙鈔。", 'pay.coupon': "地獄蒸鍋使用費也可用回數券（15分鐘以內10次券，2,500日圓）支付。", 'pay.n1': "自2023年6月1日起，我們導入了支援信用卡、電子錢包及QR Code支付的無現金售票機，不必掏出現金即可順暢付款。", 'pay.n2': "支援的品牌以2023年6月及2024年6月的官方公告為準。"
 };
+
+Object.assign(I18N['zh-Hant'], {"sup.title":"支持 Jigoku Mushikobo Kanawa","sup.body":"喜歡地獄蒸料理嗎？支持可幫助 Jigoku Mushikobo Kanawa 持續營運，我們提議將部分相關益處回饋鐵輪・別府當地社區。","sup.note":"僅為示範提案：本網站不收取任何款項，也不代表與市政府有正式合作。"});

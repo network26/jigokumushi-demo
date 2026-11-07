@@ -170,8 +170,8 @@
     return navigator.serviceWorker.getRegistration().then(function (r) { if (r) { swReg = r; if (!r.active) return navigator.serviceWorker.ready; } return r || null; }).catch(function () { return null; });
   }
   function notifText(l, kind, no) {
-    return { title: '地獄蒸し工房 · ' + tt(l, 'yourNo') + ' ' + no,
-             body: kind === 'called' ? tt(l, 'calledMsg') : kind === 'test' ? tt(l, 'testMsg') : tt(l, 's.noshow') };
+    return { title: 'Jigoku Mushikobo Kanawa · ' + tt(l, 'yourNo') + ' ' + no,
+             body: kind === 'called' ? tt(l, 'calledMsg') : kind === 'test' ? tt(l, 'testMsg') : 'Jigoku Mushikobo Kanawa: ' + tt(l, 's.noshow') };
   }
   function notify(kind, test) {
     try {

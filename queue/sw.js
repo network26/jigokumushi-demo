@@ -7,8 +7,8 @@ var D = self.QI18N;
 function tr(l, k) { return (D[l] && D[l][k] != null) ? D[l][k] : D.en[k]; }
 function build(d) {
   d = d || {}; var l = D[d.lang] ? d.lang : 'en', kind = d.kind || 'called';
-  return { title: '地獄蒸し工房 · ' + tr(l, 'yourNo') + ' ' + (d.no || ''),
-           opts: { body: kind === 'called' ? tr(l, 'calledMsg') : kind === 'test' ? tr(l, 'testMsg') : tr(l, 's.noshow'), lang: l, tag: 'jk-queue-' + (d.no || ''), renotify: true,
+  return { title: 'Jigoku Mushikobo Kanawa · ' + tr(l, 'yourNo') + ' ' + (d.no || ''),
+           opts: { body: kind === 'called' ? tr(l, 'calledMsg') : kind === 'test' ? tr(l, 'testMsg') : 'Jigoku Mushikobo Kanawa: ' + tr(l, 's.noshow'), lang: l, tag: 'jk-queue-' + (d.no || ''), renotify: true,
                    requireInteraction: kind === 'called', vibrate: [400, 150, 400, 150, 800] }, lang: l };
 }
 self.addEventListener('install', function () { self.skipWaiting(); });

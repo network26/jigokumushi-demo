@@ -87,3 +87,5 @@ I18N['zh-Hans'] = {
   'foot.demo': '本页面为设计概念演示（非官方网站）。所有信息均来自 jigokumushi.com。',
   'pay.title': "支付方式", 'pay.sub': "售票机支持现金及无现金支付", 'pay.tag': "支持无现金支付", 'pay.card': "信用卡", 'pay.emoney': "电子钱包", 'pay.qr': "二维码支付", 'pay.cash': "现金", 'pay.ic': "交通IC卡", 'pay.cashChip': "日元（现金）", 'pay.cashNote': "售票机也支持2024年7月起发行的新版纸币。", 'pay.coupon': "地狱蒸锅使用费也可用次数券（15分钟以内10次券，2,500日元）支付。", 'pay.n1': "自2023年6月1日起，我们引进了支持信用卡、电子钱包及二维码支付的无现金售票机，无需掏出现金即可轻松付款。", 'pay.n2': "支持的品牌以2023年6月及2024年6月的官方通知为准。"
 };
+
+Object.assign(I18N['zh-Hans'], {"sup.title":"支持 Jigoku Mushikobo Kanawa","sup.body":"喜欢地狱蒸料理吗？支持可帮助 Jigoku Mushikobo Kanawa 持续运营，我们提议将部分相关益处回馈铁轮・别府当地社区。","sup.note":"仅为演示提案：本网站不收取任何款项，也不代表与市政府有正式合作。"});
