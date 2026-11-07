@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Members (DEMO) · Jigoku Mushikobo Kanawa</title>
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="members.css?v=20261107m">
+</head>
+<body>
+<div class="demo-bar" role="note"><b>DEMO</b> <span data-t="bar"></span></div>
+<header class="top">
+  <a class="brand" href="../" data-t="back"></a>
+  <div class="langs" role="group" aria-label="Language"><button type="button" data-lang="en">EN</button><button type="button" data-lang="ja">日本語</button></div>
+</header>
+
+<main id="landing" class="wrap">
+  <p class="kicker" data-t="kicker"></p>
+  <h1 data-t="h1"></h1>
+  <p class="lead" data-t="lead"></p>
+  <ul class="perks"><li data-t="perk1"></li><li data-t="perk2"></li><li data-t="perk3"></li></ul>
+  <p class="card note" data-t="subPrice"></p>
+  <button type="button" class="btn fire" id="enter" data-t="enter"></button>
+  <p class="small" data-t="noCred"></p>
+  <details class="card walk" open><summary data-t="walkT"></summary><ol><li data-t="w1"></li><li data-t="w2"></li><li data-t="w3"></li></ol></details>
+</main>
+
+<main id="dash" class="wrap" hidden>
+  <div class="row between">
+    <div><p class="kicker" data-t="dashK"></p><h1 data-t="dashH"></h1></div>
+    <div class="row"><span class="badge" data-t="badge"></span><button type="button" class="btn ghost sm" id="logout" data-t="logout"></button></div>
+  </div>
+
+  <section class="card">
+    <h2 data-t="bookH"></h2>
+    <p class="small" data-t="hoursNote"></p>
+    <div class="form">
+      <label><span data-t="dateL"></span><select id="date"></select></label>
+      <label><span data-t="sizeL"></span><select id="size"><option value="small" data-t="small"></option><option value="large" data-t="large"></option></select></label>
+      <label><span data-t="durL"></span><select id="dur"><option value="15">15</option><option value="30">30</option><option value="45">45</option><option value="60">60</option></select></label>
+    </div>
+    <p class="small" data-t="gridHelp"></p>
+    <div class="legend"><span class="free" data-t="lgFree"></span><span class="mine" data-t="lgMine"></span><span class="taken" data-t="lgTaken"></span><span class="sel" data-t="lgSel"></span></div>
+    <div class="grid-wrap"><table id="grid" aria-describedby="gridcap"><caption id="gridcap" class="sr" data-t="gridCap"></caption></table></div>
+  </section>
+
+  <section class="card" id="checkout" hidden>
+    <h2 data-t="sumH"></h2>
+    <dl id="sum"></dl>
+    <p class="small" data-t="feeNote"></p>
+    <div class="row"><button type="button" class="btn fire" id="pay" data-t="pay"></button><button type="button" class="btn ghost" id="clearSel" data-t="clear"></button></div>
+    <p class="small" data-t="payNote"></p>
+  </section>
+
+  <p id="msg" role="status" class="msg" hidden></p>
+
+  <section class="card">
+    <h2 data-t="mineH"></h2>
+    <ul id="mine" class="list"></ul>
+  </section>
+
+  <section class="card">
+    <h2 data-t="ovH"></h2>
+    <p class="small" data-t="ovNote"></p>
+    <ul id="all" class="list small"></ul>
+    <button type="button" class="btn ghost sm" id="reset" data-t="reset"></button>
+  </section>
+
+  <details class="card walk"><summary data-t="walkT"></summary><ol><li data-t="w1"></li><li data-t="w2"></li><li data-t="w3"></li></ol></details>
+</main>
+<footer class="foot small" data-t="foot"></footer>
+<script src="members.js?v=20261107m"></script>
+</body>
+</html>
