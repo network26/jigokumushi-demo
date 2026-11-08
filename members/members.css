@@ -43,3 +43,4 @@ dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px}dt{color:var(--mute)
 .foot{text-align:center;padding:20px;border-top:1px solid var(--line)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 input[type=date]{background:var(--ink3);color:var(--paper);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;min-width:170px;color-scheme:dark}
+.fee-callout{border-color:var(--fire);margin:12px 0}.fee-callout h3{font-family:var(--serif);font-size:1.05rem;color:var(--fire);margin-bottom:6px}.fee-callout ul{margin:0 0 6px 18px}
