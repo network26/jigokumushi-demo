@@ -8,7 +8,7 @@
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="members.css?v=20261108b">
+<link rel="stylesheet" href="members.css?v=20261108c">
 </head>
 <body>
 <div class="demo-bar" role="note"><b>DEMO</b> <span data-t="bar"></span></div>
@@ -39,7 +39,7 @@
     <div class="form">
       <label><span data-t="dateL"></span><input type="date" id="date" required></label>
       <label><span data-t="sizeL"></span><select id="size"><option value="small" data-t="small"></option><option value="large" data-t="large"></option></select></label>
-      <label><span data-t="durL"></span><select id="dur"><option value="15">15</option><option value="30">30</option><option value="45">45</option><option value="60">60</option></select></label>
+      <p class="small" id="durFixed" data-t="durFixed"></p>
     </div>
     <p class="small" data-t="gridHelp"></p>
     <p id="dayNote" class="msg" role="status" hidden></p>
@@ -60,6 +60,7 @@
 
   <section class="card">
     <h2 data-t="mineH"></h2>
+    <p id="mineTotal" class="small" hidden></p>
     <ul id="mine" class="list"></ul>
   </section>
 
@@ -71,6 +72,6 @@
   </section>
 </main>
 <footer class="foot small" data-t="foot"></footer>
-<script src="members.js?v=20261108b"></script>
+<script src="members.js?v=20261108c"></script>
 </body>
 </html>
