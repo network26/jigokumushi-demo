@@ -52,6 +52,8 @@
       foot: 'デモ・学生プロジェクト・公式予約システムではありません・支払いは発生しません'
     }
   };
+  Object.assign(T.en, {"feeNote": "Fee estimate from the official price list (revised July 1, 2021): basic fee covers up to 15 min, then each extra 10 min (or part). No separate local-resident steamer rate is published on the official site, so standard rates are shown; local pricing is unconfirmed. Admission is free; ingredients are bought separately. Subscription pricing: to be confirmed.", "feeSrc": "Official price list (jigokumushi.com)", "polH": "Example cancellation / no-show policy (proposed for this demo, not the facility’s official rules):", "pol": "Cancellation fee ¥200 or no-show fee ¥200 — one or the other, never both for the same booking. Nothing is actually charged in this demo; cancelling still frees the slot immediately.", "closedNote": "Closed on this date (3rd Wednesday of the month). Please choose another day.", "pastNote": "This date is outside the bookable range (past, after today’s 18:00 JST last reception, or more than 12 months ahead). Please choose another date.", "polShort": "Example policy: ¥200 cancellation or ¥200 no-show fee (not both; demo only, not charged)."});
+  Object.assign(T.ja, {"feeNote": "公式料金表（令和3年7月1日改定）による概算：基本使用料は15分以内、以降は延長10分（又は端数）ごと。公式サイトには地元住民向けの釜料金の記載がないため通常料金を表示しています（地元向け料金は未確認）。入館料は無料、食材は別途購入です。サブスク料金：未定。", "feeSrc": "公式料金表（jigokumushi.com）", "polH": "キャンセル・無断不参加の例示ポリシー（このデモ用の提案であり、施設の公式ルールではありません）：", "pol": "キャンセル料200円 または 無断不参加料200円 — どちらか一方のみで、同じ予約に両方はかかりません。このデモでは実際の請求は一切なく、キャンセルすると枠はすぐに空きます。", "closedNote": "この日は休館日です（毎月第3水曜日）。別の日を選んでください。", "pastNote": "予約できる期間外です（過去の日付、本日18:00の最終受付後、または12か月より先）。別の日付を選んでください。", "polShort": "例示ポリシー：キャンセル料200円 または 無断不参加料200円（両方はかかりません。デモのため請求なし）。"});
   var lang = 'en'; try { lang = localStorage.getItem(KL) || (/^ja/.test(navigator.language) ? 'ja' : 'en'); } catch (e) {}
   try { var q = new URL(location.href).searchParams.get('lang'); if (T[q]) lang = q; } catch (e) {}
   if (!T[lang]) lang = 'en';
@@ -66,7 +68,7 @@
   function jstNow() { var d = new Date(Date.now() + 9 * 3600e3); return { y: d.getUTCFullYear(), mo: d.getUTCMonth(), da: d.getUTCDate(), min: d.getUTCHours() * 60 + d.getUTCMinutes() }; }
   function iso(y, mo, da) { var d = new Date(Date.UTC(y, mo, da)); return d.toISOString().slice(0, 10); }
   function isClosed(isoD) { var d = new Date(isoD + 'T00:00:00Z'); return d.getUTCDay() === 3 && d.getUTCDate() >= 15 && d.getUTCDate() <= 21; }
-  function days() {
+  function days_unused() {
     var n = jstNow(), out = [];
     for (var i = 0; out.length < 7 && i < 14; i++) { var s = iso(n.y, n.mo, n.da + i); if (isClosed(s)) continue; if (i === 0 && n.min >= LAST_START) continue; out.push(s); }
     return out;
@@ -80,13 +82,18 @@
     document.querySelectorAll('.langs button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === lang); });
     document.title = t('h1') + ' · Jigoku Mushikobo Kanawa';
   }
+  var MAX_MONTHS = 12;   // bookable up to 12 months ahead (demo)
+  function firstOpen() { var n = jstNow(), i = (n.min >= LAST_START) ? 1 : 0, d; do { d = iso(n.y, n.mo, n.da + i++); } while (isClosed(d)); return d; }
   function fillDates() {
-    var cur = $('#date').value, ds = days();
-    $('#date').innerHTML = ds.map(function (d) { var w = new Date(d + 'T00:00:00Z').toLocaleDateString(lang === 'ja' ? 'ja-JP' : 'en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }); return '<option value="' + d + '">' + w + '</option>'; }).join('');
-    if (ds.indexOf(cur) >= 0) $('#date').value = cur;
+    var n = jstNow(), el = $('#date');
+    el.min = iso(n.y, n.mo, n.da + (n.min >= LAST_START ? 1 : 0)); el.max = iso(n.y, n.mo + MAX_MONTHS, n.da);
+    if (!el.value || el.value < el.min || el.value > el.max) el.value = firstOpen();
   }
+  function dayState(date) { var n = jstNow(), today = iso(n.y, n.mo, n.da); if (!date || date < today || (date === today && n.min >= LAST_START) || date > $('#date').max) return 'past'; return isClosed(date) ? 'closed' : 'open'; }
   function render() {
-    var a = load(), date = $('#date').value, dur = +$('#dur').value, n = jstNow(), today = iso(n.y, n.mo, n.da) === date;
+    var a = load(), date = $('#date').value, dur = +$('#dur').value, n = jstNow(), today = iso(n.y, n.mo, n.da) === date, ds = dayState(date);
+    $('#dayNote').hidden = ds === 'open'; $('#dayNote').textContent = ds === 'closed' ? t('closedNote') : ds === 'past' ? t('pastNote') : '';
+    if (ds !== 'open') sel = null;
     var h = '<thead><tr><th>' + t('time') + '</th>' + STEAMERS.map(function (s) { return '<th>' + t('steamer') + ' ' + s + '</th>'; }).join('') + '</tr></thead><tbody>';
     for (var m = OPEN; m < CLOSE; m += STEP) {
       var cells = '', taken = 0;
@@ -94,7 +101,7 @@
         var b = a.filter(function (x) { return x.date === date && x.steamer === s && x.start <= m && m < x.end; })[0];
         var isSel = sel && sel.steamer === s && sel.start <= m && m < sel.start + dur;
         if (b) { taken++; cells += '<td><button type="button" disabled class="' + (b.mine ? 'mine' : 'taken') + '" data-s="' + s + '" data-m="' + m + '">' + (b.mine ? t('lgMine') : t('lgTaken')) + '</button></td>'; return; }
-        var canStart = m <= LAST_START && m + dur <= CLOSE && !(today && m <= n.min) && !overlaps(a, s, m, m + dur, date);
+        var canStart = ds === 'open' && m <= LAST_START && m + dur <= CLOSE && !(today && m <= n.min) && !overlaps(a, s, m, m + dur, date);
         cells += '<td><button type="button" class="' + (isSel ? 'sel' : canStart ? '' : 'na') + '" data-s="' + s + '" data-m="' + m + '"' + (canStart ? '' : ' disabled') + '>' + (isSel ? t('lgSel') : canStart ? t('lgFree') : (today && m <= n.min ? t('past') : '—')) + '</button></td>';
       });
       h += '<tr class="' + (taken === 3 ? 'full' : '') + '" data-m="' + m + '"><td class="t">' + hm(m) + (taken === 3 ? ' · ' + t('full') : '') + '</td>' + cells + '</tr>';
@@ -104,7 +111,7 @@
     // summary
     if (sel) {
       var sz = $('#size').value;
-      $('#sum').innerHTML = [[t('dt'), date], [t('tm'), hm(sel.start) + '–' + hm(sel.start + dur) + ' JST'], [t('st'), sel.steamer], [t('sz'), t(sz)], [t('du'), dur + ' ' + t('min')], [t('fee'), yen(fee(sz, dur))]]
+      $('#sum').innerHTML = [[t('dt'), date], [t('tm'), hm(sel.start) + '–' + hm(sel.start + dur) + ' JST'], [t('st'), sel.steamer], [t('sz'), t(sz)], [t('du'), dur + ' ' + t('min')], [t('fee'), yen(fee(sz, dur))], ['', t('polShort')]]
         .map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + r[1] + '</dd>'; }).join('');
     }
     $('#checkout').hidden = !sel;
@@ -117,10 +124,10 @@
   function book() {
     if (!sel) return;
     var a = load(), date = $('#date').value, dur = +$('#dur').value, sz = $('#size').value, s = sel.steamer, st = sel.start, en = st + dur;
-    if (st < OPEN || st > LAST_START || en > CLOSE || st % STEP || overlaps(a, s, st, en, date)) { say(t('clash')); sel = null; render(); return; }
+    if (dayState(date) !== 'open' || st < OPEN || st > LAST_START || en > CLOSE || st % STEP || overlaps(a, s, st, en, date)) { say(t('clash')); sel = null; render(); return; }
     var b = { id: 'D' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), date: date, steamer: s, start: st, end: en, size: sz, fee: fee(sz, dur), mine: true, status: 'confirmed-demo', paid: 'simulated' };
     a.push(b); save(a); sel = null;
-    say(t('ok', { s: s, d: date, t1: hm(st), t2: hm(en), y: yen(b.fee) })); render();
+    say(t('ok', { s: s, d: date, t1: hm(st), t2: hm(en), y: yen(b.fee) }) + ' ' + t('polShort')); render();
   }
   function cancel(id) {
     var a = load(), b = a.filter(function (x) { return x.id === id; })[0]; if (!b) return;
@@ -136,7 +143,7 @@
   document.querySelectorAll('.langs button').forEach(function (b) { b.onclick = function () { lang = b.dataset.lang; try { localStorage.setItem(KL, lang); } catch (e) {} texts(); show(); }; });
   $('#enter').onclick = function () { localStorage.setItem(KS, '1'); show(); };
   $('#logout').onclick = function () { localStorage.removeItem(KS); sel = null; show(); };
-  $('#date').onchange = $('#dur').onchange = function () { sel = null; render(); };
+  $('#date').onchange = $('#date').oninput = $('#dur').onchange = function () { sel = null; render(); };
   $('#size').onchange = render;
   $('#pay').onclick = book;
   $('#clearSel').onclick = function () { sel = null; render(); };

@@ -8,7 +8,7 @@
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="members.css?v=20261108a">
+<link rel="stylesheet" href="members.css?v=20261108b">
 </head>
 <body>
 <div class="demo-bar" role="note"><b>DEMO</b> <span data-t="bar"></span></div>
@@ -37,11 +37,12 @@
     <h2 data-t="bookH"></h2>
     <p class="small" data-t="hoursNote"></p>
     <div class="form">
-      <label><span data-t="dateL"></span><select id="date"></select></label>
+      <label><span data-t="dateL"></span><input type="date" id="date" required></label>
       <label><span data-t="sizeL"></span><select id="size"><option value="small" data-t="small"></option><option value="large" data-t="large"></option></select></label>
       <label><span data-t="durL"></span><select id="dur"><option value="15">15</option><option value="30">30</option><option value="45">45</option><option value="60">60</option></select></label>
     </div>
     <p class="small" data-t="gridHelp"></p>
+    <p id="dayNote" class="msg" role="status" hidden></p>
     <div class="legend"><span class="free" data-t="lgFree"></span><span class="mine" data-t="lgMine"></span><span class="taken" data-t="lgTaken"></span><span class="sel" data-t="lgSel"></span></div>
     <div class="grid-wrap"><table id="grid" aria-describedby="gridcap"><caption id="gridcap" class="sr" data-t="gridCap"></caption></table></div>
   </section>
@@ -49,7 +50,8 @@
   <section class="card" id="checkout" hidden>
     <h2 data-t="sumH"></h2>
     <dl id="sum"></dl>
-    <p class="small" data-t="feeNote"></p>
+    <p class="small"><span data-t="feeNote"></span> <a href="https://jigokumushi.com/pages/18/" target="_blank" rel="noopener" data-t="feeSrc"></a></p>
+    <div class="card note"><p class="small"><b>DEMO</b> <span data-t="polH"></span></p><p class="small" data-t="pol"></p></div>
     <div class="row"><button type="button" class="btn fire" id="pay" data-t="pay"></button><button type="button" class="btn ghost" id="clearSel" data-t="clear"></button></div>
     <p class="small" data-t="payNote"></p>
   </section>
@@ -69,6 +71,6 @@
   </section>
 </main>
 <footer class="foot small" data-t="foot"></footer>
-<script src="members.js?v=20261108a"></script>
+<script src="members.js?v=20261108b"></script>
 </body>
 </html>

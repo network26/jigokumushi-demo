@@ -13,3 +13,7 @@ Data used from the main website: hours 10:00–19:00 JST, last steamer reception
 (the "next day if a public holiday" rule is not modelled). Fee estimate follows the published steamer price list:
 small ¥400 basic (up to 15 min) + ¥200 per extra 10 min or part; large ¥600 + ¥300. Which of the 3 steamers is
 small or large is not published, so the member picks a size. Durations: 15/30/45/60 min, in 15-minute slots.
+
+Date: native date picker, bookable from today (until the 18:00 JST last reception) up to 12 months ahead; 3rd-Wednesday closures blocked.
+No local-resident steamer rate is published on jigokumushi.com (checked Nov 8, 2026: https://jigokumushi.com/pages/18/), so standard rates are used.
+Cancellation ¥200 / no-show ¥200 is an EXAMPLE policy for the demo (one or the other, never both; nothing charged).
