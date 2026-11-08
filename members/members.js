@@ -14,10 +14,6 @@
       perk1: 'Reserve a steamer slot ahead instead of waiting in line', perk2: 'Cancel anytime: the slot is released immediately', perk3: 'Pay the steamer fee in advance (simulated here)',
       subPrice: 'Subscription pricing and terms: to be confirmed. This is a student concept, not an official Jigoku Mushikobo Kanawa service.',
       enter: 'Enter as demo subscriber', noCred: 'No email, password or personal details are requested. This button just opens the demo dashboard.',
-      walkT: 'How to demo this in class (3 steps)',
-      w1: 'Open this page on the projector, tap "Enter as demo subscriber" and show the "Active subscription — demo" badge.',
-      w2: 'Pick a date, size and duration, tap a free slot, then "Simulate payment & reserve". Book the same time on steamers A, B and C to show the slot become fully booked.',
-      w3: 'Cancel one booking under "My reservations": that steamer frees up instantly. Use "Reset demo data" before the next run.',
       dashK: 'MEMBER DASHBOARD', dashH: 'Welcome, Demo Subscriber', badge: 'Active subscription — demo', logout: 'Log out',
       bookH: 'Reserve a steamer', hoursNote: 'Opening hours (from the website): 10:00–19:00 JST, last steamer reception 18:00. Closed on the 3rd Wednesday of each month. All times are JST.',
       dateL: 'Date (JST)', sizeL: 'Steamer size', durL: 'Duration (minutes)', small: 'Small steamer', large: 'Large steamer',
@@ -40,10 +36,6 @@
       perk1: '列に並ばずに釜の時間を事前予約', perk2: 'いつでもキャンセル可能：枠はすぐに解放されます', perk3: '釜の使用料を事前に支払い（ここでは模擬）',
       subPrice: 'サブスクリプションの料金・条件：未定。学生による構想であり、地獄蒸し工房 鉄輪の公式サービスではありません。',
       enter: 'デモ会員として入る', noCred: 'メールアドレス・パスワード・個人情報は一切不要です。このボタンでデモ画面が開くだけです。',
-      walkT: '授業でのデモ方法（3ステップ）',
-      w1: 'プロジェクターでこのページを開き「デモ会員として入る」を押して「サブスク有効 — デモ」バッジを見せます。',
-      w2: '日付・釜の大きさ・時間を選び、空き枠を押して「模擬支払いで予約」。同じ時刻を釜A・B・Cで予約すると満枠になる様子を見せます。',
-      w3: '「マイ予約」で1件キャンセルすると、その釜がすぐ空きになります。次の実演前に「デモデータをリセット」を押します。',
       dashK: '会員ダッシュボード', dashH: 'ようこそ、デモ会員さん', badge: 'サブスク有効 — デモ', logout: 'ログアウト',
       bookH: '釜を予約する', hoursNote: '営業時間（公式サイト記載）：10:00〜19:00（日本時間）、釜の最終受付18:00。毎月第3水曜日は休館。時刻はすべて日本時間です。',
       dateL: '日付（日本時間）', sizeL: '釜の大きさ', durL: '利用時間（分）', small: '地獄蒸し釜（小）', large: '地獄蒸し釜（大）',
@@ -60,7 +52,6 @@
       foot: 'デモ・学生プロジェクト・公式予約システムではありません・支払いは発生しません'
     }
   };
-  T.my = {"bar": "အတန်းပြသရန် demo သာ- အစစ်အမှန် အကောင့်၊ ကြိုတင်စာရင်း သို့မဟုတ် ငွေကောက်ခံမှု မရှိပါ။ ဒေတာသည် ဤဘရောက်ဇာတွင်သာ ရှိပြီး အတန်းဖော်များနှင့် မမျှဝေပါ။", "back": "← Jigoku Mushikobo Kanawa (demo ဆိုက်)", "kicker": "ဒေသခံ အဖွဲ့ဝင်များ · စာရင်းသွင်းသူများ", "h1": "အဖွဲ့ဝင် ဝင်ရောက်ရန် (demo)", "lead": "ဒေသခံ စာရင်းသွင်းသူများအတွက် အယူအဆ- ဝင်ရောက်ပြီး ဖွင့်ချိန်အတွင်း ငရဲပေါင်းအိုး ၃ လုံးထဲမှ တစ်လုံးကို ၁၅ မိနစ်ခြားဖြင့် ကြိုတင်ယူပါ။", "perk1": "တန်းမစီဘဲ အိုးအချိန်ကို ကြိုတင်ယူနိုင်", "perk2": "အချိန်မရွေး ပယ်ဖျက်နိုင်- အချိန်ကွက် ချက်ချင်း ပြန်လွတ်မည်", "perk3": "အိုး အသုံးပြုခကို ကြိုတင်ပေးချေ (ဤနေရာတွင် အတုသာ)", "subPrice": "စာရင်းသွင်းခ ဈေးနှုန်းနှင့် စည်းကမ်းများ- အတည်မပြုရသေးပါ။ ကျောင်းသား အယူအဆသာဖြစ်ပြီး Jigoku Mushikobo Kanawa ၏ တရားဝင် ဝန်ဆောင်မှု မဟုတ်ပါ။", "enter": "Demo စာရင်းသွင်းသူအဖြစ် ဝင်ရန်", "noCred": "အီးမေးလ်၊ စကားဝှက် သို့မဟုတ် ကိုယ်ရေးအချက်အလက် မတောင်းပါ။ ဤခလုတ်က demo dashboard ကို ဖွင့်ရုံသာ။", "walkT": "အတန်းတွင် demo ပြပုံ (အဆင့် ၃ ဆင့်)", "w1": "ပရိုဂျက်တာတွင် ဤစာမျက်နှာ ဖွင့်ပြီး “Demo စာရင်းသွင်းသူအဖြစ် ဝင်ရန်” ကို နှိပ်ကာ “စာရင်းသွင်းမှု အသက်ဝင် — demo” တံဆိပ်ကို ပြပါ။", "w2": "ရက်စွဲ၊ အရွယ်အစားနှင့် ကြာချိန် ရွေးပြီး လွတ်သော အချိန်ကွက်ကို နှိပ်ကာ “ငွေပေးချေမှု အတုဖြင့် ကြိုတင်ယူရန်” ကို နှိပ်ပါ။ အိုး A၊ B၊ C တွင် တူညီသောအချိန် ယူ၍ ပြည့်သွားသည်ကို ပြပါ။", "w3": "“ကျွန်ုပ်၏ ကြိုတင်စာရင်းများ” တွင် တစ်ခု ပယ်ဖျက်ပါ- ထိုအိုး ချက်ချင်း လွတ်သွားမည်။ နောက်တစ်ကြိမ်မပြမီ “Demo ဒေတာ ပြန်စရန်” ကို သုံးပါ။", "dashK": "အဖွဲ့ဝင် DASHBOARD", "dashH": "ကြိုဆိုပါသည်၊ Demo စာရင်းသွင်းသူ", "badge": "စာရင်းသွင်းမှု အသက်ဝင် — demo", "logout": "ထွက်ရန်", "bookH": "အိုး ကြိုတင်ယူရန်", "hoursNote": "ဖွင့်ချိန် (ဝက်ဘ်ဆိုက်အရ)- 10:00–19:00 JST၊ အိုး နောက်ဆုံးလက်ခံချိန် 18:00။ လစဉ် တတိယ ဗုဒ္ဓဟူးနေ့ ပိတ်။ အချိန်အားလုံး JST ဖြစ်သည်။", "dateL": "ရက်စွဲ (JST)", "sizeL": "အိုး အရွယ်အစား", "durL": "ကြာချိန် (မိနစ်)", "small": "အိုး (သေး)", "large": "အိုး (ကြီး)", "gridHelp": "စတင်လိုသော လွတ်သည့်အကွက်ကို နှိပ်ပါ။ ကြာချိန်တစ်ခုလုံး ထိုအိုးတွင် လွတ်ရမည်ဖြစ်ပြီး 19:00 မတိုင်မီ ပြီးရမည်။", "lgFree": "လွတ်", "lgMine": "ကျွန်ုပ်၏", "lgTaken": "ယူပြီး", "lgSel": "ရွေးထား", "gridCap": "၁၅ မိနစ်ခြား အိုး ရရှိနိုင်မှု", "time": "အချိန်", "steamer": "အိုး", "full": "ပြည့်", "sumH": "ကြိုတင်စာရင်း အကျဉ်း", "feeNote": "ဝက်ဘ်ဆိုက် ဈေးနှုန်းစာရင်းမှ ခန့်မှန်းခ- အခြေခံခသည် ၁၅ မိနစ်အထိ၊ ထို့နောက် ၁၀ မိနစ် (သို့ အပိုင်း) တိုင်း။ Demo ခန့်မှန်းချက်သာ၊ အမှန်တကယ်ခကို နေရာက သတ်မှတ်သည်။", "pay": "ငွေပေးချေမှု အတုဖြင့် ကြိုတင်ယူရန်", "clear": "ရှင်းရန်", "payNote": "ကတ်အချက်အလက် မတောင်းဘဲ မည်သည့်ငွေမျှ မကောက်ပါ။", "mineH": "ကျွန်ုပ်၏ ကြိုတင်စာရင်းများ", "none": "ကြိုတင်စာရင်း မရှိသေးပါ။", "cancel": "ပယ်ဖျက်ရန်", "ovH": "Demo ခြုံငုံသုံးသပ်ချက် (ဤဘရောက်ဇာသာ)", "ovNote": "ဤဘရောက်ဇာတွင် သိမ်းထားသော demo ကြိုတင်စာရင်းအားလုံး။ ဤသည်မှာ တန်းစီ ဝန်ထမ်းစာမျက်နှာ မဟုတ်ဘဲ ဝန်ထမ်းခွင့် မပေးပါ။", "reset": "Demo ဒေတာ ပြန်စရန်", "resetQ": "ဤဘရောက်ဇာရှိ အဖွဲ့ဝင် demo ကြိုတင်စာရင်းအားလုံး ဖျက်မလား။ (တန်းစီ ဒေတာကို မထိပါ)", "ok": "ကြိုတင်ယူပြီး (DEMO)။ အိုး {s}၊ {d} {t1}–{t2} JST။ ငွေပေးချေမှု အတု {y}။ အခြေအနေ- အတည်ပြု (demo)။", "cancelled": "ပယ်ဖျက်ပြီး။ အိုး {s} သည် {d} {t1}–{t2} တွင် ပြန်လွတ်ပါပြီ။", "clash": "ဤအချိန်သည် ဤအိုးရှိ အခြားစာရင်းနှင့် ထပ်နေသည် သို့မဟုတ် ပိတ်ချိန်ကျော်သည်။", "dt": "ရက်စွဲ", "tm": "အချိန်", "st": "အိုး", "sz": "အရွယ်", "du": "ကြာချိန်", "fee": "အခ (ခန့်မှန်း)", "min": "မိနစ်", "closedDay": "(ပိတ်)", "past": "ကျော်ပြီ", "foot": "DEMO · ကျောင်းသား ပရောဂျက် · တရားဝင် ကြိုတင်စာရင်းစနစ် မဟုတ် · ငွေမကောက်ပါ"};
   var lang = 'en'; try { lang = localStorage.getItem(KL) || (/^ja/.test(navigator.language) ? 'ja' : 'en'); } catch (e) {}
   try { var q = new URL(location.href).searchParams.get('lang'); if (T[q]) lang = q; } catch (e) {}
   if (!T[lang]) lang = 'en';
@@ -91,7 +82,7 @@
   }
   function fillDates() {
     var cur = $('#date').value, ds = days();
-    $('#date').innerHTML = ds.map(function (d) { var w = new Date(d + 'T00:00:00Z').toLocaleDateString(lang === 'ja' ? 'ja-JP' : lang === 'my' ? 'my-MM' : 'en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }); return '<option value="' + d + '">' + w + '</option>'; }).join('');
+    $('#date').innerHTML = ds.map(function (d) { var w = new Date(d + 'T00:00:00Z').toLocaleDateString(lang === 'ja' ? 'ja-JP' : 'en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }); return '<option value="' + d + '">' + w + '</option>'; }).join('');
     if (ds.indexOf(cur) >= 0) $('#date').value = cur;
   }
   function render() {

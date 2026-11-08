@@ -25,8 +25,8 @@
   function render(){
     document.documentElement.lang = lang;
     $$('[data-qlink]').forEach(function(a){ a.setAttribute('href','queue/?lang='+encodeURIComponent(lang)); });
-    // members demo supports en/ja/my; other site languages open it in English
-    $$('[data-members]').forEach(function(a){ a.setAttribute('href','members/?lang='+(/^(en|ja|my)$/.test(lang)?lang:'en')); });
+    // members demo supports en/ja only; every other site language (incl. my) opens it in English
+    $$('[data-members]').forEach(function(a){ a.setAttribute('href','members/?lang='+(lang==='ja'?'ja':'en')); });
     $$('[data-i18n]').forEach(function(el){ el.textContent = t(el.getAttribute('data-i18n')); });
     $$('[data-alt]').forEach(function(el){ var v=t(el.getAttribute('data-alt')); el.alt=v; if(el.parentNode && el.parentNode.tagName==='A') el.parentNode.setAttribute('aria-label', t('qs.title')+' – '+v); });
     document.title = t('meta.title');

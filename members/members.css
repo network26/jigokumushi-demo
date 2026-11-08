@@ -42,4 +42,3 @@ dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px}dt{color:var(--mute)
 .walk summary{cursor:pointer;font-weight:700}.walk ol{margin:8px 0 0 20px}
 .foot{text-align:center;padding:20px;border-top:1px solid var(--line)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-html[lang=my] body,html[lang=my] h1,html[lang=my] h2{font-family:'Noto Sans Myanmar','Myanmar Text','Padauk',var(--sans);line-height:1.9}
