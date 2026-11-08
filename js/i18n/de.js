@@ -22,7 +22,7 @@ I18N.de = {
   'flow.intro': 'Jigokumushi Kobo Kannawa ist eine Mitmach-Einrichtung. Teilnehmen können Gäste ab dem Mittelschulalter.',
   'flow.s1t': 'Zuerst zur Rezeption', 'flow.s1d': 'Holen Sie sich eine Wartenummer.',
   'flow.s2t': 'Während Sie warten, Gericht wählen und am Ticketautomaten kaufen', 'flow.s2d': 'Bis 10 Minuten vor Ende der geschätzten Wartezeit dürfen Sie das Gebäude verlassen.',
-  'flow.s3t': 'Im Gebäude warten, bis Sie aufgerufen werden', 'flow.s3d': 'Bitte seien Sie zurück, bevor Ihre Nummer aufgerufen wird.',
+  'flow.s3t': 'Warten Sie, bis Ihre Nummer aufgerufen wird.', 'flow.s3d': 'Wir rufen Ihre Nummer auf, wenn Sie an der Reihe sind.',
   'flow.s4t': 'Wird Ihre Nummer aufgerufen, geben Sie Ihr Ticket an der Rezeption ab – und los geht’s!', 'flow.s4d': 'Nehmen Sie Ihre Zutaten entgegen und starten Sie das Höllendampf-Erlebnis. Unser Team hilft Ihnen dabei.',
   'menu.title': 'Speisen & Preise',
   'fees.title': 'Gebühren für die Dampfgarer (Stand: 1. Juli 2021)', 'fees.small': 'Dampfgarer (klein)', 'fees.large': 'Dampfgarer (groß)', 'fees.coupon': 'Mehrfachkarte', 'fees.basic': 'Grundgebühr · bis 15 Min.', 'fees.ext': 'Je weitere 10 Min. (auch angefangen)', 'fees.couponSub': '10 Nutzungen · je bis 15 Min.',

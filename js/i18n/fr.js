@@ -22,7 +22,7 @@ I18N.fr = {
   'flow.intro': 'Jigokumushi Kobo Kannawa est un lieu d’expérience. L’activité est ouverte à partir de l’âge du collège.',
   'flow.s1t': 'D’abord, passez à l’accueil', 'flow.s1d': 'Prenez un ticket numéroté.',
   'flow.s2t': 'Choisissez votre menu en attendant et achetez-le au distributeur de tickets', 'flow.s2d': 'Vous pouvez sortir jusqu’à 10 minutes avant la fin du temps d’attente estimé.',
-  'flow.s3t': 'Patientez à l’intérieur jusqu’à l’appel de votre numéro', 'flow.s3d': 'Merci d’être de retour à l’intérieur avant l’appel de votre numéro.',
+  'flow.s3t': 'Attendez que votre numéro soit appelé.', 'flow.s3d': 'Nous appellerons votre numéro quand ce sera votre tour.',
   'flow.s4t': 'À l’appel de votre numéro, remettez votre ticket à l’accueil : c’est parti !', 'flow.s4d': 'Récupérez vos ingrédients et lancez votre cuisson à la vapeur des enfers. Notre équipe vous guidera.',
   'menu.title': 'Menu & tarifs',
   'fees.title': 'Tarifs des cuiseurs (révisés le 1er juillet 2021)', 'fees.small': 'Cuiseur (petit)', 'fees.large': 'Cuiseur (grand)', 'fees.coupon': 'Carnet de tickets', 'fees.basic': 'Tarif de base · jusqu’à 15 min', 'fees.ext': 'Par tranche de 10 min supplémentaires (entamée)', 'fees.couponSub': '10 utilisations · 15 min max. chacune',

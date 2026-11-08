@@ -22,7 +22,7 @@ I18N.id = {
   'flow.intro': 'Jigokumushi Kobo Kannawa adalah fasilitas pengalaman langsung. Tamu mulai usia SMP ke atas dapat ikut serta.',
   'flow.s1t': 'Pertama, menuju resepsionis', 'flow.s1d': 'Ambil kartu nomor antrean.',
   'flow.s2t': 'Sambil menunggu, pilih menu dan beli di mesin tiket', 'flow.s2d': 'Anda boleh keluar sampai 10 menit sebelum perkiraan waktu tunggu.',
-  'flow.s3t': 'Tunggu di dalam gedung sampai dipanggil', 'flow.s3d': 'Mohon kembali ke dalam sebelum nomor Anda dipanggil.',
+  'flow.s3t': 'Tunggu hingga nomor Anda dipanggil.', 'flow.s3d': 'Kami akan memanggil nomor Anda saat giliran Anda tiba.',
   'flow.s4t': 'Saat dipanggil, serahkan tiket ke resepsionis — dan mulai mengukus!', 'flow.s4d': 'Ambil bahan makanan Anda dan mulailah pengalaman kukus neraka. Staf kami akan memandu Anda.',
   'menu.title': 'Menu & Harga',
   'fees.title': 'Tarif pengukus (direvisi 1 Juli 2021)', 'fees.small': 'Pengukus (kecil)', 'fees.large': 'Pengukus (besar)', 'fees.coupon': 'Kupon berkali-kali', 'fees.basic': 'Tarif dasar · maks. 15 menit', 'fees.ext': 'Tiap tambahan 10 menit (atau kurang)', 'fees.couponSub': '10 kali pakai · maks. 15 menit per kali',

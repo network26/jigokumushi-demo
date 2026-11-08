@@ -22,7 +22,7 @@ I18N.vi = {
   'flow.intro': 'Jigokumushi Kobo Kannawa là cơ sở trải nghiệm. Khách từ độ tuổi trung học cơ sở trở lên có thể tham gia.',
   'flow.s1t': 'Trước tiên, đến quầy lễ tân', 'flow.s1d': 'Nhận phiếu số thứ tự.',
   'flow.s2t': 'Trong lúc chờ, chọn món và mua tại máy bán vé', 'flow.s2d': 'Bạn có thể ra ngoài cho đến 10 phút trước thời gian chờ dự kiến.',
-  'flow.s3t': 'Chờ trong tòa nhà cho đến khi được gọi', 'flow.s3d': 'Vui lòng quay lại bên trong trước khi đến lượt số của bạn.',
+  'flow.s3t': 'Hãy chờ đến khi số của bạn được gọi.', 'flow.s3d': 'Chúng tôi sẽ gọi số của bạn khi đến lượt.',
   'flow.s4t': 'Khi được gọi, đưa vé cho lễ tân và bắt đầu trải nghiệm hấp địa ngục!', 'flow.s4d': 'Nhận nguyên liệu và bắt đầu trải nghiệm. Nhân viên sẽ hướng dẫn bạn.',
   'menu.title': 'Thực đơn & Giá',
   'fees.title': 'Phí sử dụng nồi hấp (điều chỉnh ngày 1/7/2021)', 'fees.small': 'Nồi hấp (nhỏ)', 'fees.large': 'Nồi hấp (lớn)', 'fees.coupon': 'Tập vé', 'fees.basic': 'Phí cơ bản · tối đa 15 phút', 'fees.ext': 'Gia hạn mỗi 10 phút (hoặc phần lẻ)', 'fees.couponSub': '10 lượt · mỗi lượt tối đa 15 phút',

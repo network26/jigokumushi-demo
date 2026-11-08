@@ -22,7 +22,7 @@ I18N.en = {
   'flow.intro': 'Jigokumushi Kobo Kannawa is a hands-on facility. Guests of junior-high-school age and older can take part.',
   'flow.s1t': 'First, go to reception', 'flow.s1d': 'Pick up a numbered ticket.',
   'flow.s2t': 'Choose your menu while you wait and buy it at the ticket machine', 'flow.s2d': 'You’re welcome to step out until 10 minutes before your estimated waiting time.',
-  'flow.s3t': 'Wait inside the building until you are called', 'flow.s3d': 'Please be back inside before your number comes up.',
+  'flow.s3t': 'Wait for your number to be called.', 'flow.s3d': 'We will call your number when it is your turn.',
   'flow.s4t': 'When your number is called, hand your ticket to reception — and start steaming!', 'flow.s4d': 'Collect your ingredients and begin your hell-steaming experience. Our staff will guide you.',
   'menu.title': 'Menu & Prices',
   'fees.title': 'Steamer fees (revised July 1, 2021)', 'fees.small': 'Steamer (small)', 'fees.large': 'Steamer (large)', 'fees.coupon': 'Coupon book', 'fees.basic': 'Basic fee · up to 15 min', 'fees.ext': 'Each extra 10 min (or part)', 'fees.couponSub': '10 uses · up to 15 min each',

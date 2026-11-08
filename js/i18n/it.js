@@ -22,7 +22,7 @@ I18N.it = {
   'flow.intro': 'Jigokumushi Kobo Kannawa è una struttura esperienziale. Possono partecipare persone dall’età delle scuole medie in su.',
   'flow.s1t': 'Per prima cosa, vai alla reception', 'flow.s1d': 'Ritira un biglietto numerato.',
   'flow.s2t': 'Mentre aspetti, scegli il menu e acquistalo al distributore di biglietti', 'flow.s2d': 'Puoi uscire fino a 10 minuti prima del tempo di attesa stimato.',
-  'flow.s3t': 'Attendi all’interno finché non vieni chiamato', 'flow.s3d': 'Rientra prima che venga chiamato il tuo numero.',
+  'flow.s3t': 'Attendi che venga chiamato il tuo numero.', 'flow.s3d': 'Chiameremo il tuo numero quando sarà il tuo turno.',
   'flow.s4t': 'Quando chiamano il tuo numero, consegna il biglietto alla reception… e si parte!', 'flow.s4d': 'Ritira gli ingredienti e inizia l’esperienza. Il nostro staff ti guiderà.',
   'menu.title': 'Menu e prezzi',
   'fees.title': 'Tariffe dei vaporieri (aggiornate al 1° luglio 2021)', 'fees.small': 'Vaporiere (piccolo)', 'fees.large': 'Vaporiere (grande)', 'fees.coupon': 'Carnet', 'fees.basic': 'Tariffa base · fino a 15 min', 'fees.ext': 'Ogni 10 min in più (o frazione)', 'fees.couponSub': '10 utilizzi · fino a 15 min ciascuno',
