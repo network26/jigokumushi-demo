@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Members bookings (DEMO staff) · Jigoku Mushikobo Kanawa</title>
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="members.css?v=20261109a">
+<style>
+.counts{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0}.counts span{background:var(--ink3);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:13px}
+.occ{overflow:auto;max-height:420px;border:1px solid var(--line);border-radius:12px}
+.occ table{border-collapse:collapse;width:100%;min-width:320px;font-size:12px}
+.occ th,.occ td{border-bottom:1px solid var(--line);padding:3px 6px;text-align:center}
+.occ .booked{background:var(--jade);color:var(--ink)}.occ .canc{background:#5a2a1e;color:var(--paper);opacity:.55}.occ .free{background:#2a2420}
+.tag{display:inline-block;border-radius:6px;padding:0 7px;font-size:11px}.tag.booked{background:var(--jade);color:var(--ink)}.tag.cancelled{background:#5a2a1e}
+</style>
+</head>
+<body>
+<div class="demo-bar" role="note"><b>DEMO</b> <span data-t="bar"></span></div>
+<header class="top">
+  <span class="brand" data-t="brand"></span>
+  <div class="langs" role="group"><button type="button" data-lang="en">EN</button><button type="button" data-lang="ja">日本語</button></div>
+</header>
+<main class="wrap">
+  <p class="kicker" data-t="kicker"></p>
+  <h1 data-t="h1"></h1>
+  <p class="small" data-t="local"></p>
+  <div class="form">
+    <label><span data-t="dateL"></span><input type="date" id="date"></label>
+    <button type="button" class="btn ghost sm" id="refresh" data-t="refresh"></button>
+  </div>
+  <div class="counts" id="counts"></div>
+  <section class="card"><h2 data-t="occH"></h2><div class="occ"><table id="occ"></table></div></section>
+  <section class="card"><h2 data-t="listH"></h2><ul id="list" class="list"></ul></section>
+</main>
+<footer class="foot small" data-t="foot"></footer>
+<script src="staff.js?v=20261109a"></script>
+</body>
+</html>

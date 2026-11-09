@@ -1,12 +1,12 @@
 /* Members area DEMO for Jigoku Mushikobo Kanawa. Browser-local only (localStorage). No login, no payment, no server.
-   Fees come from the public website (fees.* : small ¥400 basic up to 15 min, +¥200 per extra 10 min or part; large ¥600 / +¥300).
+   Steamer fee for this demo: ¥400 per 15-min slot (official basic steamer fee from jigokumushi.com). Size labels are not used.
    Hours from the website: 10:00–19:00 JST, last steamer reception 18:00; closed 3rd Wednesday (holiday shift not modelled). */
 (function () {
   'use strict';
   var KB = 'jk-members-demo-v1', KS = 'jk-members-demo-session', KL = 'jk-members-demo-lang';
   var SLOT = 15, PENALTY = 200;   // every new booking = exactly one steamer x one 15-min slot; EXAMPLE cancel/no-show fee per steamer-slot
   var STEAMERS = ['A', 'B', 'C'], OPEN = 10 * 60, LAST_START = 18 * 60, CLOSE = 19 * 60, STEP = 15;
-  var FEES = { small: { base: 400, ext: 200 }, large: { base: 600, ext: 300 } };
+  var RATE = 400;   // official basic steamer fee (15 min), jigokumushi.com/pages/18/
   var T = {
     en: {
       bar: 'Class demonstration only: no real accounts, no real bookings, no money collected. Data stays in this browser and is not shared with classmates.',
@@ -17,7 +17,7 @@
       enter: 'Enter as demo subscriber', noCred: 'No email, password or personal details are requested. This button just opens the demo dashboard.',
       dashK: 'MEMBER DASHBOARD', dashH: 'Welcome, Demo Subscriber', badge: 'Active subscription — demo', logout: 'Log out',
       bookH: 'Reserve a steamer', hoursNote: 'Opening hours (from the website): 10:00–19:00 JST, last steamer reception 18:00. Closed on the 3rd Wednesday of each month. All times are JST.',
-      dateL: 'Date (JST)', sizeL: 'Steamer size', durL: 'Duration (minutes)', small: 'Small steamer', large: 'Large steamer',
+      dateL: 'Date (JST)', durL: 'Duration (minutes)',
       gridHelp: 'Tap a free cell to start your booking there. The whole duration must be free on that steamer and end by 19:00.',
       lgFree: 'Free', lgMine: 'My booking', lgTaken: 'Booked', lgSel: 'Selected', gridCap: 'Steamer availability in 15-minute steps', time: 'Time', steamer: 'Steamer', full: 'FULL',
       sumH: 'Booking summary', feeNote: 'Fee estimate from the website price list: basic fee covers up to 15 min, then each extra 10 min (or part). Demo estimate only; the facility sets actual charges.',
@@ -39,7 +39,7 @@
       enter: 'デモ会員として入る', noCred: 'メールアドレス・パスワード・個人情報は一切不要です。このボタンでデモ画面が開くだけです。',
       dashK: '会員ダッシュボード', dashH: 'ようこそ、デモ会員さん', badge: 'サブスク有効 — デモ', logout: 'ログアウト',
       bookH: '釜を予約する', hoursNote: '営業時間（公式サイト記載）：10:00〜19:00（日本時間）、釜の最終受付18:00。毎月第3水曜日は休館。時刻はすべて日本時間です。',
-      dateL: '日付（日本時間）', sizeL: '釜の大きさ', durL: '利用時間（分）', small: '地獄蒸し釜（小）', large: '地獄蒸し釜（大）',
+      dateL: '日付（日本時間）', durL: '利用時間（分）',
       gridHelp: '空いている枠を押すと、そこから予約が始まります。利用時間すべてが空いていて、19:00までに終わる必要があります。',
       lgFree: '空き', lgMine: '自分の予約', lgTaken: '予約済み', lgSel: '選択中', gridCap: '15分単位の釜の空き状況', time: '時刻', steamer: '釜', full: '満枠',
       sumH: '予約内容', feeNote: '公式サイトの料金表による概算：基本使用料は15分以内、以降は延長10分（又は端数）ごと。デモの概算であり、実際の料金は施設が定めます。',
@@ -59,6 +59,8 @@
   Object.assign(T.ja, {"durFixed": "1回の予約は釜1つにつき15分ちょうどです。30分など長く使う場合や複数の釜を使う場合は、釜ごと・15分枠ごとに別々に予約してください。", "gridHelp": "空いている枠を押すと、その釜をその15分枠で予約できます（19:00までに終了）。", "lead": "地元の会員向けの構想です。ログインして、営業時間内に3つの地獄蒸し釜のいずれかを15分枠ずつ予約できます。", "durOne": "15分（固定）", "rent": "釜の使用料（概算）", "exFee": "キャンセル・無断不参加料の例", "exFeeSub": "釜1つ・15分枠ごと（例示のみ・請求なし）", "polH": "キャンセル・無断不参加料の例（このデモ用の例示であり、施設の公式料金・ルールではありません。請求は一切ありません）：", "pol": "釜1つ・15分枠ごとに200円。予約した枠には、キャンセル料 または 無断不参加料 のどちらか一方のみがかかり、両方はかかりません。例：釜1つ×1枠＝200円、同じ時間に釜2つ＝400円、釜2つ×連続2枠（30分）＝4枠＝800円（1枠目400円＋2枠目400円）。キャンセルすると枠はすぐに空きます。", "polShort": "キャンセル・無断不参加時の例示料金：この釜の枠につき200円（どちらか一方のみ、両方はかかりません。デモのため請求なし）。", "exTotal": "すべてキャンセル・無断不参加の場合の例：{n}枠 × 200円 ＝ {y}（請求なし）。"});
   Object.assign(T.en, {"feeH": "Example cancellation and no-show fees", "feeC": "Cancellation: ¥200 per steamer per 15-minute booked slot.", "feeN": "No-show: ¥200 per steamer per 15-minute booked slot.", "feeOne": "Each booked slot is charged either the cancellation fee or the no-show fee — never both.", "feeEx": "Example: 2 steamers × 2 back-to-back 15-min slots = 4 slots = ¥800.", "feeDemo": "Examples for this demo only — not the facility’s official rules, and nothing is collected."});
   Object.assign(T.ja, {"feeH": "キャンセル料・無断不参加料の例", "feeC": "キャンセル：予約した釜1つ・15分枠ごとに200円。", "feeN": "無断不参加：予約した釜1つ・15分枠ごとに200円。", "feeOne": "1つの予約枠にかかるのはキャンセル料か無断不参加料のどちらか一方のみで、両方はかかりません。", "feeEx": "例：釜2つ × 連続した15分枠2つ ＝ 4枠 ＝ 800円。", "feeDemo": "このデモ用の例であり、施設の公式ルールではありません。請求は一切ありません。"});
+  Object.assign(T.en, {"feeNote": "Steamer fee for this demo: ¥400 per 15-minute slot (official basic steamer fee, revised July 1, 2021). No separate local-resident rate is published. Subscription pricing: to be confirmed.", "feeSrc": "Official price list (jigokumushi.com)", "rent": "Steamer fee (est.)", "stCancelled": "Cancelled", "small": "Steamer", "large": "Steamer", "sizeL": "Steamer", "sz": "Steamer"});
+  Object.assign(T.ja, {"feeNote": "このデモの釜使用料：15分枠ごとに400円（公式の基本使用料・令和3年7月1日改定）。地元住民向け料金の記載はありません。サブスク料金：未定。", "feeSrc": "公式料金表（jigokumushi.com）", "rent": "釜の使用料（概算）", "stCancelled": "キャンセル済", "small": "釜", "large": "釜", "sizeL": "釜", "sz": "釜"});
   var lang = 'en'; try { lang = localStorage.getItem(KL) || (/^ja/.test(navigator.language) ? 'ja' : 'en'); } catch (e) {}
   try { var q = new URL(location.href).searchParams.get('lang'); if (T[q]) lang = q; } catch (e) {}
   if (!T[lang]) lang = 'en';
@@ -66,10 +68,11 @@
   var $ = function (s) { return document.querySelector(s); };
 
   function load() { try { var a = JSON.parse(localStorage.getItem(KB)); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
-  function save(a) { localStorage.setItem(KB, JSON.stringify(a)); }
+  function save(a) { localStorage.setItem(KB, JSON.stringify(a)); try { localStorage.setItem(KB + '-rev', String(Date.now())); } catch (e) {} }
+  function active(a) { return (a || load()).filter(function (x) { return x.status !== 'cancelled'; }); }
   function hm(m) { return ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + m % 60).slice(-2); }
   function yen(n) { return '¥' + n.toLocaleString('en-US'); }
-  function fee(size, d) { var f = FEES[size]; return f.base + Math.max(0, Math.ceil((d - 15) / 10)) * f.ext; }
+  function fee(d) { return RATE * Math.max(1, Math.round((d || SLOT) / SLOT)); }   // ¥400 per 15-min steamer-slot
   function jstNow() { var d = new Date(Date.now() + 9 * 3600e3); return { y: d.getUTCFullYear(), mo: d.getUTCMonth(), da: d.getUTCDate(), min: d.getUTCHours() * 60 + d.getUTCMinutes() }; }
   function iso(y, mo, da) { var d = new Date(Date.UTC(y, mo, da)); return d.toISOString().slice(0, 10); }
   function isClosed(isoD) { var d = new Date(isoD + 'T00:00:00Z'); return d.getUTCDay() === 3 && d.getUTCDate() >= 15 && d.getUTCDate() <= 21; }
@@ -79,7 +82,7 @@
     return out;
   }
   function units(x) { return Math.max(1, Math.round((x.end - x.start) / SLOT)); }   // legacy longer bookings count each 15-min steamer-slot
-  function overlaps(a, s, start, end, date) { return a.some(function (b) { return b.date === date && b.steamer === s && b.start < end && start < b.end; }); }
+  function overlaps(a, s, start, end, date) { return active(a).some(function (b) { return b.date === date && b.steamer === s && b.start < end && start < b.end; }); }
 
   var sel = null;   // {steamer, start}
   function texts() {
@@ -97,17 +100,17 @@
   }
   function dayState(date) { var n = jstNow(), today = iso(n.y, n.mo, n.da); if (!date || date < today || (date === today && n.min >= LAST_START) || date > $('#date').max) return 'past'; return isClosed(date) ? 'closed' : 'open'; }
   function render() {
-    var a = load(), date = $('#date').value, dur = SLOT, n = jstNow(), today = iso(n.y, n.mo, n.da) === date, ds = dayState(date);
+    var a = load(), live = active(a), date = $('#date').value, dur = SLOT, n = jstNow(), today = iso(n.y, n.mo, n.da) === date, ds = dayState(date);
     $('#dayNote').hidden = ds === 'open'; $('#dayNote').textContent = ds === 'closed' ? t('closedNote') : ds === 'past' ? t('pastNote') : '';
     if (ds !== 'open') sel = null;
     var h = '<thead><tr><th>' + t('time') + '</th>' + STEAMERS.map(function (s) { return '<th>' + t('steamer') + ' ' + s + '</th>'; }).join('') + '</tr></thead><tbody>';
     for (var m = OPEN; m < CLOSE; m += STEP) {
       var cells = '', taken = 0;
       STEAMERS.forEach(function (s) {
-        var b = a.filter(function (x) { return x.date === date && x.steamer === s && x.start <= m && m < x.end; })[0];
+        var b = live.filter(function (x) { return x.date === date && x.steamer === s && x.start <= m && m < x.end; })[0];
         var isSel = sel && sel.steamer === s && sel.start <= m && m < sel.start + dur;
         if (b) { taken++; cells += '<td><button type="button" disabled class="' + (b.mine ? 'mine' : 'taken') + '" data-s="' + s + '" data-m="' + m + '">' + (b.mine ? t('lgMine') : t('lgTaken')) + '</button></td>'; return; }
-        var canStart = ds === 'open' && m <= LAST_START && m + dur <= CLOSE && !(today && m <= n.min) && !overlaps(a, s, m, m + dur, date);
+        var canStart = ds === 'open' && m <= LAST_START && m + dur <= CLOSE && !(today && m <= n.min) && !overlaps(live, s, m, m + dur, date);
         cells += '<td><button type="button" class="' + (isSel ? 'sel' : canStart ? '' : 'na') + '" data-s="' + s + '" data-m="' + m + '"' + (canStart ? '' : ' disabled') + '>' + (isSel ? t('lgSel') : canStart ? t('lgFree') : (today && m <= n.min ? t('past') : '—')) + '</button></td>';
       });
       h += '<tr class="' + (taken === 3 ? 'full' : '') + '" data-m="' + m + '"><td class="t">' + hm(m) + (taken === 3 ? ' · ' + t('full') : '') + '</td>' + cells + '</tr>';
@@ -116,30 +119,30 @@
     $('#grid').querySelectorAll('button:not([disabled])').forEach(function (b) { b.onclick = function () { sel = { steamer: b.dataset.s, start: +b.dataset.m }; render(); }; });
     // summary
     if (sel) {
-      var sz = $('#size').value;
-      $('#sum').innerHTML = [[t('dt'), date], [t('tm'), hm(sel.start) + '–' + hm(sel.start + dur) + ' JST'], [t('st'), sel.steamer], [t('sz'), t(sz)], [t('du'), t('durOne')], [t('fee'), yen(fee(sz, dur))], [t('exFee'), yen(PENALTY) + ' ' + t('exFeeSub')]]
+      $('#sum').innerHTML = [[t('dt'), date], [t('tm'), hm(sel.start) + '–' + hm(sel.start + dur) + ' JST'], [t('st'), sel.steamer], [t('du'), t('durOne')], [t('fee'), yen(fee(dur))], [t('exFee'), yen(PENALTY) + ' ' + t('exFeeSub')]]
         .map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + r[1] + '</dd>'; }).join('');
     }
     $('#checkout').hidden = !sel;
-    var mine = a.filter(function (x) { return x.mine; }).sort(function (x, y) { return (x.date + hm(x.start)).localeCompare(y.date + hm(y.start)); });
+    var mine = live.filter(function (x) { return x.mine; }).sort(function (x, y) { return (x.date + hm(x.start)).localeCompare(y.date + hm(y.start)); });
     var tot = mine.reduce(function (q, x) { return q + units(x); }, 0);
     $('#mineTotal').hidden = !mine.length; $('#mineTotal').textContent = t('exTotal', { n: tot, y: yen(PENALTY * tot) });
-    $('#mine').innerHTML = mine.length ? mine.map(function (x) { return '<li><span>' + x.date + ' ' + hm(x.start) + '–' + hm(x.end) + ' JST · ' + t('steamer') + ' ' + x.steamer + ' · ' + t(x.size) + ' · ' + t('rent') + ' ' + yen(x.fee) + ' · ' + t('exFee') + ' ' + yen(PENALTY * units(x)) + (units(x) > 1 ? ' (' + units(x) + ' × ' + yen(PENALTY) + ')' : '') + ' · DEMO</span><button type="button" class="btn ghost sm" data-cancel="' + x.id + '">' + t('cancel') + '</button></li>'; }).join('') : '<li>' + t('none') + '</li>';
+    $('#mine').innerHTML = mine.length ? mine.map(function (x) { return '<li><span>' + x.date + ' ' + hm(x.start) + '–' + hm(x.end) + ' JST · ' + t('steamer') + ' ' + x.steamer + ' · ' + t('rent') + ' ' + yen(x.fee) + ' · ' + t('exFee') + ' ' + yen(PENALTY * units(x)) + (units(x) > 1 ? ' (' + units(x) + ' × ' + yen(PENALTY) + ')' : '') + ' · DEMO</span><button type="button" class="btn ghost sm" data-cancel="' + x.id + '">' + t('cancel') + '</button></li>'; }).join('') : '<li>' + t('none') + '</li>';
     $('#mine').querySelectorAll('[data-cancel]').forEach(function (b) { b.onclick = function () { cancel(b.dataset.cancel); }; });
-    $('#all').innerHTML = a.length ? a.map(function (x) { return '<li>' + x.date + ' ' + hm(x.start) + '–' + hm(x.end) + ' · ' + x.steamer + ' · ' + x.size + ' · ' + yen(x.fee) + '</li>'; }).join('') : '<li>' + t('none') + '</li>';
+    $('#all').innerHTML = a.length ? a.map(function (x) { return '<li>' + x.date + ' ' + hm(x.start) + '–' + hm(x.end) + ' · ' + t('steamer') + ' ' + x.steamer + ' · ' + yen(x.fee) + (x.status === 'cancelled' ? ' · ' + t('stCancelled') : '') + '</li>'; }).join('') : '<li>' + t('none') + '</li>';
   }
   function say(s) { $('#msg').textContent = s; $('#msg').hidden = false; }
   function book() {
     if (!sel) return;
-    var a = load(), date = $('#date').value, dur = SLOT, sz = $('#size').value, s = sel.steamer, st = sel.start, en = st + dur;
+    var a = load(), date = $('#date').value, dur = SLOT, s = sel.steamer, st = sel.start, en = st + dur;
     if (dayState(date) !== 'open' || st < OPEN || st > LAST_START || en > CLOSE || st % STEP || overlaps(a, s, st, en, date)) { say(t('clash')); sel = null; render(); return; }
-    var b = { id: 'D' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), date: date, steamer: s, start: st, end: en, size: sz, fee: fee(sz, dur), mine: true, status: 'confirmed-demo', paid: 'simulated' };
+    var b = { id: 'D' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), date: date, steamer: s, start: st, end: en, fee: fee(dur), mine: true, member: 'Demo Subscriber', status: 'booked', paid: 'simulated', createdAt: Date.now() };
     a.push(b); save(a); sel = null;
     say(t('ok', { s: s, d: date, t1: hm(st), t2: hm(en), y: yen(b.fee) }) + ' ' + t('polShort')); render();
   }
   function cancel(id) {
-    var a = load(), b = a.filter(function (x) { return x.id === id; })[0]; if (!b) return;
-    save(a.filter(function (x) { return x.id !== id; }));
+    var a = load(), b = null;
+    a.forEach(function (x) { if (x.id === id) { b = x; x.status = 'cancelled'; x.cancelledAt = Date.now(); } });
+    if (!b) return; save(a);
     say(t('cancelled', { s: b.steamer, d: b.date, t1: hm(b.start), t2: hm(b.end) })); render();
   }
   function show() {
@@ -152,11 +155,10 @@
   $('#enter').onclick = function () { localStorage.setItem(KS, '1'); show(); };
   $('#logout').onclick = function () { localStorage.removeItem(KS); sel = null; show(); };
   $('#date').onchange = $('#date').oninput = function () { sel = null; render(); };
-  $('#size').onchange = render;
   $('#pay').onclick = book;
   $('#clearSel').onclick = function () { sel = null; render(); };
   $('#reset').onclick = function () { if (confirm(t('resetQ'))) { localStorage.removeItem(KB); sel = null; $('#msg').hidden = true; render(); } };
   window.addEventListener('storage', function (e) { if (e.key === KB || e.key === KS) show(); });
   show();
-  window.__membersDemo = { fee: fee, FEES: FEES };
+  window.__membersDemo = { fee: fee, RATE: RATE, PENALTY: PENALTY };
 })();
