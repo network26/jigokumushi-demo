@@ -68,11 +68,11 @@
       var meta = [];
       if(m[2]) meta.push('<span>'+esc(t('serv.'+m[2]))+'</span>');
       if(m[4]) meta.push('<span>'+esc(fmt(t('pcs'),{n:m[4]}))+'</span>');
-      if(D.top.indexOf(m[0])>-1) meta.unshift('<span class="top8-badge">★ '+esc(t('top.badge'))+'</span>');
+      var ti=D.top.indexOf(m[0]); if(ti>-1) meta.unshift('<span class="top8-badge">★ #'+(ti+1)+' '+esc(t('top.badge'))+'</span>');
       if(m[5]) meta.push('<span class="rec">★ '+esc(t('rec'))+'</span>');
       var note = (m[0]===1||m[0]===2) ? '<div class="setnote">+ '+esc(t('food.setNote'))+'</div>' : '';
       var ja = lang==='ja' ? '' : '<div class="ja">'+esc(D.menuJa[i])+'</div>';
-      return '<article class="dish tilt'+(D.top.indexOf(m[0])>-1?' is-top':'')+'" data-cat="'+m[1]+'" data-top="'+(D.top.indexOf(m[0])>-1?1:0)+'" data-reveal="'+dirs[i%5]+'" data-delay="'+(i%4)+'">'+
+      var ti2=D.top.indexOf(m[0]); return '<article class="dish tilt'+(ti2>-1?' is-top':'')+'" data-cat="'+m[1]+'" data-top="'+(ti2>-1?1:0)+'" data-rank="'+(ti2>-1?ti2+1:0)+'" style="'+(ti2>-1?'--top-rank:'+(ti2+1):'')+'" data-reveal="'+dirs[i%5]+'" data-delay="'+(i%4)+'">'+
         '<span class="no">'+m[0]+'</span><div class="glyph">'+D.catKanji[m[1]]+'</div>'+
         '<h4>'+esc(names[i]||D.menuJa[i])+'</h4>'+ja+note+
         '<div class="meta">'+meta.join('')+'</div><div class="price">'+yen(m[3])+'</div><i class="steam-puff"></i></article>';
@@ -80,16 +80,18 @@
     filterMenu(false); bindTilt();
   }
   function filterMenu(anim){
-    var n = 0;
-    $$('#food-grid .dish').forEach(function(d){
+    var n=0, isTop = curCat==='top', grid = $('#food-grid'), dishes = Array.prototype.slice.call(grid.querySelectorAll('.dish'));
+    dishes.forEach(function(d){
       var show = curCat==='all' || (curCat==='top' ? d.dataset.top==='1' : d.dataset.cat===curCat);
-      if(show) n++;
-      d.classList.toggle('hide',!show);
-      if(show && anim){ d.classList.remove('in'); void d.offsetWidth; requestAnimationFrame(function(){ d.classList.add('in'); }); }
+      d.classList.toggle('hide', !show); if(show) n++;
+      if(anim && show){ d.classList.remove('in'); requestAnimationFrame(function(){ d.classList.add('in'); }); }
     });
-    var isTop = curCat==='top';
+    dishes.sort(function(a,b){
+      if(isTop) return (+a.dataset.rank||99) - (+b.dataset.rank||99);
+      return (+a.querySelector('.no').textContent) - (+b.querySelector('.no').textContent);
+    }).forEach(function(d){ grid.appendChild(d); });
     $('#top8-banner').hidden = !isTop;
-    $('#food-grid').classList.toggle('is-top-view', isTop);
+    grid.classList.toggle('is-top-view', isTop);
     $('#menu-status').textContent = isTop ? fmt(t('top.status'),{m:D.menu.length}) : fmt(t('menu.status'),{n:n,m:D.menu.length});
   }
   function renderDress(){
