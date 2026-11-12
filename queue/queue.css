@@ -123,3 +123,8 @@ tr.is-new{animation:jk-pulse 1.2s ease-in-out 2}
 
 #called-msg{white-space:pre-line}
 html[lang=my] body{font-family:'Noto Sans Myanmar','Myanmar Text','Padauk',sans-serif;line-height:1.9}
+
+.tag.coming{background:var(--jade);color:#0b0a09;border-color:var(--jade);font-weight:700}
+tr.is-coming td{background:rgba(111,167,154,.18)}
+.coming-banner{background:rgba(111,167,154,.2);border-color:var(--jade)}
+#f-ticket-err{margin-top:6px}

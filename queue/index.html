@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Noto+Sans+Myanmar:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="queue.css?v=20261107c">
+<link rel="stylesheet" href="queue.css?v=20261112q">
 </head>
 <body>
 <div id="called-banner" role="alert" hidden>
@@ -40,11 +40,17 @@
         <select id="f-size"></select>
       </div>
       <div class="field">
+        <label for="f-ticket" data-q="ticketNoL">Ticket number</label>
+        <input id="f-ticket" type="text" inputmode="numeric" pattern="[0-9]{1,6}" maxlength="6" autocomplete="off" required aria-describedby="f-ticket-h f-ticket-err">
+        <small id="f-ticket-h" data-q="ticketNoH">The number printed on your meal or reception ticket (digits only).</small>
+        <p id="f-ticket-err" class="empty" hidden data-q="ticketNoErr">Enter the number on your ticket (1–6 digits).</p>
+      </div>
+      <div class="field">
         <label for="f-nick" data-q="nickL">Nickname (optional)</label>
         <input id="f-nick" type="text" maxlength="20" autocomplete="off" aria-describedby="f-nick-h">
         <small id="f-nick-h" data-q="nickH"></small>
       </div>
-      <button class="btn btn-fire block" type="submit" id="f-join" data-q="join">Get my queue number</button>
+      <button class="btn btn-fire block" type="submit" id="f-join" disabled data-q="join">Get my queue number</button>
       <p id="closed-msg" class="empty" hidden data-q="closed"></p>
     </form>
   </section>
@@ -56,7 +62,9 @@
     <p><span class="status" id="t-status"></span></p>
     <p class="stat" id="t-ahead"></p>
     <p class="stat" id="t-wait"></p>
+    <p class="meta" id="t-ticketno-row" hidden><span data-q="ticketNoShow">Ticket number</span>: <strong id="t-ticketno"></strong></p>
     <p class="meta"><span id="t-party"></span> · <span data-q="ticket">Ticket ID</span>: <code id="t-id"></code></p>
+    <p class="alerts-on" id="t-coming-sent" hidden data-q="comingSent">Staff notified</p>
 
     <div class="row" id="alert-row">
       <button type="button" class="btn btn-gold sm" id="alerts-btn" data-q="alertsOff"></button>
@@ -72,9 +80,9 @@
   </section>
 </main>
 
-<script src="i18n.js?v=20261107c"></script>
-<script src="queue-core.js?v=20261107c"></script>
-<script src="relay.js?v=20261107c"></script>
-<script src="customer.js?v=20261107c"></script>
+<script src="i18n.js?v=20261112q"></script>
+<script src="queue-core.js?v=20261112q"></script>
+<script src="relay.js?v=20261112q"></script>
+<script src="customer.js?v=20261112q"></script>
 </body>
 </html>

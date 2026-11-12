@@ -74,7 +74,7 @@
   function initButtons() {
   $('#b-next').addEventListener('click', function () { api.callNext().then(function (e) { say(e ? 'Called No. ' + e.no + ' / ' + e.no + '番を呼びました' : 'Nobody is waiting / 待ちはありません'); }); });
   $('#b-open').addEventListener('click', function () { api.setOpen(!api.getState().open); });
-  $('#b-add').addEventListener('click', function () { api.join({ size: 1 + Math.floor(Math.random() * 4), nick: NAMES[0], lang: 'ja' }).catch(function () { say('Queue is closed / 受付終了中です'); }); });
+  $('#b-add').addEventListener('click', function () { api.join({ size: 1 + Math.floor(Math.random() * 4), nick: NAMES[0], lang: 'ja', walkIn: true }).catch(function () { say('Queue is closed / 受付終了中です'); }); });
   $('#b-reset').addEventListener('click', function () { if (confirm('Clear the whole queue and restart numbers at 1?\n待ちリストをすべて消して番号を1に戻しますか？')) api.reset(); });
   $('#rows').addEventListener('click', function (e) {
     var b = e.target.closest('button[data-act]'); if (!b) return;
@@ -108,10 +108,28 @@
       say('New in line: ' + m); beep();
     }
   }
+  var seenComing = null;
+  function clock(ms) { try { return new Date(ms).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }); } catch (e) { return ''; } }
+  function trackComing(st) {
+    if (seenComing === null) { seenComing = {}; st.entries.forEach(function (e) { if (e.comingAt) seenComing[e.id + ':' + e.comingAt] = 1; }); return; }
+    var freshC = [];
+    st.entries.forEach(function (e) {
+      if (e.comingAt) {
+        var k = e.id + ':' + e.comingAt;
+        if (!seenComing[k]) { seenComing[k] = 1; if (Date.now() - e.comingAt < 120000) freshC.push(e); }
+      }
+    });
+    if (freshC.length) {
+      var m = freshC.map(function (e) { return 'No. ' + e.no + (e.ticketNo ? ' (ticket ' + e.ticketNo + ')' : ''); }).join(', ');
+      var cb = $('#coming-banner');
+      if (cb) { cb.textContent = "I'm coming / 向かっています: " + m + ' · ' + clock(freshC[0].comingAt); cb.hidden = false; clearTimeout(trackComing.t); trackComing.t = setTimeout(function () { cb.hidden = true; }, 15000); }
+      say("I'm coming: " + m); beep();
+    }
+  }
 
   function render() {
     if (!authed || !api) return;
-    var st = api.getState(), now = Date.now(); trackNew(st); var c = { waiting: 0, called: 0, seated: 0, noshow: 0 };
+    var st = api.getState(), now = Date.now(); trackNew(st); trackComing(st); var c = { waiting: 0, called: 0, seated: 0, noshow: 0 };
     st.entries.forEach(function (e) { if (c[e.status] != null) c[e.status]++; });
     $('#n-wait').textContent = c.waiting; $('#n-called').textContent = c.called; $('#n-seated').textContent = c.seated; $('#n-no').textContent = c.noshow;
     var o = $('#s-open'); o.textContent = st.open ? 'Queue open' : 'Queue closed'; o.className = 'badge' + (st.open ? '' : ' closed');
@@ -130,7 +148,10 @@
       if (e.status === 'called') btns += '<button type="button" class="btn btn-gold sm" data-act="seat" data-id="' + esc(e.id) + '">Seat <span lang="ja">案内</span></button>';
       if (live) btns += '<button type="button" class="btn btn-ghost sm" data-act="noshow" data-id="' + esc(e.id) + '">No-show <span lang="ja">不在</span></button>';
       var isNew = e.status === 'waiting' && fresh[e.id];
-      return '<tr class="' + esc(e.status) + (isNew ? ' is-new' : '') + '" data-id="' + esc(e.id) + '"><td class="no">' + e.no + (isNew ? ' <span class="tag new">NEW</span>' : '') + '</td><td>' + e.size + '</td><td>' + (e.nick ? esc(e.nick) : '<span class="tag">—</span>') + '<br><small class="meta">' + esc(e.id) + '</small></td><td>' + (e.lang ? '<span class="tag lang" lang="' + esc(e.lang) + '" title="Ticket language / 言語">' + esc(LT[e.lang] || e.lang) + '</span>' : '—') + '</td><td><span class="tag ' + esc(e.status) + '">' + (ST[e.status] || esc(e.status)) + '</span></td><td>' + mins((e.doneAt || now) - e.joinedAt) + '</td><td class="act"><div>' + btns + '</div></td></tr>';
+      var coming = !!e.comingAt && e.status === 'called';
+      var ticketCell = (e.ticketNo ? esc(e.ticketNo) : '—');
+      var comingTag = coming ? ' <span class="tag coming">I\'m coming / 向かっています · ' + esc(clock(e.comingAt)) + '</span>' : '';
+      return '<tr class="' + esc(e.status) + (isNew ? ' is-new' : '') + (coming ? ' is-coming' : '') + '" data-id="' + esc(e.id) + '"><td class="no">' + e.no + (isNew ? ' <span class="tag new">NEW</span>' : '') + '</td><td class="ticketno">' + ticketCell + '</td><td>' + e.size + '</td><td>' + (e.nick ? esc(e.nick) : '<span class="tag">—</span>') + '<br><small class="meta">' + esc(e.id) + '</small></td><td>' + (e.lang ? '<span class="tag lang" lang="' + esc(e.lang) + '" title="Ticket language / 言語">' + esc(LT[e.lang] || e.lang) + '</span>' : '—') + '</td><td><span class="tag ' + esc(e.status) + '">' + (ST[e.status] || esc(e.status)) + '</span>' + comingTag + '</td><td>' + mins((e.doneAt || now) - e.joinedAt) + '</td><td class="act"><div>' + btns + '</div></td></tr>';
     }).join('');
   }
   setInterval(render, 15000); // refresh elapsed minutes

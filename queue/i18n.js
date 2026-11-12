@@ -41,7 +41,13 @@ window.QI18N = {
     "again": "Join again",
     "ticket": "Ticket ID",
     "lang": "Language",
-    "tab": "🔔 Your turn!"
+    "tab": "🔔 Your turn!",
+    "ticketNoL": "Ticket number",
+    "ticketNoH": "The number printed on your meal or reception ticket (digits only).",
+    "ticketNoErr": "Enter the number on your ticket (1–6 digits).",
+    "ticketNoShow": "Ticket number",
+    "coming": "I'm coming",
+    "comingSent": "Staff notified"
   },
   "ja": {
     "stSoundOk": "音：準備OK",
@@ -84,7 +90,13 @@ window.QI18N = {
     "again": "もう一度並ぶ",
     "ticket": "チケットID",
     "lang": "言語",
-    "tab": "🔔 お呼びします！"
+    "tab": "🔔 お呼びします！",
+    "ticketNoL": "受付番号",
+    "ticketNoH": "食券または受付札に書かれた番号（数字のみ）。",
+    "ticketNoErr": "受付番号を入力してください（1～6桁の数字）。",
+    "ticketNoShow": "受付番号",
+    "coming": "向かっています",
+    "comingSent": "スタッフに伝えました"
   },
   "ko": {
     "stSoundOk": "소리: 준비됨",
@@ -127,7 +139,13 @@ window.QI18N = {
     "again": "다시 등록",
     "ticket": "티켓 ID",
     "lang": "언어",
-    "tab": "🔔 고객님 차례!"
+    "tab": "🔔 고객님 차례!",
+    "ticketNoL": "접수 번호",
+    "ticketNoH": "식권 또는 접수 표에 적힌 번호(숫자만).",
+    "ticketNoErr": "티켓 번호를 입력하세요(숫자 1–6자리).",
+    "ticketNoShow": "접수 번호",
+    "coming": "지금 갑니다",
+    "comingSent": "직원에게 전달했습니다"
   },
   "zh-Hans": {
     "stSoundOk": "声音：已就绪",
@@ -170,7 +188,13 @@ window.QI18N = {
     "again": "重新排队",
     "ticket": "票号 ID",
     "lang": "语言",
-    "tab": "🔔 轮到您了！"
+    "tab": "🔔 轮到您了！",
+    "ticketNoL": "取号号码",
+    "ticketNoH": "餐券或接待号牌上的号码（仅数字）。",
+    "ticketNoErr": "请输入您的号码（1–6位数字）。",
+    "ticketNoShow": "取号号码",
+    "coming": "我马上到",
+    "comingSent": "已通知工作人员"
   },
   "zh-Hant": {
     "stSoundOk": "聲音：已就緒",
@@ -213,7 +237,13 @@ window.QI18N = {
     "again": "重新排隊",
     "ticket": "票號 ID",
     "lang": "語言",
-    "tab": "🔔 輪到您了！"
+    "tab": "🔔 輪到您了！",
+    "ticketNoL": "取號號碼",
+    "ticketNoH": "餐券或接待號牌上的號碼（僅數字）。",
+    "ticketNoErr": "請輸入您的號碼（1–6 位數字）。",
+    "ticketNoShow": "取號號碼",
+    "coming": "我馬上到",
+    "comingSent": "已通知工作人員"
   },
   "fr": {
     "stSoundOk": "Son : prêt",
@@ -256,7 +286,13 @@ window.QI18N = {
     "again": "Rejoindre à nouveau",
     "ticket": "ID du ticket",
     "lang": "Langue",
-    "tab": "🔔 À vous !"
+    "tab": "🔔 À vous !",
+    "ticketNoL": "Numéro de ticket",
+    "ticketNoH": "Le numéro imprimé sur votre ticket repas ou d’accueil (chiffres uniquement).",
+    "ticketNoErr": "Entrez le numéro de votre ticket (1 à 6 chiffres).",
+    "ticketNoShow": "Numéro de ticket",
+    "coming": "J’arrive",
+    "comingSent": "Le personnel a été prévenu"
   },
   "vi": {
     "stSoundOk": "Âm thanh: sẵn sàng",
@@ -299,7 +335,13 @@ window.QI18N = {
     "again": "Xếp hàng lại",
     "ticket": "Mã vé",
     "lang": "Ngôn ngữ",
-    "tab": "🔔 Đến lượt bạn!"
+    "tab": "🔔 Đến lượt bạn!",
+    "ticketNoL": "Số phiếu",
+    "ticketNoH": "Số in trên phiếu ăn hoặc phiếu nhận chỗ (chỉ gồm chữ số).",
+    "ticketNoErr": "Nhập số trên phiếu của bạn (1–6 chữ số).",
+    "ticketNoShow": "Số phiếu",
+    "coming": "Tôi đang tới",
+    "comingSent": "Đã thông báo cho nhân viên"
   },
   "es": {
     "stSoundOk": "Sonido: listo",
@@ -342,7 +384,13 @@ window.QI18N = {
     "again": "Unirme de nuevo",
     "ticket": "ID del ticket",
     "lang": "Idioma",
-    "tab": "🔔 ¡Tu turno!"
+    "tab": "🔔 ¡Tu turno!",
+    "ticketNoL": "Número de ticket",
+    "ticketNoH": "El número impreso en su ticket de comida o de recepción (solo dígitos).",
+    "ticketNoErr": "Introduzca el número de su ticket (1–6 dígitos).",
+    "ticketNoShow": "Número de ticket",
+    "coming": "Ya voy",
+    "comingSent": "Se avisó al personal"
   },
   "de": {
     "stSoundOk": "Ton: bereit",
@@ -385,7 +433,13 @@ window.QI18N = {
     "again": "Erneut anstellen",
     "ticket": "Ticket-ID",
     "lang": "Sprache",
-    "tab": "🔔 Sie sind dran!"
+    "tab": "🔔 Sie sind dran!",
+    "ticketNoL": "Ticketnummer",
+    "ticketNoH": "Die Nummer auf Ihrem Essens- oder Empfangsticket (nur Ziffern).",
+    "ticketNoErr": "Geben Sie die Nummer auf Ihrem Ticket ein (1–6 Ziffern).",
+    "ticketNoShow": "Ticketnummer",
+    "coming": "Ich komme",
+    "comingSent": "Personal wurde benachrichtigt"
   },
   "th": {
     "stSoundOk": "เสียง: พร้อมแล้ว",
@@ -428,7 +482,13 @@ window.QI18N = {
     "again": "ต่อคิวอีกครั้ง",
     "ticket": "รหัสบัตรคิว",
     "lang": "ภาษา",
-    "tab": "🔔 ถึงคิวคุณแล้ว!"
+    "tab": "🔔 ถึงคิวคุณแล้ว!",
+    "ticketNoL": "หมายเลขบัตรคิว",
+    "ticketNoH": "หมายเลขที่พิมพ์บนบัตรอาหารหรือบัตรรับคิว (ตัวเลขเท่านั้น)",
+    "ticketNoErr": "กรอกหมายเลขบนบัตรของคุณ (1–6 หลัก)",
+    "ticketNoShow": "หมายเลขบัตรคิว",
+    "coming": "กำลังไปแล้ว",
+    "comingSent": "แจ้งเจ้าหน้าที่แล้ว"
   },
   "id": {
     "stSoundOk": "Suara: siap",
@@ -471,7 +531,13 @@ window.QI18N = {
     "again": "Ikut antre lagi",
     "ticket": "ID tiket",
     "lang": "Bahasa",
-    "tab": "🔔 Giliran Anda!"
+    "tab": "🔔 Giliran Anda!",
+    "ticketNoL": "Nomor tiket",
+    "ticketNoH": "Nomor yang tercetak di tiket makan atau tiket pendaftaran (hanya angka).",
+    "ticketNoErr": "Masukkan nomor pada tiket Anda (1–6 digit).",
+    "ticketNoShow": "Nomor tiket",
+    "coming": "Saya sedang datang",
+    "comingSent": "Staf sudah diberitahu"
   },
   "pt": {
     "stSoundOk": "Som: pronto",
@@ -514,7 +580,13 @@ window.QI18N = {
     "again": "Entrar novamente",
     "ticket": "ID do ticket",
     "lang": "Idioma",
-    "tab": "🔔 Sua vez!"
+    "tab": "🔔 Sua vez!",
+    "ticketNoL": "Número do ticket",
+    "ticketNoH": "O número impresso no seu ticket de refeição ou de receção (apenas dígitos).",
+    "ticketNoErr": "Introduza o número do seu ticket (1–6 dígitos).",
+    "ticketNoShow": "Número do ticket",
+    "coming": "Estou a chegar",
+    "comingSent": "A equipa foi avisada"
   },
   "it": {
     "stSoundOk": "Audio: pronto",
@@ -557,7 +629,13 @@ window.QI18N = {
     "again": "Rimettiti in coda",
     "ticket": "ID ticket",
     "lang": "Lingua",
-    "tab": "🔔 Tocca a te!"
+    "tab": "🔔 Tocca a te!",
+    "ticketNoL": "Numero del ticket",
+    "ticketNoH": "Il numero stampato sul ticket pasto o di accoglienza (solo cifre).",
+    "ticketNoErr": "Inserisci il numero sul tuo ticket (1–6 cifre).",
+    "ticketNoShow": "Numero del ticket",
+    "coming": "Sto arrivando",
+    "comingSent": "Lo staff è stato avvisato"
   },
   "my": {
     "stSoundOk": "အသံ- အသင့်",
@@ -600,6 +678,12 @@ window.QI18N = {
     "again": "ထပ်မံ တန်းစီရန်",
     "ticket": "လက်မှတ် ID",
     "lang": "ဘာသာစကား",
-    "tab": "🔔 သင့်အလှည့်!"
+    "tab": "🔔 သင့်အလှည့်!",
+    "ticketNoL": "လက်မှတ်နံပါတ်",
+    "ticketNoH": "အစားအစာ သို့မဟုတ် လက်ခံလက်မှတ်ပေါ်ရှိ နံပါတ် (ဂဏန်းများသာ)။",
+    "ticketNoErr": "သင့်လက်မှတ်ပေါ်ရှိ နံပါတ်ကို ရိုက်ထည့်ပါ (ဂဏန်း ၁–၆ လုံး)။",
+    "ticketNoShow": "လက်မှတ်နံပါတ်",
+    "coming": "လာနေပါပြီ",
+    "comingSent": "ဝန်ထမ်းကို အသိပေးပြီးပါပြီ"
   }
 };

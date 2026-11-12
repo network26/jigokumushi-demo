@@ -7,8 +7,9 @@
  *
  *   adapter.getState()          -> { open:Boolean, nextNo:Number, entries:[Entry] }
  *   adapter.subscribe(fn)       -> unsubscribe()   fn(state) is called on every change (any tab/device)
- *   adapter.join({size,nick,lang}) -> Promise<Entry>  (server assigns number + random ticket id)
+ *   adapter.join({size,nick,lang,ticketNo,walkIn}) -> Promise<Entry>  (server assigns queue number + random ticket id)
  *   adapter.leave(id)           -> Promise         (customer leaves)
+ *   adapter.ack(id)             -> Promise         (customer: I'm coming)
  *   adapter.callNext()          -> Promise<Entry|null>   first waiting -> called
  *   adapter.call(id)            -> Promise         waiting -> called
  *   adapter.seat(id)            -> Promise         called  -> seated
@@ -17,7 +18,8 @@
  *   adapter.reset()             -> Promise         clear everything, numbers restart at 1
  *
  *   Entry = { id:'K7F2-9QXD' (random ticket id), no:12, size:2, nick:'', status:
- *             'waiting'|'called'|'seated'|'noshow'|'left', joinedAt:ms, calledAt:ms|null, calls:int, doneAt:ms|null }
+ *             'waiting'|'called'|'seated'|'noshow'|'left', joinedAt:ms, calledAt:ms|null, calls:int, doneAt:ms|null,
+ *             ticketNo?:'123' (meal/reception ticket, 1–6 digits), comingAt:ms|null }
  *
  * Planned production backend (recommended): Cloudflare Workers + D1 (queue tables),
  * a Durable Object or SSE/WebSocket for live pushes, Turnstile on join (bot protection) and
@@ -79,20 +81,24 @@
           if (!st.open) { var err = new Error('closed'); err.code = 'closed'; throw err; }
           var rid = /^[A-Za-z0-9-]{6,16}$/.test(o.id || '') ? o.id : null;   // class demo: the phone chooses its own (secret-derived) id; joining twice = no-op
           if (rid) { var ex = find(st, rid); if (ex) return ex; }
+          var tn = String(o.ticketNo == null ? '' : o.ticketNo).replace(/\D/g, '').slice(0, 6);
+          if (!o.walkIn && !/^\d{1,6}$/.test(tn)) { var err2 = new Error('ticketNo'); err2.code = 'ticketNo'; throw err2; }
           var e = { id: rid || randomId(), no: st.nextNo++, size: Math.min(20, Math.max(1, parseInt(o.size, 10) || 1)),
-                    nick: String(o.nick || '').trim().slice(0, 20), lang: /^[A-Za-z]{2,3}(-[A-Za-z]{2,4})?$/.test(o.lang || '') ? o.lang : 'en', status: 'waiting', joinedAt: Math.min(Date.now(), +o.ts || Date.now()), calledAt: null, doneAt: null };
+                    nick: String(o.nick || '').trim().slice(0, 20), lang: /^[A-Za-z]{2,3}(-[A-Za-z]{2,4})?$/.test(o.lang || '') ? o.lang : 'en', ticketNo: tn || '',
+                    status: 'waiting', joinedAt: Math.min(Date.now(), +o.ts || Date.now()), calledAt: null, comingAt: null, doneAt: null };
           st.entries.push(e); return e;
         });
       },
       leave: function (id) { return mutate(function (st) { var e = find(st, id); if (e && (e.status === 'waiting' || e.status === 'called')) { e.status = 'left'; e.doneAt = Date.now(); } }); },
+      ack: function (id) { return mutate(function (st) { var e = find(st, id); if (e && e.status === 'called') { e.comingAt = e.comingAt || Date.now(); } }); },
       callNext: function () {
         return mutate(function (st) {
           var w = st.entries.filter(function (e) { return e.status === 'waiting'; }).sort(function (a, b) { return a.no - b.no; })[0];
-          if (w) { w.status = 'called'; w.calledAt = Date.now(); w.calls = (w.calls || 0) + 1; }
+          if (w) { w.status = 'called'; w.calledAt = Date.now(); w.calls = (w.calls || 0) + 1; w.comingAt = null; }
           return w || null;
         });
       },
-      call: function (id) { return mutate(function (st) { var e = find(st, id); if (e && (e.status === 'waiting' || e.status === 'called')) { e.status = 'called'; e.calledAt = Date.now(); e.calls = (e.calls || 0) + 1; } }); }, // also "Call again"
+      call: function (id) { return mutate(function (st) { var e = find(st, id); if (e && (e.status === 'waiting' || e.status === 'called')) { e.status = 'called'; e.calledAt = Date.now(); e.calls = (e.calls || 0) + 1; e.comingAt = null; } }); }, // also "Call again"
       seat: function (id) { return mutate(function (st) { var e = find(st, id); if (e && e.status === 'called') { e.status = 'seated'; e.doneAt = Date.now(); } }); },
       noShow: function (id) { return mutate(function (st) { var e = find(st, id); if (e && (e.status === 'waiting' || e.status === 'called')) { e.status = 'noshow'; e.doneAt = Date.now(); } }); },
       setOpen: function (v) { return mutate(function (st) { st.open = !!v; }); },
@@ -107,7 +113,7 @@
   function RemoteAdapter(/* baseUrl */) {
     function nope() { return Promise.reject(new Error('RemoteAdapter not implemented yet – demo uses LocalAdapter')); }
     return { kind: 'remote', getState: fresh, subscribe: function () { return function () {}; },
-             join: nope, leave: nope, callNext: nope, call: nope, seat: nope, noShow: nope, setOpen: nope, reset: nope };
+             join: nope, leave: nope, ack: nope, callNext: nope, call: nope, seat: nope, noShow: nope, setOpen: nope, reset: nope };
   }
 
   /* ---------------- helpers shared by both pages ---------------- */

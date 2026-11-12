@@ -29,9 +29,14 @@ relay **ntfy.sh** (no account, no server of ours):
 - Staff state lives in the staff browser's localStorage. Joins made while the staff page is closed are recovered from ntfy's cached history (~12 h).
 - A phone keeps its ticket in localStorage, re-syncs on return from lock/background (visibility, focus, pageshow, online) and falls back to slow polling
   if the relay refuses more streams from one IP.
-- Data: only party size, language and an optional nickname. Messages pass through a public relay: don't enter personal info.
+- Data: party size, language, the meal/reception ticket number, and an optional nickname. Messages pass through a public relay: don't enter personal info.
 - Limits (ntfy.sh anonymous tier, per IP): ~250 messages/day, ~30 concurrent streams, a small request rate. Locked phones cannot be woken (no Web Push):
   they alert when the page is opened again.
+
+
+## Ticket number and “I’m coming” (demo)
+Customers must enter the number on their meal / reception ticket (1–6 digits) to join. That number is shown on the staff row and on the customer ticket view.
+When staff calls a party, the alert’s **I’m coming / 向かっています** button (the previous OK control) dismisses the alert and tells the staff page. Staff see a highlighted badge with the time, plus a short banner and beep. In the live class-demo relay this acknowledgement is signed with the phone’s ticket secret (same as leave), recovered from ntfy history, and included in the signed snapshot so the phone can show “Staff notified”.
 
 ## Files
 `queue-core.js` (state + adapters), `relay.js` (ntfy client, signatures, class-demo adapters), `customer.js`, `staff.js`, `gate.js` (private-link gate),

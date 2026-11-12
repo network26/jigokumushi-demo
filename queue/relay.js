@@ -105,13 +105,13 @@
     function saveMe() { lsj(K_ME, me); }
     function getState() {
       var s = snap || { s: 0, o: 1, n: 1, ep: '', ra: 0, e: [] };
-      var entries = s.e.map(function (a) { return { id: a[0], no: a[1], status: ST[a[2]] || 'left', calls: a[3] || 0, calledAt: a[4] ? a[4] * 1000 : null, size: 1, nick: '', lang: null }; });
+      var entries = s.e.map(function (a) { return { id: a[0], no: a[1], status: ST[a[2]] || 'left', calls: a[3] || 0, calledAt: a[4] ? a[4] * 1000 : null, ticketNo: a[5] ? String(a[5]) : '', comingAt: a[6] ? a[6] * 1000 : null, size: 1, nick: '', lang: null }; });
       var pending = null;
       if (me) {
         var mine = null; entries.forEach(function (e) { if (e.id === me.id) mine = e; });
-        if (mine) { mine.size = me.size; mine.nick = me.nick; mine.lang = me.lang; mine.joinedAt = me.joinedAt; if (me.left) mine.status = 'left'; }
-        else if (me.seen || me.left) entries.push({ id: me.id, no: me.no || 0, size: me.size, nick: me.nick, lang: me.lang, status: 'left', calls: 0, calledAt: null, joinedAt: me.joinedAt });
-        else pending = { id: me.id, no: 0, pending: true, size: me.size, nick: me.nick, lang: me.lang, status: 'waiting', calls: 0, calledAt: null, joinedAt: me.joinedAt };
+        if (mine) { mine.size = me.size; mine.nick = me.nick; mine.lang = me.lang; mine.ticketNo = me.ticketNo || mine.ticketNo || ''; mine.joinedAt = me.joinedAt; if (me.left) mine.status = 'left'; }
+        else if (me.seen || me.left) entries.push({ id: me.id, no: me.no || 0, size: me.size, nick: me.nick, lang: me.lang, ticketNo: me.ticketNo || '', status: 'left', calls: 0, calledAt: null, comingAt: null, joinedAt: me.joinedAt });
+        else pending = { id: me.id, no: 0, pending: true, size: me.size, nick: me.nick, lang: me.lang, ticketNo: me.ticketNo || '', status: 'waiting', calls: 0, calledAt: null, comingAt: null, joinedAt: me.joinedAt };
       }
       return { open: !!s.o, nextNo: s.n, entries: entries, pending: pending, rev: rev, net: net };
     }
@@ -164,7 +164,7 @@
     function tryPost() {
       if (!me || me.posted || posting || (me.tries || 0) >= 30) return;
       posting = true; me.tries = (me.tries || 0) + 1; saveMe();
-      post({ t: 'join', id: me.id, size: me.size, nick: me.nick, lang: me.lang, ts: me.joinedAt }).then(function () { me.posted = true; saveMe(); posting = false; },
+      post({ t: 'join', id: me.id, size: me.size, nick: me.nick, lang: me.lang, ticketNo: me.ticketNo || '', ts: me.joinedAt }).then(function () { me.posted = true; saveMe(); posting = false; },
         function () { posting = false; setTimeout(tryPost, Math.min(20000, 3000 * me.tries)); });
     }
 
@@ -179,12 +179,13 @@
         if (me && !me.seen && !me.left) return Promise.resolve(getState().entries.filter(function (e) { return e.id === me.id; })[0]);
         var secret = b64u(rand(12));
         return idFromSecret(secret).then(function (id) {
-          me = { id: id, secret: secret, size: Math.min(20, Math.max(1, parseInt(o.size, 10) || 1)), nick: String(o.nick || '').trim().slice(0, 20), lang: o.lang || 'en', joinedAt: Date.now(), posted: false, tries: 0, seen: false };
+          me = { id: id, secret: secret, size: Math.min(20, Math.max(1, parseInt(o.size, 10) || 1)), nick: String(o.nick || '').trim().slice(0, 20), lang: o.lang || 'en', ticketNo: String(o.ticketNo || '').replace(/\D/g, '').slice(0, 6), joinedAt: Date.now(), posted: false, tries: 0, seen: false };
           saveMe(); tryPost(); emit();
           return getState().entries.filter(function (e) { return e.id === id; })[0];
         });
       },
-      leave: function () { if (!me) return Promise.resolve(); var m = me; me.left = true; saveMe(); emit(); return post({ t: 'leave', id: m.id, secret: m.secret }).catch(function () {}); }
+      leave: function () { if (!me) return Promise.resolve(); var m = me; me.left = true; saveMe(); emit(); return post({ t: 'leave', id: m.id, secret: m.secret }).catch(function () {}); },
+      ack: function () { if (!me || !me.secret) return Promise.resolve(); return post({ t: 'ack', id: me.id, secret: me.secret, ts: Date.now() }).catch(function () {}); }
     };
   }
 
@@ -212,10 +213,15 @@
             if (!o || typeof o.id !== 'string') return;
             if (o.t === 'join') {
               var lang = typeof o.lang === 'string' ? o.lang.slice(0, 8) : 'en';
-              return local.join({ id: o.id, size: o.size, nick: o.nick, lang: lang, ts: o.ts }).then(function () { status.joins++; schedule(3000); }, function () {});   // joins are batched (free tier: 250 messages/day per IP)
+              var tn = String(o.ticketNo == null ? '' : o.ticketNo).replace(/\D/g, '').slice(0, 6);
+              if (!/^\d{1,6}$/.test(tn)) return;   // customer joins must carry a ticket number
+              return local.join({ id: o.id, size: o.size, nick: o.nick, lang: lang, ticketNo: tn, ts: o.ts }).then(function () { status.joins++; schedule(3000); }, function () {});   // joins are batched (free tier: 250 messages/day per IP)
             }
             if (o.t === 'leave' && typeof o.secret === 'string') {
               return idFromSecret(o.secret).then(function (id) { if (id === o.id) return local.leave(o.id); });
+            }
+            if (o.t === 'ack' && typeof o.secret === 'string') {
+              return idFromSecret(o.secret).then(function (id) { if (id === o.id) return local.ack(o.id).then(function () { schedule(300); }); });
             }
           });
         }, Promise.resolve()).then(function () { if (list.length) { cur = list[list.length - 1].id || cur; ls(K_CUR, cur); } emitStatus(); });
@@ -230,7 +236,7 @@
     var pubTimer = null, pubBusy = false, again = false;
     function build(seqNo) {
       var st = local.getState(), act = [], fin = [];
-      st.entries.forEach(function (e) { var a = [e.id, e.no, Math.max(0, ST.indexOf(e.status)), e.calls || 0, e.calledAt ? Math.round(e.calledAt / 1000) : 0]; (e.status === 'waiting' || e.status === 'called' ? act : fin).push(a); });
+      st.entries.forEach(function (e) { var a = [e.id, e.no, Math.max(0, ST.indexOf(e.status)), e.calls || 0, e.calledAt ? Math.round(e.calledAt / 1000) : 0, e.ticketNo || '', e.comingAt ? Math.round(e.comingAt / 1000) : 0]; (e.status === 'waiting' || e.status === 'called' ? act : fin).push(a); });
       fin.sort(function (a, b) { return b[1] - a[1]; });
       var p = { s: seqNo, o: st.open ? 1 : 0, n: st.nextNo, ep: st.epoch || '', ra: st.resetAt || 0, e: act.concat(fin) };
       while (JSON.stringify(p).length > 3500 && p.e.length > act.length) p.e.pop();   // keep the newest finished ones, drop the oldest (phones show "left")

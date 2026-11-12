@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="queue.css?v=20261107c">
+<link rel="stylesheet" href="queue.css?v=20261112q">
 </head>
 <body class="wide">
 <header class="q-head">
@@ -34,6 +34,7 @@
   <div id="console" hidden>
     <p class="vh" id="s-live" role="status" aria-live="polite"></p>
     <p class="new-banner" id="new-banner" role="alert" hidden></p>
+    <div id="coming-banner" class="new-banner coming-banner" role="status" hidden></div>
     <p class="meta" style="margin:0 0 12px"><b>How calling works:</b> when someone joins, they appear in the list below (highlighted as NEW, with a short beep). Their phone only alerts when you press <b>Call</b>. Customers cannot call themselves. <span lang="ja">お客様が並ぶと下のリストに表示されます。「呼出」を押した時だけお客様のスマホが鳴ります。</span></p>
     <div class="stats" aria-label="Summary">
       <div><b id="n-wait">0</b><span>Waiting / 待ち</span></div>
@@ -78,7 +79,7 @@
     <div class="card tbl-wrap">
       <table>
         <caption>Queue <span lang="ja">待ちリスト</span></caption>
-        <thead><tr><th scope="col">No.</th><th scope="col">Party / 人数</th><th scope="col">Name / 名前</th><th scope="col">Language / 言語</th><th scope="col">Status / 状態</th><th scope="col">Waiting / 経過</th><th scope="col">Actions / 操作</th></tr></thead>
+        <thead><tr><th scope="col">No.</th><th scope="col">Ticket / 受付番号</th><th scope="col">Party / 人数</th><th scope="col">Name / 名前</th><th scope="col">Language / 言語</th><th scope="col">Status / 状態</th><th scope="col">Waiting / 経過</th><th scope="col">Actions / 操作</th></tr></thead>
         <tbody id="rows"></tbody>
       </table>
       <p class="empty" id="empty">No parties yet. Open the customer page in another tab and join. <span lang="ja">まだ待ちはありません。別タブでお客様ページから並んでみてください。</span></p>
@@ -94,10 +95,10 @@
     </div>
   </div>
 </main>
-<script src="gate.js?v=20261107c"></script>
-<script src="vendor/qrcode.js?v=20261107c"></script>
-<script src="queue-core.js?v=20261107c"></script>
-<script src="relay.js?v=20261107c"></script>
-<script src="staff.js?v=20261107c"></script>
+<script src="gate.js?v=20261112q"></script>
+<script src="vendor/qrcode.js?v=20261112q"></script>
+<script src="queue-core.js?v=20261112q"></script>
+<script src="relay.js?v=20261112q"></script>
+<script src="staff.js?v=20261112q"></script>
 </body>
 </html>

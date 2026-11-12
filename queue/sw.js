@@ -1,3 +1,4 @@
+/* cache-bust v=20261112q */
 /* Tiny service worker for the queue DEMO. It builds + shows the "your turn" notification in the TICKET's language
    (same dictionary as the pages: i18n.js) so it also works for a future real Web Push ('push' event with
    { kind, lang, no }). No caching, no fetch handling. */

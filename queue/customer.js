@@ -15,7 +15,7 @@
     return c;
   })();
   // Customer side gets ONLY join/leave/read: no call / callNext / seat / reset reach this page (staff page only).
-  var api = (function (full) { return { getState: full.getState, subscribe: full.subscribe, join: full.join, leave: full.leave, myId: full.myId, clearMe: full.clearMe }; })(CLASS ? JKRelay.customer(CLASS) : Q.create());
+  var api = (function (full) { return { getState: full.getState, subscribe: full.subscribe, join: full.join, leave: full.leave, ack: full.ack, myId: full.myId, clearMe: full.clearMe }; })(CLASS ? JKRelay.customer(CLASS) : Q.create());
   function findMe(st) { var id = ticketId(); if (!id) return null; return Q.findById(st, id) || (st.pending && st.pending.id === id ? st.pending : null); }
   var $ = function (s) { return document.querySelector(s); }, $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
   var LANGS = [['en','English'],['ja','日本語'],['ko','한국어'],['zh-Hans','简体中文'],['zh-Hant','繁體中文'],['fr','Français'],['vi','Tiếng Việt'],['es','Español'],['de','Deutsch'],['th','ไทย'],['id','Bahasa Indonesia'],['pt','Português'],['it','Italiano'],['my','မြန်မာ']];
@@ -50,7 +50,7 @@
     document.documentElement.lang = lang;
     sel.value = lang;
     $$('[data-q]').forEach(function (el) { el.textContent = t(el.getAttribute('data-q')); });
-    $('#called-ok').textContent = bi('ok', null, ' / ');
+    $('#called-ok').textContent = bi('coming', null, ' / ');
     var fs = $('#f-size'), cur = fs.value || '2';
     fs.innerHTML = '';
     for (var i = 1; i <= 12; i++) { var o = document.createElement('option'); o.value = i; o.textContent = t('party', { n: i }); fs.appendChild(o); }
@@ -63,7 +63,7 @@
     alertLang = (me && me.lang && QI18N[me.lang]) ? me.lang : lang;
     curNo = me ? me.no : null;
     baseTitle = ta('title') + ' | 地獄蒸し工房 鉄輪';
-    $('#called-ok').textContent = bi('ok', null, ' / ');
+    $('#called-ok').textContent = bi('coming', null, ' / ');
     $('#called-banner').setAttribute('lang', alertLang);
     if (!$('#called-banner').hidden && alarmTimer) $('#called-msg').textContent = bi('calledMsg');
   }
@@ -127,7 +127,7 @@
   function askNotifications() {
     try {
       if ('serviceWorker' in navigator && !swReg) {
-        navigator.serviceWorker.register('sw.js', { scope: './' }).then(function () { return navigator.serviceWorker.ready; }).then(function (r) { swReg = r; }).catch(function () {});
+        navigator.serviceWorker.register('sw.js?v=20261112q', { scope: './' }).then(function () { return navigator.serviceWorker.ready; }).then(function (r) { swReg = r; }).catch(function () {});
       }
       if ('Notification' in window && Notification.permission === 'default') {
         var p = Notification.requestPermission(function () { updateStatus(); });
@@ -232,23 +232,51 @@
     try { if (swReg && swReg.getNotifications) swReg.getNotifications({ tag: 'jk-queue-' + curNo }).then(function (l) { l.forEach(function (n) { n.close(); }); }); } catch (e) {}
   }
   // (No self-test button: only the staff page can make this phone alert.)
-  $('#called-ok').addEventListener('click', function () { dismissedSig = alertedSig; ss(DISMISS_KEY, dismissedSig); stopAlarm(); });
+  $('#called-ok').addEventListener('click', function () {
+    dismissedSig = alertedSig; ss(DISMISS_KEY, dismissedSig); stopAlarm();
+    var id = ticketId();
+    if (api.ack) api.ack(id).then(function () { render(); }).catch(function () { render(); });
+  });
   $('#alerts-btn').addEventListener('click', enableAlerts);
 
   /* ---------- ticket ---------- */
   function ticketId() { if (CLASS) return api.myId(); try { return sessionStorage.getItem(TICKET_KEY); } catch (e) { return null; } }
   function setTicket(id) { if (CLASS) { if (!id) api.clearMe(); return; } try { id ? sessionStorage.setItem(TICKET_KEY, id) : sessionStorage.removeItem(TICKET_KEY); } catch (e) {} }
 
+  function ticketNoVal() {
+    var el = $('#f-ticket'); if (!el) return '';
+    var v = String(el.value || '').replace(/\D/g, '').slice(0, 6);
+    if (v !== el.value) el.value = v;
+    return /^\d{1,6}$/.test(v) ? v : '';
+  }
+  function syncJoinBtn() {
+    var st = api.getState(), err = $('#f-ticket-err'), tn = ticketNoVal(), raw = $('#f-ticket') && $('#f-ticket').value;
+    $('#f-join').disabled = !st.open || !tn;
+    if (err) err.hidden = !raw || !!tn;
+  }
+  if ($('#f-ticket')) {
+    ['input', 'change', 'blur'].forEach(function (ev) { $('#f-ticket').addEventListener(ev, syncJoinBtn); });
+  }
   $('#join-form').addEventListener('submit', function (e) {
     e.preventDefault();
+    var tn = ticketNoVal();
+    if (!tn) { if ($('#f-ticket-err')) $('#f-ticket-err').hidden = false; if ($('#f-ticket')) $('#f-ticket').focus(); return; }
     enableAlerts();   // the Join tap is a user gesture: unlock sound + ask for notifications right here
-    api.join({ size: $('#f-size').value, nick: $('#f-nick').value, lang: lang }).then(function (en) {
-      setTicket(en.id); $('#f-nick').value = ''; render(); $('#t-no').focus();
-    }).catch(function (err) { if (err && err.code === 'closed') render(); });
+    api.join({ size: $('#f-size').value, nick: $('#f-nick').value, lang: lang, ticketNo: tn }).then(function (en) {
+      setTicket(en.id); $('#f-nick').value = ''; if ($('#f-ticket')) $('#f-ticket').value = ''; render(); $('#t-no').focus();
+    }).catch(function (err) { if (err && err.code === 'closed') render(); if (err && err.code === 'ticketNo') { if ($('#f-ticket-err')) $('#f-ticket-err').hidden = false; } });
   });
   $('#leave-btn').addEventListener('click', function () { if (confirm(t('leaveQ'))) { var id = ticketId(); api.leave(id); } });
   $('#again-btn').addEventListener('click', function () { setTicket(null); alertedSig = null; stopAlarm(); render(); $('#f-size').focus(); });
 
+  function paintTicketNo(me) {
+    var row = $('#t-ticketno-row'), el = $('#t-ticketno');
+    if (!row || !el) return;
+    if (me && me.ticketNo) { row.hidden = false; el.textContent = me.ticketNo; }
+    else { row.hidden = true; el.textContent = ''; }
+    var sent = $('#t-coming-sent');
+    if (sent) { var show = !!(me && me.status === 'called' && me.comingAt); sent.hidden = !show; }
+  }
   /* ---------- render ---------- */
   var lastStatus = null, lastLive = '', lastRev = -1;
   function render() {
@@ -262,13 +290,13 @@
     $('#ticket-view').hidden = !me;
     var b = $('#q-open-badge'); b.textContent = st.open ? t('open') : t('closedB'); b.className = 'badge' + (st.open ? '' : ' closed');
     $('#q-waiting-now').textContent = t('waitingNow', { n: waitingN });
-    $('#f-join').disabled = !st.open; $('#closed-msg').hidden = st.open;
+    $('#closed-msg').hidden = st.open; syncJoinBtn();
 
     if (!me) { lastStatus = null; stopAlarm(); document.title = baseTitle; return; }
 
     if (me.pending) {   // class demo: joined, waiting for the staff device to number the ticket (it may be closed for a while)
       $('#t-no').textContent = '…'; $('#t-no').setAttribute('aria-label', t('pend')); $('#t-id').textContent = me.id;
-      $('#t-party').textContent = t('party', { n: me.size }) + (me.nick ? ' · ' + me.nick : '');
+      $('#t-party').textContent = t('party', { n: me.size }) + (me.nick ? ' · ' + me.nick : ''); paintTicketNo(me);
       var ps = $('#t-status'); ps.textContent = t('s.waiting'); ps.className = 'status waiting';
       $('#t-ahead').hidden = false; $('#t-ahead').textContent = t('pend'); $('#t-wait').hidden = true;
       $('#leave-btn').hidden = false; $('#again-btn').hidden = true;
@@ -279,7 +307,7 @@
     var live = me.status === 'waiting' && me.status !== lastStatus;
     $('#t-no').textContent = me.no; $('#t-no').setAttribute('aria-label', t('yourNo') + ' ' + me.no);
     $('#t-id').textContent = me.id;
-    $('#t-party').textContent = t('party', { n: me.size }) + (me.nick ? ' · ' + me.nick : '');
+    $('#t-party').textContent = t('party', { n: me.size }) + (me.nick ? ' · ' + me.nick : ''); paintTicketNo(me);
     var s = $('#t-status'); s.textContent = t('s.' + me.status); s.className = 'status ' + me.status;
 
     var active = me.status === 'waiting';
