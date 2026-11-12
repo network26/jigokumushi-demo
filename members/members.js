@@ -59,8 +59,10 @@
   Object.assign(T.ja, {"durFixed": "1回の予約は釜1つにつき15分ちょうどです。30分など長く使う場合や複数の釜を使う場合は、釜ごと・15分枠ごとに別々に予約してください。", "gridHelp": "空いている枠を押すと、その釜をその15分枠で予約できます（19:00までに終了）。", "lead": "地元の会員向けの構想です。ログインして、営業時間内に3つの地獄蒸し釜のいずれかを15分枠ずつ予約できます。", "durOne": "15分（固定）", "rent": "釜の使用料（概算）", "exFee": "キャンセル・無断不参加料の例", "exFeeSub": "釜1つ・15分枠ごと（例示のみ・請求なし）", "polH": "キャンセル・無断不参加料の例（このデモ用の例示であり、施設の公式料金・ルールではありません。請求は一切ありません）：", "pol": "釜1つ・15分枠ごとに200円。予約した枠には、キャンセル料 または 無断不参加料 のどちらか一方のみがかかり、両方はかかりません。例：釜1つ×1枠＝200円、同じ時間に釜2つ＝400円、釜2つ×連続2枠（30分）＝4枠＝800円（1枠目400円＋2枠目400円）。キャンセルすると枠はすぐに空きます。", "polShort": "キャンセル・無断不参加時の例示料金：この釜の枠につき200円（どちらか一方のみ、両方はかかりません。デモのため請求なし）。", "exTotal": "すべてキャンセル・無断不参加の場合の例：{n}枠 × 200円 ＝ {y}（請求なし）。"});
   Object.assign(T.en, {"feeH": "Example cancellation and no-show fees", "feeC": "Cancellation: ¥200 per steamer per 15-minute booked slot.", "feeN": "No-show: ¥200 per steamer per 15-minute booked slot.", "feeOne": "Each booked slot is charged either the cancellation fee or the no-show fee — never both.", "feeEx": "Example: 2 steamers × 2 back-to-back 15-min slots = 4 slots = ¥800.", "feeDemo": "Examples for this demo only — not the facility’s official rules, and nothing is collected."});
   Object.assign(T.ja, {"feeH": "キャンセル料・無断不参加料の例", "feeC": "キャンセル：予約した釜1つ・15分枠ごとに200円。", "feeN": "無断不参加：予約した釜1つ・15分枠ごとに200円。", "feeOne": "1つの予約枠にかかるのはキャンセル料か無断不参加料のどちらか一方のみで、両方はかかりません。", "feeEx": "例：釜2つ × 連続した15分枠2つ ＝ 4枠 ＝ 800円。", "feeDemo": "このデモ用の例であり、施設の公式ルールではありません。請求は一切ありません。"});
-  Object.assign(T.en, {"feeNote": "Steamer fee for this demo: ¥400 per 15-minute slot (official basic steamer fee, revised July 1, 2021). No separate local-resident rate is published. Subscription pricing: to be confirmed.", "feeSrc": "Official price list (jigokumushi.com)", "rent": "Steamer fee (est.)", "stCancelled": "Cancelled", "small": "Steamer", "large": "Steamer", "sizeL": "Steamer", "sz": "Steamer"});
-  Object.assign(T.ja, {"feeNote": "このデモの釜使用料：15分枠ごとに400円（公式の基本使用料・令和3年7月1日改定）。地元住民向け料金の記載はありません。サブスク料金：未定。", "feeSrc": "公式料金表（jigokumushi.com）", "rent": "釜の使用料（概算）", "stCancelled": "キャンセル済", "small": "釜", "large": "釜", "sizeL": "釜", "sz": "釜"});
+  Object.assign(T.en, {"feeNote": "Steaming cost for this demo: ¥400 per 15-minute slot (official walk-in basic use fee for 15 minutes or less, revised July 1, 2021). No separate local-resident rate is published. Example cancellation/no-show fees are listed separately. Subscription pricing: to be confirmed.", "feeSrc": "Official price list (jigokumushi.com)", "rent": "Steamer fee (est.)", "stCancelled": "Cancelled", "small": "Steamer", "large": "Steamer", "sizeL": "Steamer", "sz": "Steamer"});
+  Object.assign(T.ja, {"feeNote": "このデモの蒸し料金：15分枠ごとに400円（公式の一般・基本使用料・15分以内、令和3年7月1日改定）。地元住民向け料金の記載はありません。キャンセル・無断不参加料の例は別に表示します。サブスク料金：未定。", "feeSrc": "公式料金表（jigokumushi.com）", "rent": "釜の使用料（概算）", "stCancelled": "キャンセル済", "small": "釜", "large": "釜", "sizeL": "釜", "sz": "釜"});
+  Object.assign(T.en, {"steamCost": "Steaming cost (official walk-in)", "steamRate": "¥400 per steamer per 15-min slot", "total": "Total", "costTotal": "Steaming cost {steam} ({n} × ¥400 official walk-in) + EXAMPLE cancel/no-show fees {fees} ({n} × ¥200) = Total {total} (example fees not charged).", "fee": "Steaming cost (official walk-in)", "rent": "Steaming cost (official walk-in)"});
+  Object.assign(T.ja, {"steamCost": "蒸し料金（公式の一般利用料金）", "steamRate": "釜1つ・15分枠ごとに400円", "total": "合計", "costTotal": "蒸し料金 {steam}（{n}枠 × 400円・公式の一般利用料金）＋ キャンセル・無断不参加料の例 {fees}（{n}枠 × 200円）＝ 合計 {total}（例示料金は請求なし）。", "fee": "蒸し料金（公式の一般利用料金）", "rent": "蒸し料金（公式の一般利用料金）"});
   var lang = 'en'; try { lang = localStorage.getItem(KL) || (/^ja/.test(navigator.language) ? 'ja' : 'en'); } catch (e) {}
   try { var q = new URL(location.href).searchParams.get('lang'); if (T[q]) lang = q; } catch (e) {}
   if (!T[lang]) lang = 'en';
@@ -72,7 +74,11 @@
   function active(a) { return (a || load()).filter(function (x) { return x.status !== 'cancelled'; }); }
   function hm(m) { return ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + m % 60).slice(-2); }
   function yen(n) { return '¥' + n.toLocaleString('en-US'); }
-  function fee(d) { return RATE * Math.max(1, Math.round((d || SLOT) / SLOT)); }   // ¥400 per 15-min steamer-slot
+  function fee(d) { return RATE * Math.max(1, Math.round((d || SLOT) / SLOT)); }   // official walk-in basic use fee ¥400 / 15-min steamer-slot
+  function steamYen(n) { return RATE * n; }
+  function feeYen(n) { return PENALTY * n; }
+  function totalYen(n) { return (RATE + PENALTY) * n; }
+  function costText(n) { return t('costTotal', { n: n, steam: yen(steamYen(n)), fees: yen(feeYen(n)), total: yen(totalYen(n)) }); }
   function jstNow() { var d = new Date(Date.now() + 9 * 3600e3); return { y: d.getUTCFullYear(), mo: d.getUTCMonth(), da: d.getUTCDate(), min: d.getUTCHours() * 60 + d.getUTCMinutes() }; }
   function iso(y, mo, da) { var d = new Date(Date.UTC(y, mo, da)); return d.toISOString().slice(0, 10); }
   function isClosed(isoD) { var d = new Date(isoD + 'T00:00:00Z'); return d.getUTCDay() === 3 && d.getUTCDate() >= 15 && d.getUTCDate() <= 21; }
@@ -119,16 +125,16 @@
     $('#grid').querySelectorAll('button:not([disabled])').forEach(function (b) { b.onclick = function () { sel = { steamer: b.dataset.s, start: +b.dataset.m }; render(); }; });
     // summary
     if (sel) {
-      $('#sum').innerHTML = [[t('dt'), date], [t('tm'), hm(sel.start) + '–' + hm(sel.start + dur) + ' JST'], [t('st'), sel.steamer], [t('du'), t('durOne')], [t('fee'), yen(fee(dur))], [t('exFee'), yen(PENALTY) + ' ' + t('exFeeSub')]]
+      $('#sum').innerHTML = [[t('dt'), date], [t('tm'), hm(sel.start) + '–' + hm(sel.start + dur) + ' JST'], [t('st'), sel.steamer], [t('du'), t('durOne')], [t('steamCost'), yen(fee(dur)) + ' · ' + t('steamRate')], [t('exFee'), yen(PENALTY) + ' ' + t('exFeeSub')], [t('total'), yen(totalYen(1))]]
         .map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + r[1] + '</dd>'; }).join('');
     }
     $('#checkout').hidden = !sel;
     var mine = live.filter(function (x) { return x.mine; }).sort(function (x, y) { return (x.date + hm(x.start)).localeCompare(y.date + hm(y.start)); });
     var tot = mine.reduce(function (q, x) { return q + units(x); }, 0);
-    $('#mineTotal').hidden = !mine.length; $('#mineTotal').textContent = t('exTotal', { n: tot, y: yen(PENALTY * tot) });
-    $('#mine').innerHTML = mine.length ? mine.map(function (x) { return '<li><span>' + x.date + ' ' + hm(x.start) + '–' + hm(x.end) + ' JST · ' + t('steamer') + ' ' + x.steamer + ' · ' + t('rent') + ' ' + yen(x.fee) + ' · ' + t('exFee') + ' ' + yen(PENALTY * units(x)) + (units(x) > 1 ? ' (' + units(x) + ' × ' + yen(PENALTY) + ')' : '') + ' · DEMO</span><button type="button" class="btn ghost sm" data-cancel="' + x.id + '">' + t('cancel') + '</button></li>'; }).join('') : '<li>' + t('none') + '</li>';
+    $('#mineTotal').hidden = !mine.length; $('#mineTotal').textContent = tot ? costText(tot) : '';
+    $('#mine').innerHTML = mine.length ? mine.map(function (x) { var n = units(x); return '<li><span>' + x.date + ' ' + hm(x.start) + '–' + hm(x.end) + ' JST · ' + t('steamer') + ' ' + x.steamer + ' · ' + t('steamCost') + ' ' + yen(x.fee != null ? x.fee : steamYen(n)) + ' · ' + t('exFee') + ' ' + yen(feeYen(n)) + (n > 1 ? ' (' + n + ' × ' + yen(PENALTY) + ')' : '') + ' · ' + t('total') + ' ' + yen(totalYen(n)) + ' · DEMO</span><button type="button" class="btn ghost sm" data-cancel="' + x.id + '">' + t('cancel') + '</button></li>'; }).join('') : '<li>' + t('none') + '</li>';
     $('#mine').querySelectorAll('[data-cancel]').forEach(function (b) { b.onclick = function () { cancel(b.dataset.cancel); }; });
-    $('#all').innerHTML = a.length ? a.map(function (x) { return '<li>' + x.date + ' ' + hm(x.start) + '–' + hm(x.end) + ' · ' + t('steamer') + ' ' + x.steamer + ' · ' + yen(x.fee) + (x.status === 'cancelled' ? ' · ' + t('stCancelled') : '') + '</li>'; }).join('') : '<li>' + t('none') + '</li>';
+    $('#all').innerHTML = a.length ? a.map(function (x) { var n = units(x); return '<li>' + x.date + ' ' + hm(x.start) + '–' + hm(x.end) + ' · ' + t('steamer') + ' ' + x.steamer + ' · ' + t('steamCost') + ' ' + yen(x.fee != null ? x.fee : steamYen(n)) + ' · ' + t('exFee') + ' ' + yen(feeYen(n)) + ' · ' + t('total') + ' ' + yen(totalYen(n)) + (x.status === 'cancelled' ? ' · ' + t('stCancelled') : '') + '</li>'; }).join('') : '<li>' + t('none') + '</li>';
   }
   function say(s) { $('#msg').textContent = s; $('#msg').hidden = false; }
   function book() {
@@ -137,7 +143,7 @@
     if (dayState(date) !== 'open' || st < OPEN || st > LAST_START || en > CLOSE || st % STEP || overlaps(a, s, st, en, date)) { say(t('clash')); sel = null; render(); return; }
     var b = { id: 'D' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), date: date, steamer: s, start: st, end: en, fee: fee(dur), mine: true, member: 'Demo Subscriber', status: 'booked', paid: 'simulated', createdAt: Date.now() };
     a.push(b); save(a); sel = null;
-    say(t('ok', { s: s, d: date, t1: hm(st), t2: hm(en), y: yen(b.fee) }) + ' ' + t('polShort')); render();
+    say(t('ok', { s: s, d: date, t1: hm(st), t2: hm(en), y: yen(b.fee) }) + ' ' + costText(1) + ' ' + t('polShort')); render();
   }
   function cancel(id) {
     var a = load(), b = null;
@@ -160,5 +166,5 @@
   $('#reset').onclick = function () { if (confirm(t('resetQ'))) { localStorage.removeItem(KB); sel = null; $('#msg').hidden = true; render(); } };
   window.addEventListener('storage', function (e) { if (e.key === KB || e.key === KS) show(); });
   show();
-  window.__membersDemo = { fee: fee, RATE: RATE, PENALTY: PENALTY };
+  window.__membersDemo = { fee: fee, RATE: RATE, PENALTY: PENALTY, totalYen: totalYen, costText: costText };
 })();
