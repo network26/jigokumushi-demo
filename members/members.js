@@ -1,4 +1,4 @@
-/* Members area DEMO for Jigoku Mushikobo Kanawa. Browser-local only (localStorage). No login, no payment, no server.
+/* Members area DEMO for Jigoku Mushikobo Kannawa. Browser-local only (localStorage). No login, no payment, no server.
    Steamer fee for this demo: ¥400 per 15-min slot (official basic steamer fee from jigokumushi.com). Size labels are not used.
    Hours from the website: 10:00–19:00 JST, last steamer reception 18:00; closed 3rd Wednesday (holiday shift not modelled). */
 (function () {
@@ -10,10 +10,10 @@
   var T = {
     en: {
       bar: 'Class demonstration only: no real accounts, no real bookings, no money collected. Data stays in this browser and is not shared with classmates.',
-      back: '← Jigoku Mushikobo Kanawa (demo site)', kicker: 'LOCAL MEMBERS · SUBSCRIBERS', h1: 'Members login (demo)',
+      back: '← Jigoku Mushikobo Kannawa (demo site)', kicker: 'LOCAL MEMBERS · SUBSCRIBERS', h1: 'Members login (demo)',
       lead: 'A concept for local subscribers: sign in, then reserve one of the 3 hell-steamers in 15-minute steps during opening hours.',
       perk1: 'Reserve a steamer slot ahead instead of waiting in line', perk2: 'Cancel anytime: the slot is released immediately', perk3: 'Pay the steamer fee in advance (simulated here)',
-      subPrice: 'Subscription pricing and terms: to be confirmed. This is a student concept, not an official Jigoku Mushikobo Kanawa service.',
+      subPrice: 'Subscription pricing and terms: to be confirmed. This is a student concept, not an official Jigoku Mushikobo Kannawa service.',
       enter: 'Enter as demo subscriber', noCred: 'No email, password or personal details are requested. This button just opens the demo dashboard.',
       dashK: 'MEMBER DASHBOARD', dashH: 'Welcome, Demo Subscriber', badge: 'Active subscription — demo', logout: 'Log out',
       bookH: 'Reserve a steamer', hoursNote: 'Opening hours (from the website): 10:00–19:00 JST, last steamer reception 18:00. Closed on the 3rd Wednesday of each month. All times are JST.',
@@ -95,7 +95,7 @@
     document.documentElement.lang = lang;
     document.querySelectorAll('[data-t]').forEach(function (el) { el.textContent = t(el.getAttribute('data-t')); });
     document.querySelectorAll('.langs button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === lang); });
-    document.title = t('h1') + ' · Jigoku Mushikobo Kanawa';
+    document.title = t('h1') + ' · Jigoku Mushikobo Kannawa';
   }
   var MAX_MONTHS = 12;   // bookable up to 12 months ahead (demo)
   function firstOpen() { var n = jstNow(), i = (n.min >= LAST_START) ? 1 : 0, d; do { d = iso(n.y, n.mo, n.da + i++); } while (isClosed(d)); return d; }

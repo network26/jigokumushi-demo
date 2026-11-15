@@ -127,7 +127,7 @@
   function askNotifications() {
     try {
       if ('serviceWorker' in navigator && !swReg) {
-        navigator.serviceWorker.register('sw.js?v=20261112q', { scope: './' }).then(function () { return navigator.serviceWorker.ready; }).then(function (r) { swReg = r; }).catch(function () {});
+        navigator.serviceWorker.register('sw.js?v=20261115q', { scope: './' }).then(function () { return navigator.serviceWorker.ready; }).then(function (r) { swReg = r; }).catch(function () {});
       }
       if ('Notification' in window && Notification.permission === 'default') {
         var p = Notification.requestPermission(function () { updateStatus(); });
@@ -172,8 +172,8 @@
     return navigator.serviceWorker.getRegistration().then(function (r) { if (r) { swReg = r; if (!r.active) return navigator.serviceWorker.ready; } return r || null; }).catch(function () { return null; });
   }
   function notifText(l, kind, no) {
-    return { title: 'Jigoku Mushikobo Kanawa · ' + bi('yourNo', null, ' / ') + ' ' + no,
-             body: kind === 'called' ? bi('calledMsg') : kind === 'test' ? bi('testMsg') : 'Jigoku Mushikobo Kanawa: ' + bi('s.noshow') };
+    return { title: 'Jigoku Mushikobo Kannawa · ' + bi('yourNo', null, ' / ') + ' ' + no,
+             body: kind === 'called' ? bi('calledMsg') : kind === 'test' ? bi('testMsg') : 'Jigoku Mushikobo Kannawa: ' + bi('s.noshow') };
   }
   function notify(kind, test) {
     try {
@@ -333,7 +333,7 @@
     } else { alertedSig = null; stopAlarm(); }
     if (me.status === 'waiting') document.title = '#' + me.no + ' · ' + (ahead ? ta('ahead', { n: ahead }) : ta('next')) + ' | ' + baseTitle;
     if (me.status === 'noshow' && (lastStatus === 'waiting' || lastStatus === 'called')) {   // staff marked no-show: alert in the ticket language
-      showBanner('Jigoku Mushikobo Kanawa: ' + bi('s.noshow')); clearTimeout(testTimer); testTimer = setTimeout(hideBanner, 8000); notify('noshow', false); document.title = ta('s.noshow') + ' | ' + baseTitle;
+      showBanner('Jigoku Mushikobo Kannawa: ' + bi('s.noshow')); clearTimeout(testTimer); testTimer = setTimeout(hideBanner, 8000); notify('noshow', false); document.title = ta('s.noshow') + ' | ' + baseTitle;
     }
     else if (me.status !== 'called' && me.status !== 'noshow') document.title = baseTitle;
 

@@ -1,6 +1,6 @@
 # Members area (DEMO)
 
-`/members/` is a **class demonstration** of a possible local-subscriber login for Jigoku Mushikobo Kanawa.
+`/members/` is a **class demonstration** of a possible local-subscriber login for Jigoku Mushikobo Kannawa.
 It is not an official service and nothing here is real:
 
 - "Enter as demo subscriber" is a button, not a login. No email, password or personal data is collected.
