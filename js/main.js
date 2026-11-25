@@ -72,7 +72,12 @@
       if(m[5]) meta.push('<span class="rec">★ '+esc(t('rec'))+'</span>');
       var note = (m[0]===1||m[0]===2) ? '<div class="setnote">+ '+esc(t('food.setNote'))+'</div>' : '';
       var ja = lang==='ja' ? '' : '<div class="ja">'+esc(D.menuJa[i])+'</div>';
-      var ti2=D.top.indexOf(m[0]); return '<article class="dish tilt'+(ti2>-1?' is-top':'')+'" data-cat="'+m[1]+'" data-top="'+(ti2>-1?1:0)+'" data-rank="'+(ti2>-1?ti2+1:0)+'" style="'+(ti2>-1?'--top-rank:'+(ti2+1):'')+'" data-reveal="'+dirs[i%5]+'" data-delay="'+(i%4)+'">'+
+      var ti2=D.top.indexOf(m[0]);
+      var no = ('0'+m[0]).slice(-2);
+      var alt = esc(names[i]||D.menuJa[i]);
+      var photo = '<figure class="dish-photo"><img src="assets/food/'+no+'.webp?v=20261125b" alt="'+alt+'" width="800" height="600" loading="lazy" decoding="async"></figure>';
+      return '<article class="dish tilt'+(ti2>-1?' is-top':'')+'" data-cat="'+m[1]+'" data-top="'+(ti2>-1?1:0)+'" data-rank="'+(ti2>-1?ti2+1:0)+'" style="'+(ti2>-1?'--top-rank:'+(ti2+1):'')+'" data-reveal="'+dirs[i%5]+'" data-delay="'+(i%4)+'">'+
+        photo+
         '<span class="no">'+m[0]+'</span><div class="glyph">'+D.catKanji[m[1]]+'</div>'+
         '<h4>'+esc(names[i]||D.menuJa[i])+'</h4>'+ja+note+
         '<div class="meta">'+meta.join('')+'</div><div class="price">'+yen(m[3])+'</div><i class="steam-puff"></i></article>';
