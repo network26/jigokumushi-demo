@@ -1,4 +1,4 @@
-/* Facts transcribed from the official site jigokumushi.com (menu revised 2026-10-01; news and crowd forecast checked 2026-11-11). */
+/* Facts transcribed from the official site jigokumushi.com (menu revised 2026-10-01; news and closure dates checked 2026-11-25; crowd forecast checked 2026-11-11). */
 window.SITE_DATA = {
   // [no, category, servings('1'|'12'|'2'|''), price, pieces(0 = n/a), recommended]
   menu: [
@@ -21,9 +21,9 @@ window.SITE_DATA = {
   catKanji: {set:'膳',sea:'海',meat:'肉',veg:'菜',dim:'点',rice:'飯',sweet:'甘'},
   dressJa: ['ゴマドレ','梅しそ','バーニャカウダ','麻辣ソース','コチュジャンソース','西京みそドレ','焼肉のタレ','イタリアントマトソース'],
   dressColor: ['#b9a477','#a3471f','#e3d6a8','#5a1d14','#b8641f','#cdb58f','#2b1a10','#d0632b'],
-  closedDays: ['2026-10-21','2026-11-18','2026-12-16','2027-01-20','2027-02-17','2027-03-17'],
+  closedDays: ['2026-12-16','2027-01-20','2027-02-17','2027-03-17','2027-04-21','2027-05-19'],
   crowd: { year: 2026, month: 11, busy: [1,3,7,8,14,15,28,29], vbusy: [21,22,23], closed: [18] },
-  news: ['2026-11-05','2026-11-02','2026-10-27','2026-10-21','2026-10-20','2026-10-01','2026-09-18','2026-09-17','2026-09-14','2026-09-11'],
+  news: ['2026-11-24','2026-11-20','2026-11-05','2026-11-02','2026-10-27','2026-10-21','2026-10-20','2026-10-01','2026-09-18','2026-09-17'],
   // bus: [exitKey, minutes, fare, stopKey, walkMin, lineCodes]
   bus: [
     ['west', 20, 330, 'kannawa', 0, ['2','5','7','41']],
